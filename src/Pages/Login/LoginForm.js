@@ -15,8 +15,6 @@ const LoginForm = ({ texts }) => {
   const navigate = useNavigate();
   const { setAuth } = useAuth();
 
-  
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -50,17 +48,17 @@ const LoginForm = ({ texts }) => {
         <form className="rounded-lg bg-gray-700 p-4 md:absolute" onSubmit={handleSubmit}>
           {error && <p className="text-red-500">{error}</p>}
           <label>
-            <input className="mt-4 w-full max-w-[50vw] rounded focus:border-gray-600" autoComplete="username" placeholder="Nick or Email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
+            <input className="mt-4 w-full max-w-[60vw]  rounded px-2 focus:border-gray-600" autoComplete="username" placeholder="Nick or Email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
           </label>
           <br />
           <label>
-            <input className="mt-4 w-full max-w-[50vw] rounded" autoComplete="current-password" placeholder=" Password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+            <input className="mt-4 w-full  max-w-[60vw] rounded px-2" autoComplete="current-password" placeholder=" Password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
           </label>
           <br />
-          <button className="mt-4 w-full max-w-[50vw] rounded-lg bg-red-700 p-2 text-white disabled:opacity-60" type="submit" disabled={!email || !password}>
+          <button className="mt-4 w-full  max-w-[60vw] rounded-lg bg-red-700 p-2 px-2 text-white disabled:opacity-60" type="submit" disabled={!email || !password}>
             {texts.logIn}
           </button>
-          <div className="flex w-full justify-between">
+          <div className="flex w-full flex-col  justify-between sm:flex-row">
             <div className="mr-8 cursor-pointer text-gray-400" onClick={() => setShowPasswordReset(true)}>
               {texts.forgetPassword}
             </div>
