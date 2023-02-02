@@ -3,49 +3,73 @@ import logo from '../assets/logo.png';
 import { useState, useContext } from 'react';
 import { Spin as Hamburger } from 'hamburger-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusSquare, faRandom, faSearch, faSortAmountAsc, faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { LanguageContext } from './context/LanguageProvider';
-import withLanguage from './HOC/withLanguage';
-import QRCodeGenerator from './QRCodeGenerator';
+import { faPlusSquare, faRandom, faSearch, faSortAmountAsc, faGlobe, faUser } from '@fortawesome/free-solid-svg-icons';
+import { LanguageContext } from '../context/LanguageProvider';
+import { withLanguage } from '../components/HOC/withLanguage';
+import { QRCodeGenerator } from './QRCodeGenerator';
 import { BiQr } from 'react-icons/bi';
+import { useAuth } from '../hooks/useAuth';
+import { useEffect } from 'react';
 
-function Header(props) {
+function Header({ texts }) {
   const [isOpen, setOpen] = useState(false);
   const { language, setLanguage } = useContext(LanguageContext);
   const [showQRCode, setShowQRCode] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const { auth } = useAuth();
+
+  useEffect(() => {
+    if (!auth.email) {
+      setShowLogin(true);
+    } else setShowLogin(false);
+  }, [auth]);
 
   return (
     <div>
-      <nav className="hidden md:flex bg-gray-800 items-center justify-between mx-auto md:flex-row md:justify-start md:items-center">
-        <div className="flex-1 flex items-center">
+      <nav className="mx-auto hidden items-center justify-between bg-gray-800 md:flex md:flex-row md:items-center md:justify-start">
+        <div className="flex flex-1 items-center">
           <Link to="/home">
             <img className="h-16 w-24" src={logo} alt="logo meme website" />
           </Link>
-          <button className="ml-24 hidden md:flex" onClick={() => setShowQRCode(!showQRCode)}>
-            {<BiQr className="text-orange-600 text-2xl" />}
+          <button className="ml-20 hidden md:flex" onClick={() => setShowQRCode(!showQRCode)}>
+            {<BiQr className="text-2xl text-orange-600" />}
             {showQRCode && <QRCodeGenerator />}
           </button>
         </div>
-        <NavItem to="/home" text={props.texts.browse} icon={faSortAmountAsc} />
-        <NavItem to="/sort" text={props.texts.sortMemes} icon={faSortAmountAsc} />
-        <button className="mt-2 mr-4 text-orange-500 flex flex-col" onClick={() => setLanguage(language === 'en' ? 'pl' : 'en')}>
+        <NavItem to="/home" text={texts.browse} icon={faRandom} />
+        <NavItem to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
+        <NavItem to="/generatemem" text={texts.generateMeme} icon={faPlusSquare} />
+        {showLogin ? (
+          <NavItem to="/login" text={texts.logIn} icon={faUser} />
+        ) : (
+          <p className="absolute left-[20%] text-white">
+            {texts.hi}, {auth.userNick}
+          </p>
+        )}
+        <button className="mt-2 mr-6 flex flex-col text-orange-500" onClick={() => setLanguage(language === 'en' ? 'pl' : 'en')}>
           {<FontAwesomeIcon size="lg" icon={faGlobe} />}
           {language.toUpperCase()}
         </button>
       </nav>
-      <div className="md:hidden fixed">
+      <div className="fixed rounded-lg bg-black md:hidden z-10">
         <Hamburger toggled={isOpen} toggle={setOpen} color="#f97316" duration={0.6} label="Menu" />
         {isOpen && (
           <>
-            <header className="flex items-center md:block rounded-lg justify-end max-h-full flex-nowrap bg-gray-800 ">
+            <header className="flex max-h-full flex-nowrap items-center justify-end rounded-lg bg-gray-800 md:block ">
               <div className="flex flex-col">
-                <NavItem to="/sort" text={props.texts.sortMemes} icon={faSortAmountAsc} />
-                <NavItem to="/home" text={props.texts.browse} icon={faSortAmountAsc} />
+                <NavItem to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
+                <NavItem to="/home" text={texts.browse} icon={faRandom} />
+                <NavItem to="/generatemem" text={texts.generateMeme} icon={faPlusSquare} />
               </div>
             </header>
             <button className=" absolute top-3 left-14 text-orange-500" onClick={() => setLanguage(language === 'en' ? 'pl' : 'en')}>
               {<FontAwesomeIcon size="lg" icon={faGlobe} />}
             </button>
+            {showLogin && (
+              <Link to="/login" className="absolute top-3 left-24 text-orange-500" icon={faUser}>
+                <FontAwesomeIcon size="lg" icon={faUser} />
+              </Link>
+            )}
           </>
         )}
       </div>
@@ -58,7 +82,7 @@ function NavItem({ to, text, icon }) {
   const active = location.pathname === to;
 
   return (
-    <Link to={to} className={`p-2 rounded-lg md:mr-5 text-white ${active ? 'bg-orange-500 text-black' : ''}`}>
+    <Link to={to} className={`rounded-lg p-2 text-white md:mr-5 ${active ? 'bg-orange-500 text-black' : ''}`}>
       <FontAwesomeIcon className="mr-5" icon={icon} />
       {text}
     </Link>

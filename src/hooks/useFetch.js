@@ -1,29 +1,20 @@
-import { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
+import { useQuery } from 'react-query';
+import { useAuth } from '../hooks/useAuth';
+import axios from 'axios';
 
-function useFetch(url, formSubmitted) {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = Cookies.get('token');
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        console.log(error);
+const useFetch = (url) => {
+  const { auth } = useAuth();
+  const { data, refetch, isLoading, isError, status } = useQuery(url, async () => {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: ` Bearer ${auth.token}`
       }
-    };
-    fetchData();
-  }, [formSubmitted]);
+    });
+    const result = response.data;
+    return result;
+  });
 
-  return { data };
-}
+  return { data, refetch, isLoading, isError, status };
+};
 
 export default useFetch;

@@ -1,14 +1,28 @@
 import { useContext } from 'react';
-import { LanguageContext } from '../context/LanguageProvider';
+import { LanguageContext } from '../../context/LanguageProvider';
 
-const withLanguage = (WrappedComponent) => {
+export const withLanguage = (WrappedComponent) => {
   return (props) => {
     const { language } = useContext(LanguageContext);
 
     const texts = {
       en: {
+        hi: 'Hi',
         sortMemes: 'Sort memes',
         browse: 'Browsing memes',
+        generateMeme: 'Generate meme',
+        selectImage: 'Select image',
+        download: 'Download',
+        upload: 'Upload',
+        removeText: 'Remove text',
+        colorText: 'Black text',
+        addTextTop: 'Add text on top meme',
+        addTextBot: 'Add text on bottom meme',
+        changeFontSize: 'change your font size, current',
+        errotTextLengthTop: 'Text is too long for the image, change font size on top text',
+        errotTextLengthBot: 'Text is too long for the image, change font size on bottom text',
+        errorSavingImage: 'Error saving the image',
+        succesSavingImage: 'Image saved successfully',
         email: 'Email address',
         password: 'Password',
         confirmPassword: 'Confirm password',
@@ -30,11 +44,34 @@ const withLanguage = (WrappedComponent) => {
         cropped: 'Cropped',
         unCropped: 'Uncropped',
         meme: 'Meme',
-        notMeme: 'Not Meme'
+        notMeme: 'Not Meme',
+        notificationToastWarn: 'Oops we have a problem, no meme available, please contact support',
+        notificationToastSuccesLike: 'You like it',
+        notificationToastSuccesDisLike: "You don't like it",
+        notificationToastSuccesSortMeme: 'Meme has been sorted!',
+        notificationToastErrorSortMeme: 'Meme was not sorted, please contact support',
+        addComment: 'Add comment',
+        comments: 'Comments',
+        errorMessageComment: 'Comment cannot be empty!',
+        userMessageComment: 'You must be logged in to add a comment'
       },
       pl: {
+        hi: 'Cześć',
         sortMemes: 'Sortuj memy',
         browse: 'Przeglądaj memy',
+        generateMeme: 'Generuj mema',
+        selectImage: 'Wybierz zdjęcie',
+        download: 'Pobierz',
+        upload: 'Prześlij',
+        removeText: 'Usuń tekst',
+        colorText: 'Czarny tekst',
+        addTextTop: 'Dodaj tekst na górze mema',
+        addTextBot: 'Dodaj tekst na dole mema',
+        changeFontSize: 'zmień rozmiar czcionki, aktualny',
+        errotTextLengthTop: 'Tekst jest za długi w stosunku do obrazu, zmień rozmiar czcionki w górnym tekście',
+        errotTextLengthBot: 'Tekst jest za długi w stosunku do obrazu, zmień rozmiar czcionki w dolnym tekście',
+        errorSavingImage: 'Mem nie został zapisany',
+        succesSavingImage: 'Mem został zapisany!',
         email: 'Adres email',
         password: 'Hasło',
         confirmPassword: 'Potwierdź hasło',
@@ -56,7 +93,16 @@ const withLanguage = (WrappedComponent) => {
         cropped: 'Przycięty',
         unCropped: 'Nieprzycięty',
         meme: 'Mem',
-        notMeme: 'to nie Mem'
+        notMeme: 'to nie Mem',
+        notificationToastWarn: 'Ups, mamy problem, mem nie jest dostępny, skontaktuj się z pomocą techniczną',
+        notificationToastSuccesLike: 'Polubiłeś mema',
+        notificationToastSuccesDisLike: 'Nie lubisz tego mema',
+        notificationToastSuccesSortMeme: 'Mem został posortowany!',
+        notificationToastErrorSortMeme: 'Mem nie został posortowany, skontaktuj się z pomocą techniczną',
+        addComment: 'Dodaj komentarz',
+        comments: 'Komenatrze',
+        errorMessageComment: 'Komentarz nie może być pusty!',
+        userMessageComment: 'Musisz być zalogowany, żeby dodać komentarz'
       }
     };
 
@@ -67,4 +113,3 @@ const withLanguage = (WrappedComponent) => {
     );
   };
 };
-export default withLanguage;
