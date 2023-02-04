@@ -4,17 +4,17 @@ import { withLanguage } from './HOC/withLanguage';
 
 function Missing({ texts }) {
   return (
-    <div>
-      <img className="mx-auto my-auto" src={caveman} alt="a caveman lost, chewing a cable"></img>
-      <h1 className="flex text:sm md:text-2xl justify-center items-center">
+    <div className="h-[83vh]">
+      <img className="mx-auto my-auto h-[80%]" src={caveman} alt="a caveman lost, chewing a cable"></img>
+      <h1 className="text:sm flex items-center justify-center md:text-2xl">
         {texts.missing}
         <br />
         <Link to="home">
-          <button className="md:mx-2 md:p-2 bg-orange-600 rounded-lg"> {texts.mainPage}</button>
+          <button className="rounded-lg bg-orange-600 md:mx-2 md:p-2"> {texts.mainPage}</button>
           {texts.or}
         </Link>
         <Link to="sort">
-          <button className="md:mx-2 md:p-2 bg-orange-600 rounded-lg"> {texts.browse}</button>
+          <button className="rounded-lg bg-orange-600 md:mx-2 md:p-2"> {texts.browse}</button>
         </Link>
       </h1>
     </div>
