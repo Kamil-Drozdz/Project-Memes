@@ -12,7 +12,6 @@ function Sort({ texts }) {
   const categorySelectRef = useRef();
   const typeSelectRef = useRef();
   const [isError, setIsError] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { auth } = useAuth();
   const [formErrors, setFormErrors] = useState({
     category: true,
@@ -31,7 +30,7 @@ function Sort({ texts }) {
   });
 
   // formSubmited here as the second argument and useFetch custom hook gets a signal when the form is submitted fetches the data again
-  const { data: meme, refetch } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes/random`);
+  const { data: meme, refetch, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes/random`);
 
   function handleChange(event) {
     const fieldName = event.target.name;
@@ -57,7 +56,6 @@ function Sort({ texts }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setLoading(true);
     fetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes/${meme.id}`, {
       method: 'PATCH',
       crossDomain: true,
@@ -74,7 +72,6 @@ function Sort({ texts }) {
       } else {
         toast.error(`${texts.notificationToastErrorSortMeme}`);
       }
-      setLoading(false);
       setFormErrors({
         category: true,
         type: true,
@@ -98,8 +95,8 @@ function Sort({ texts }) {
 
   return (
     <main>
-      <div className="flex min-h-[85vh] flex-col items-center justify-center border border-gray-700 bg-gray-700 pt-20 shadow-md md:flex-row">
-        {loading ? <PacmanLoader color="orange" /> : <RandomMeme texts={texts} randomMeme={meme} />}
+      <div className="flex  flex-col items-center justify-center border border-gray-700 bg-gray-700 pt-20 shadow-md md:max-h-[83vh] md:flex-row">
+        {isLoading ? <PacmanLoader color="orange" /> : <RandomMeme texts={texts} randomMeme={meme} />}
         <ToastContainer position="bottom-left" autoClose={2000} hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
         {isError || (
           <Form

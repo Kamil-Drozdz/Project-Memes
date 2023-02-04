@@ -4,13 +4,13 @@ import { toast } from 'react-toastify';
 export function RandomMeme({ randomMeme, texts }) {
   try {
     if (randomMeme?.url.endsWith('.mp4') || randomMeme?.url.endsWith('.avi')) {
-      return <video className="rounded-t-lg max-w-[70vw] min-h-0 max-h-[70vh] min-w-0 mb-12 md:rounded border-4" src={randomMeme?.url} alt="random meme video" controls></video>;
+      return <video className=" min-w-0 mb-12 max-h-[70vh] min-h-0 rounded-t-lg border-4 md:max-w-[70vw] md:rounded" src={randomMeme?.url} alt="random meme video" controls></video>;
     } else {
-      return <img className="rounded-t-lg max-w-[70vw] min-h-0 max-h-[70vh] min-w-0 mb-12 md:rounded border-4" src={randomMeme?.url} alt="random meme" />;
+      return <img className=" min-w-0 mb-12 max-h-[70vh] min-h-0 rounded-t-lg border-4 md:max-w-[70vw] md:rounded" src={randomMeme?.url} alt="random meme" />;
     }
   } catch (error) {
     toast.warn(`${texts.notificationToastWarn}`, { autoClose: 5000 });
 
-    return <img className="rounded-t-lg max-w-full min-h-0 max-h-full m-8 md:rounded border-4" src={photoError} alt="error" />;
+    return <img className="m-8 max-h-full min-h-0 max-w-full rounded-t-lg border-4 md:rounded" src={photoError} alt="error" />;
   }
 }

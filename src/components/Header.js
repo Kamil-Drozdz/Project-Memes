@@ -29,7 +29,10 @@ function Header({ texts }) {
       <nav className="mx-auto hidden items-center justify-between bg-gray-800 md:flex md:flex-row md:items-center md:justify-start">
         <div className="flex flex-1 items-center">
           <Link to="/home">
-            <img className="h-16 w-24" src={logo} alt="logo meme website" />
+            <p className="text-white">
+              <strong className="text-2xl">Memes</strong>
+              <br /> alfa version
+            </p>
           </Link>
           <button className="ml-20 hidden md:flex" onClick={() => setShowQRCode(!showQRCode)}>
             {<BiQr className="text-2xl text-orange-600" />}
@@ -51,7 +54,7 @@ function Header({ texts }) {
           {language.toUpperCase()}
         </button>
       </nav>
-      <div className="fixed rounded-lg bg-black md:hidden z-10">
+      <div className="fixed z-10 rounded-lg bg-black md:hidden">
         <Hamburger toggled={isOpen} toggle={setOpen} color="#f97316" duration={0.6} label="Menu" />
         {isOpen && (
           <>

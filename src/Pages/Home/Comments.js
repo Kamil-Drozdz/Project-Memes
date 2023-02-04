@@ -42,7 +42,7 @@ const Comments = ({ texts }) => {
 
   const CommentList = ({ comments }) => (
     <>
-      {comments.length && (
+      {!!comments.length && (
         <p className="text-white">
           {comments.length} {texts.comments}
         </p>
@@ -55,7 +55,7 @@ const Comments = ({ texts }) => {
               <div className="flex">
                 <p className="text-xs text-white md:text-base md:font-bold">{auth.userNick}</p> <p className="ml-4 overflow-hidden whitespace-nowrap text-[8px] text-gray-500 md:text-xs">{comment.timestamp}</p>
               </div>
-              <li className="w-full break-words rounded-lg p-2 text-xs text-white md:text-base">{comment.comment}</li>
+              <li className=" w-full break-words p-2 text-xs text-white md:text-base">{comment.comment}</li>
             </div>
           </div>
         ))}
@@ -66,7 +66,7 @@ const Comments = ({ texts }) => {
   return (
     <div className="flex flex-col">
       <form onSubmit={handleComment}>
-        <textarea maxLength="200" className=" h-8 w-full resize-none rounded-lg bg-gray-500 text-white md:h-20" value={comment} onChange={(e) => setComment(e.target.value)} />
+        <textarea maxLength="200" className=" h-8 w-full resize-none rounded-lg bg-gray-500 text-white scrollbar-none md:h-16 " value={comment} onChange={(e) => setComment(e.target.value)} />
         <button className="rounded border-b-4 border-orange-800 bg-orange-600 px-2 text-black shadow-lg hover:border-orange-500 hover:bg-orange-400 md:px-2 md:font-bold" type="submit">
           {texts.addComment}
         </button>

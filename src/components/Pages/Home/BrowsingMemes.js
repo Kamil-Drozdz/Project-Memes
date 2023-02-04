@@ -8,17 +8,21 @@ import { TfiArrowUp } from 'react-icons/tfi';
 import { withLanguage } from '../../components/HOC/withLanguage';
 
 function BrowsingMemes({ texts }) {
+  const [data, setData] = useState([]);
   const [limit, setLimit] = useState(10);
   const [ratings, setRatings] = useState({});
   const [showArrow, setShowArrow] = useState(false);
-
+  const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=1&limit=${limit}`);
+  const memeColections = memeFetching?._embedded?.items;
+  console.log(data, 'dane data');
   const loadMoreMemes = () => {
     setLimit(limit + 5);
   };
-
-  const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=1&limit=${limit}`);
-  const memeColections = memeFetching?._embedded?.items;
-  console.log(memeColections?.length, isLoading);
+  useEffect(() => {
+    if (memeColections) {
+      setData(memeColections);
+    } else return;
+  }, [isLoading]);
 
   function handleVoice(memeId, isLike) {
     setRatings((prevRatings) => ({
@@ -58,8 +62,8 @@ function BrowsingMemes({ texts }) {
   }
 
   return (
-    <InfiniteScroll dataLength={memeColections.length} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} loader={<FadeLoader className="mb-4 text-red-600" color="orange" />} className="flex flex-col items-center justify-center bg-gray-700 shadow-lg ">
-      {memeColections?.map((meme) => (
+    <InfiniteScroll dataLength={limit} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} loader={<FadeLoader className="mb-4 text-red-600" color="orange" />} className="flex flex-col items-center justify-center bg-gray-700 shadow-lg ">
+      {data?.map((meme) => (
         <div key={meme.id}>
           <div className="m-2 rounded-lg bg-gray-400 shadow-lg">{meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="min-w-0 mb-12 max-h-[70vh] min-h-0 max-w-[70vw] rounded-lg border-4 md:rounded" src={meme.url} alt="random meme video" controls></video> : <img loading="lazy" className="min-w-0 max-h-[70vh] min-h-0 max-w-[70vw] rounded-lg border-4 md:rounded" src={meme.url} alt="random meme" />}</div>
           <div className="mx-2 mb-8 flex">
