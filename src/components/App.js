@@ -30,7 +30,7 @@ export function App() {
       <Route path="login" element={atLayout(LoginForm)} />
       <Route path="unauthorized" element={atLayout(Unauthorized)} />
       <Route path="*" element={atLayout(Missing)} />
-      <Route path="home" element={atLayout(BrowsingMemes)} />
+      <Route path="/" element={atLayout(BrowsingMemes)} />
       {/*Role user*/}
       <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>
         <Route path="sort" element={atLayout(Sort)} />

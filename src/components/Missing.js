@@ -4,12 +4,12 @@ import { withLanguage } from './HOC/withLanguage';
 
 function Missing({ texts }) {
   return (
-    <div className="h-full md:h-[83vh]">
-      <img className="mx-auto my-auto h-[80%] object-contain" src={caveman} alt="a caveman lost, chewing a cable"></img>
+    <div className="h-[83vh]">
+      <img className="mx-auto my-auto h-[50%] object-contain" src={caveman} alt="a caveman lost, chewing a cable"></img>
       <h1 className="text:sm flex flex-col items-center justify-center md:flex-row md:text-2xl">
         {texts.missing}
         <br />
-        <Link className=" flex  flex-col md:block md:flex-row" to="home">
+        <Link className=" flex  flex-col md:block md:flex-row" to="/">
           <button className="mx-2 rounded-lg bg-orange-600 p-2"> {texts.mainPage}</button>
           {texts.or}
         </Link>

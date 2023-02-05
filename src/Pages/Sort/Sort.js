@@ -20,7 +20,6 @@ function Sort({ texts }) {
     isUncropped: true,
     isMeme: true
   });
-  console.log('sort');
   const [form, setForm] = useState({
     category: { id: '' },
     type: { id: '' },
@@ -86,7 +85,6 @@ function Sort({ texts }) {
         isUncropped: '',
         isMeme: ''
       });
-      console.log(meme.id);
       refetch();
       categorySelectRef.current.value = 'Category';
       typeSelectRef.current.value = 'Type';

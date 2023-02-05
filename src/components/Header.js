@@ -28,7 +28,7 @@ function Header({ texts }) {
     <div>
       <nav className="mx-auto hidden items-center justify-between bg-gray-800 md:flex md:flex-row md:items-center md:justify-start">
         <div className="flex flex-1 items-center">
-          <Link to="/home">
+          <Link to="/">
             <p className="text-white">
               <strong className="text-2xl">Memes</strong>
               <br /> alfa version
@@ -39,7 +39,7 @@ function Header({ texts }) {
             {showQRCode && <QRCodeGenerator />}
           </button>
         </div>
-        <NavItem to="/home" text={texts.browse} icon={faRandom} />
+        <NavItem to="/" text={texts.browse} icon={faRandom} />
         <NavItem to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
         <NavItem to="/generatemem" text={texts.generateMeme} icon={faPlusSquare} />
         {showLogin ? (
@@ -61,7 +61,7 @@ function Header({ texts }) {
             <header className="flex max-h-full flex-nowrap items-center justify-end rounded-lg bg-gray-800 md:block ">
               <div className="flex flex-col">
                 <NavItem to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
-                <NavItem to="/home" text={texts.browse} icon={faRandom} />
+                <NavItem to="/" text={texts.browse} icon={faRandom} />
                 <NavItem to="/generatemem" text={texts.generateMeme} icon={faPlusSquare} />
               </div>
             </header>

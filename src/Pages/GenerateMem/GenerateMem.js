@@ -80,7 +80,6 @@ const GenerateMem = ({ texts }) => {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
       ctx.strokeStyle = colorStyle ? 'black' : 'white';
-      console.log(ctx.strokeStyle);
       ctx.lineWidth = 4;
       ctx.lineJoin = 'miter';
       ctx.miterLimit = 2;
