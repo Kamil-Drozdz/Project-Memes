@@ -73,7 +73,7 @@ function BrowsingMemes({ texts }) {
 
   return (
     <>
-      <InfiniteScroll dataLength={limit} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="flex flex-col items-center justify-center bg-gray-700 shadow-lg scrollbar-none ">
+      <InfiniteScroll dataLength={limit} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="min-h-[83vh] flex flex-col items-center justify-center bg-gray-700 shadow-lg scrollbar-none ">
         {data?.map((meme) => (
           <div className="w-full bg-black px-4 md:w-[40vw]" key={meme.id}>
             <div className="m-2 flex w-full items-center justify-center rounded-lg shadow-lg ">{meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="mb-12 max-h-[70vh] w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme video" controls></video> : <img loading="lazy" className="mr-3  max-h-[70vh] w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme" />}</div>
@@ -101,7 +101,7 @@ function BrowsingMemes({ texts }) {
             </button>
           </div>
         )}
-        {isLoading && <FadeLoader className="mb-4 text-red-600" color="orange" />}
+        {isLoading && <div className='flex'><p>żeby dane załadowały się musisz się zalogować(endpoint niedopracowany)</p><FadeLoader className="mb-4 text-red-600" color="orange" /></div>}
         <ToastContainer position="bottom-left" hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
       </InfiniteScroll>
     </>
