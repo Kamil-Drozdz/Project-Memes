@@ -15,7 +15,8 @@ function BrowsingMemes({ texts }) {
   const [ratings, setRatings] = useState({});
   const [showArrow, setShowArrow] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const randomPage = Math.floor(Math.random() * 600);
+  useEffect(()=>{  const randomPage = Math.floor(Math.random() * 600)},[])
+
   const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=${randomPage}&limit=${limit}`);
   const memeColections = memeFetching?._embedded?.items;
 
