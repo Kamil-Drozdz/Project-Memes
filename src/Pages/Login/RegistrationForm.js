@@ -39,7 +39,7 @@ const RegistrationForm = ({ texts, setShowRegistration }) => {
   };
 
   return (
-    <form className=" bg-gray-700 rounded-lg p-4 w" onSubmit={handleSubmit}>
+    <form className=" bg-gray-800 rounded-lg p-4 w" onSubmit={handleSubmit}>
       {error && <p className="text-red-500 text-sm mb-8 w-48 ">{error}</p>}
       {/* <div className="relative z-0 w-full mb-6">
         <input type="text" name="floating_text" id="floating_text" className="block py-2.5 px-0 w-full text-sm text-gray-200 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-orange-600 peer" placeholder=" " required value={user} onChange={(event) => setUser(event.target.value)} />

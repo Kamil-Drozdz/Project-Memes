@@ -45,7 +45,7 @@ const LoginForm = ({ texts }) => {
       ) : showRegistration ? (
         <RegistrationForm setShowRegistration={setShowRegistration} />
       ) : (
-        <form className="w-[70vw] rounded-lg bg-gray-700 p-4 md:absolute md:w-[20vw]" onSubmit={handleSubmit}>
+        <form className="w-[70vw] rounded-lg bg-gray-800 p-4 md:absolute md:w-[20vw]" onSubmit={handleSubmit}>
           {error && <p className="text-red-500">{error}</p>}
           <div className=" relative z-0 mb-6 mt-4 w-full">
             <input name="floating_email" id="floating_email" className="peer block w-full appearance-none border-0 border-b-2 border-gray-100 bg-transparent py-2.5 px-0 text-sm text-gray-200 focus:border-orange-600 focus:outline-none focus:ring-0" placeholder=" " autoComplete="username" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
