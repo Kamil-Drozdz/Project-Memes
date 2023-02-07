@@ -192,17 +192,17 @@ const GenerateMem = ({ texts }) => {
           {texts.changeFontSize} {fontSize} px
         </p>
         <label className="max-w-64 flex justify-start">
-          <input type="checkbox" className="accent-orange-600" onChange={handleColorStyleChange} />
+          <input type="checkbox" className="rounded border-b-4 border-orange-700 accent-orange-600" onChange={handleColorStyleChange} />
           <p className="ml-2 text-white">{texts.colorText}</p>
         </label>
         <div className="mt-4 mb-8 flex md:mb-0">
-          <button className="rounded-lg bg-orange-600 p-2" onClick={handleRemoveText}>
+          <button className="rounded-lg border-b-4 border-orange-700 bg-orange-600 p-2 hover:border-orange-600 hover:bg-orange-400" onClick={handleRemoveText}>
             {texts.removeText}
           </button>
-          <button className="mr-4 ml-4 rounded-lg bg-orange-600 p-2" onClick={handleSave}>
+          <button className="mr-4 ml-4   rounded-lg border-b-4 border-orange-700 bg-orange-600 p-2 hover:border-orange-600 hover:bg-orange-400" onClick={handleSave}>
             {texts.upload}
           </button>
-          <button className="rounded-lg bg-orange-600 p-2" onClick={handleDownload}>
+          <button className="rounded-lg border-b-4 border-orange-700 bg-orange-600 p-2 hover:border-orange-600 hover:bg-orange-400" onClick={handleDownload}>
             {texts.download}
           </button>
         </div>
