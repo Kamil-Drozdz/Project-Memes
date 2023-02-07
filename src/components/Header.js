@@ -89,7 +89,7 @@ function Header({ texts }) {
       </div>
       {showInfoModal && (
         <>
-          <div className="fixed inset-x-0 bottom-0 z-10 mt-4 px-4 pb-6 sm:inset-0 sm:flex sm:items-center sm:justify-center">
+          <div className="fixed inset-x-0 bottom-0 z-10 mt-4 h-screen px-4 pb-6 sm:inset-0 sm:flex sm:items-center sm:justify-center">
             <div className="fixed inset-0 transition-opacity">
               <div className="absolute inset-0 bg-gray-900 opacity-80"></div>
             </div>
