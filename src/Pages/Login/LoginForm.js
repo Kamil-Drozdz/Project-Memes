@@ -39,7 +39,7 @@ const LoginForm = ({ texts }) => {
   };
 
   return (
-    <div className="flex h-[93vh] items-center justify-center md:h-[83vh]">
+    <div className="flex h-[94vh] items-center justify-center md:h-[83vh]">
       {showPasswordReset ? (
         <PasswordResetForm setShowPasswordReset={setShowPasswordReset} />
       ) : showRegistration ? (
