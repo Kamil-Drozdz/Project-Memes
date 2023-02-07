@@ -8,6 +8,7 @@ import { TfiArrowUp } from 'react-icons/tfi';
 import { BiCommentAdd } from 'react-icons/bi';
 import { withLanguage } from '../../components/HOC/withLanguage';
 import Comments from './Comments';
+import { useAuth } from '../../hooks/useAuth';
 
 function BrowsingMemes({ texts }) {
   const [data, setData] = useState([]);
@@ -17,6 +18,7 @@ function BrowsingMemes({ texts }) {
   const [showComments, setShowComments] = useState(false);
   const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=1&limit=${limit}`);
   const memeColections = memeFetching?._embedded?.items;
+  const { auth } = useAuth();
 
   const loadMoreMemes = () => {
     setLimit(limit + 5);
@@ -35,6 +37,10 @@ function BrowsingMemes({ texts }) {
   }, [showArrow]);
 
   function handleVoice(memeId, isLike) {
+    if (!auth.email) {
+      toast.error(`${texts.logIn}`, { autoClose: 2000 });
+      return;
+    }
     setRatings((prevRatings) => ({
       ...prevRatings,
       [memeId]: isLike ? (prevRatings[memeId] || 0) + 1 : (prevRatings[memeId] || 0) - 1
