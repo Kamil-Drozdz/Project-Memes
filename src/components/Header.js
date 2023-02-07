@@ -1,9 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../assets/logo.png';
 import { useState, useContext } from 'react';
 import { Spin as Hamburger } from 'hamburger-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusSquare, faRandom, faSearch, faSortAmountAsc, faGlobe, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faRandom, faSearch, faSortAmountAsc, faGlobe, faUser, faFileLines } from '@fortawesome/free-solid-svg-icons';
 import { LanguageContext } from '../context/LanguageProvider';
 import { withLanguage } from '../components/HOC/withLanguage';
 import { QRCodeGenerator } from './QRCodeGenerator';
@@ -16,6 +15,7 @@ function Header({ texts }) {
   const { language, setLanguage } = useContext(LanguageContext);
   const [showQRCode, setShowQRCode] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
   const { auth } = useAuth();
 
   useEffect(() => {
@@ -34,6 +34,14 @@ function Header({ texts }) {
               <br /> alfa version
             </p>
           </Link>
+          <button
+            className="ml-4 rounded-lg bg-black p-1 text-white"
+            onClick={() => {
+              setShowInfoModal(true);
+            }}
+          >
+            Docs
+          </button>
           <button className="ml-20 hidden md:flex" onClick={() => setShowQRCode(!showQRCode)}>
             {<BiQr className="text-2xl text-orange-600" />}
             {showQRCode && <QRCodeGenerator />}
@@ -45,11 +53,11 @@ function Header({ texts }) {
         {showLogin ? (
           <NavItem to="/login" text={texts.logIn} icon={faUser} />
         ) : (
-          <p className="absolute left-[20%] text-white">
+          <p className=" absolute left-[25%] text-white">
             {texts.hi}, {auth.userNick}
           </p>
         )}
-        <button className="mt-2 mr-6 flex flex-col text-orange-500" onClick={() => setLanguage(language === 'en' ? 'pl' : 'en')}>
+        <button className="z-20 mt-2 mr-6 flex flex-col text-orange-500" onClick={() => setLanguage(language === 'en' ? 'pl' : 'en')}>
           {<FontAwesomeIcon size="lg" icon={faGlobe} />}
           {language.toUpperCase()}
         </button>
@@ -68,14 +76,48 @@ function Header({ texts }) {
             <button className=" absolute top-3 left-14 text-orange-500" onClick={() => setLanguage(language === 'en' ? 'pl' : 'en')}>
               {<FontAwesomeIcon size="lg" icon={faGlobe} />}
             </button>
+            <button onClick={() => setShowInfoModal(true)} className="absolute top-3 left-24  text-orange-500">
+              <FontAwesomeIcon size="lg" icon={faFileLines} />
+            </button>
             {showLogin && (
-              <Link to="/login" className="absolute top-3 left-24 text-orange-500" icon={faUser}>
+              <Link to="/login" className="absolute left-32 top-3 ml-2 text-orange-500" icon={faUser}>
                 <FontAwesomeIcon size="lg" icon={faUser} />
               </Link>
             )}
           </>
         )}
       </div>
+      {showInfoModal && (
+        <>
+          <div className="fixed inset-x-0 bottom-0 z-10 mt-4 px-4 pb-6 sm:inset-0 sm:flex sm:items-center sm:justify-center">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-gray-900 opacity-80"></div>
+            </div>
+            <div className="scrollbar-black h-full transform overflow-y-scroll rounded-lg bg-gray-700 p-8 text-white shadow-xl transition-all scrollbar-thin  scrollbar-track-gray-600 scrollbar-thumb-orange-600 sm:w-full sm:max-w-lg" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+              <h3 className="text-lg font-medium"> {texts.projectDocumentation}</h3>
+              <p className="mt-4 ">{texts.projectDocs.introduction}</p>
+              <p className="mt-4 ">{texts.projectDocs.accessAndAuthorization}</p>
+              <h4 className="mt-6 text-lg font-medium"> {texts.features} </h4>
+              <p className="mt-4 ">{texts.projectDocs.features}</p>
+              <p className="mt-4 ">{texts.projectDocs.SortingOptions}</p>
+              <p className="mt-4 ">{texts.projectDocs.MemeGeneration}</p>
+              <p className="mt-4 ">{texts.projectDocs.HOC}</p>
+              <p className="mt-4 ">{texts.projectDocs.Styling}</p>
+              <p className="mt-4 ">{texts.projectDocs.backendDevelopment}</p>
+              <p className="mt-4 ">{texts.projectDocs.revenueModel}</p>
+              <p className="mt-4 ">{texts.projectDocs.info}</p>
+              <button
+                className="mt-6 ml-1 rounded border-b-4 border-orange-800 bg-orange-700 px-2 font-bold text-black shadow-lg hover:border-orange-500 hover:bg-orange-400"
+                onClick={() => {
+                  setShowInfoModal(false);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

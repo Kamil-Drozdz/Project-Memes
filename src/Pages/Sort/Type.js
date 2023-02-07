@@ -6,7 +6,7 @@ export const Type = ({ handleChange, reference, texts }) => {
   const memoizedTypes = useMemo(() => types, [types]);
 
   return (
-    <select name="type" ref={reference} className="mt-3 mb-6 flex rounded-full bg-gray-300 py-2 px-4 font-bold text-gray-800 hover:bg-gray-400" onChange={handleChange} defaultValue="Type">
+    <select name="type" ref={reference} className="mt-3 mb-4 flex rounded-full bg-gray-300 py-2 px-4 font-bold text-gray-800 hover:bg-gray-400" onChange={handleChange} defaultValue="Type">
       <option value="Type" disabled>
         {texts.type}
       </option>

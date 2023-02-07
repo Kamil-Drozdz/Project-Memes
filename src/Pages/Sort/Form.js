@@ -8,7 +8,7 @@ export function Form({ props }) {
   const hasEmptyFields = Object.values(formErrors).some((error) => error);
 
   return (
-    <form className=" ml-4 pt-12 md:ml-24" onSubmit={handleSubmit}>
+    <form className=" ml-4 pt-4 md:ml-24 md:pt-12" onSubmit={handleSubmit}>
       <Category texts={texts} handleChange={handleChange} reference={categorySelectRef} />
       <Type texts={texts} handleChange={handleChange} reference={typeSelectRef} />
       <BooleanChooseField
@@ -41,7 +41,7 @@ export function Form({ props }) {
           { id: 'notmeme', value: false, text: texts.notMeme }
         ]}
       />
-      <button type="submit" disabled={hasEmptyFields} className="mt-3 mb-24 flex rounded-full bg-gray-300 py-2 px-4 font-bold text-gray-800 disabled:opacity-25 hover:bg-gray-400">
+      <button type="submit" disabled={hasEmptyFields} className="mb-4 mt-3 flex rounded-full bg-gray-300 py-2 px-4 font-bold text-gray-800 disabled:opacity-25 hover:bg-gray-400 md:mb-24">
         {texts.sort}
       </button>
     </form>

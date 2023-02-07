@@ -53,7 +53,21 @@ export const withLanguage = (WrappedComponent) => {
         addComment: 'Add comment',
         comments: 'Comments',
         errorMessageComment: 'Comment cannot be empty!',
-        userMessageComment: 'You must be logged in to add a comment'
+        userMessageComment: 'You must be logged in to add a comment',
+        projectDocumentation: 'Project Documentation',
+        features: 'Features',
+        projectDocs: {
+          introduction: `This project was created using Create React App (CRA) and is designed as a single-page application (SPA). The purpose of the application is to provide a platform for browsing memes with various features, such as sorting options and meme generation. The backend of the application was developed by an experienced programmer using PHP and the PostgreSQL database.`,
+          accessAndAuthorization: `Due to the requirement of an endpoint token for authorization, the application currently requires users to log in even on the base page. This means that users must log in before accessing any data or features on the platform. This is a temporary restriction and future improvements are planned to enhance the application's security features.`,
+          features: `Infinity Scroll: Users can browse an infinite number of memes on the platform.`,
+          SortingOptions: ` Users can sort memes based on different criteria like category, type and well trimmed is it a meme etc.`,
+          MemeGeneration: ` Users can generate their memes by uploading images.`,
+          HOC: `The application implements Higher-Order Components (HOC) and context to manage the state of the application.`,
+          Styling: `The styling of the application was done using Tailwind CSS.,`,
+          backendDevelopment: `The backend of the application was developed by using PHP and the PostgreSQL database. The developer thoroughly tested the entire development process and merged the code into the develop branch.`,
+          revenueModel: `This project is planned to be a future product that will generate revenue from advertisements and paid subscriptions.`,
+          info: 'The memes displayed from the database are not intended to offend anyone and are solely for humorous purposes, as well as to showcase certain programming techniques in the portfolio'
+        }
       },
       pl: {
         hi: 'Cześć',
@@ -102,7 +116,21 @@ export const withLanguage = (WrappedComponent) => {
         addComment: 'Dodaj komentarz',
         comments: 'Komenatrze',
         errorMessageComment: 'Komentarz nie może być pusty!',
-        userMessageComment: 'Musisz być zalogowany, żeby dodać komentarz'
+        userMessageComment: 'Musisz być zalogowany, żeby dodać komentarz',
+        projectDocumentation: 'Dokumentacja projektu',
+        features: 'Cechy',
+        projectDocs: {
+          introduction: ` Ten projekt został stworzony za pomocą Create React App (CRA) i jest zaprojektowany jako aplikacja jednej strony (SPA). Celem aplikacji jest dostarczenie platformy do przeglądania memów z różnymi funkcjami, takimi jak opcje sortowania i generowanie memów. Backend aplikacji został opracowany przez doświadczonego programistę za pomocą PHP i bazy danych PostgreSQL.`,
+          accessAndAuthorization: ` Ze względu na wymóg tokenu końcowego dla autoryzacji, aplikacja obecnie wymaga od użytkowników logowania nawet na stronie podstawowej. Oznacza to, że użytkownicy muszą się zalogować przed uzyskaniem dostępu do jakichkolwiek danych lub funkcji na platformie. Jest to tymczasowe ograniczenie, a w przyszłości planowane są ulepszenia, aby wzmocnić funkcje bezpieczeństwa aplikacji.`,
+          features: ` Nieskończona przeglądarka: Użytkownicy mogą przeglądać nieskończoną liczbę memów na platformie.`,
+          SortingOptions: `Użytkownicy mogą sortować memy na podstawie różnych kryteriów, takich jak kategoria, typ i dobrze przycięte, czy jest to mem itp.`,
+          MemeGeneration: ` Użytkownicy mogą generować swoje memy poprzez przesyłanie obrazów.`,
+          HOC: ` Aplikacja implementuje Higher-Order Components (HOC) i kontekst do zarządzania stanem aplikacji.`,
+          Styling: ` Stylowanie aplikacji zostało wykonane za pomocą Tailwind CSS.`,
+          backendDevelopment: ` Backend aplikacji został opracowany za pomocą PHP i bazy danych PostgreSQL. Programista dokładnie przetestował cały proces tworzenia i połączył kod z gałęzią develop.`,
+          revenueModel: `Ten projekt jest planowany jako przyszły produkt, który będzie generować przychody z reklam i płatnych subskrypcji.`,
+          info: 'Memy wyświetlane z bazy danych nie mają na celu obrażania nikogo i służą wyłącznie do celów humorystycznych, a także do pokazania określonych technik programistycznych w portfolio'
+        }
       }
     };
 

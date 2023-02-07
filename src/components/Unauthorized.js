@@ -4,8 +4,8 @@ import { withLanguage } from './HOC/withLanguage';
 
 function Unauthorized({ texts }) {
   return (
-    <div className="h-[83vh]">
-    <img className="mx-auto my-auto h-[50%] object-contain" src={unauthorizedPhoto} alt="named you shall not pass"></img>
+    <div className="h-[91vh] md:h-[83vh]">
+      <img className="mx-auto my-auto h-[50%] object-contain" src={unauthorizedPhoto} alt="named you shall not pass"></img>
       <h2 className="text:sm flex flex-col items-center justify-center md:text-2xl">
         {texts.unauthorized}
         <Link to="/login">

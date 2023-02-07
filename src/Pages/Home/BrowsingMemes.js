@@ -21,14 +21,12 @@ function BrowsingMemes({ texts }) {
   const loadMoreMemes = () => {
     setLimit(limit + 5);
   };
-  console.log(isLoading);
 
   //sets the state of the data to static, because when fetching with useFetch sometimes there is undefined data which will move to the top of the page, using state to store api data statically fixes the problem
   useEffect(() => {
     if (memeColections) {
       setData(memeColections);
     } else return;
-    console.log('tutaj jestem');
   }, [isLoading]);
 
   useEffect(() => {
@@ -73,7 +71,7 @@ function BrowsingMemes({ texts }) {
 
   return (
     <>
-      <InfiniteScroll dataLength={limit} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="min-h-[83vh] flex flex-col items-center justify-center bg-gray-700 shadow-lg scrollbar-none ">
+      <InfiniteScroll dataLength={limit} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg scrollbar-none ">
         {data?.map((meme) => (
           <div className="w-full bg-black px-4 md:w-[40vw]" key={meme.id}>
             <div className="m-2 flex w-full items-center justify-center rounded-lg shadow-lg ">{meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="mb-12 max-h-[70vh] w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme video" controls></video> : <img loading="lazy" className="mr-3  max-h-[70vh] w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme" />}</div>
@@ -101,7 +99,7 @@ function BrowsingMemes({ texts }) {
             </button>
           </div>
         )}
-        {!!data.length || <p className='text-white mb-4'>żeby dane załadowały się musisz się zalogować(endpoint niedopracowany)</p>}
+        {!!data.length || <p className="mb-4 text-white">żeby dane załadowały się musisz się zalogować(endpoint niedopracowany)</p>}
         {isLoading && <FadeLoader className="mb-4 text-red-600" color="orange" />}
         <ToastContainer position="bottom-left" hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
       </InfiniteScroll>

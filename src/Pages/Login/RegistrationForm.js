@@ -65,7 +65,6 @@ const RegistrationForm = ({ texts, setShowRegistration }) => {
           {texts.confirmPassword}
         </label>
       </div>
-
       <button className="mt-4 p-2 bg-red-600 w-full disabled:opacity-60 max-w-[50vw] text-white rounded-lg" type="submit" disabled={!email || !password || !confirmPassword}>
         {texts.register}
       </button>

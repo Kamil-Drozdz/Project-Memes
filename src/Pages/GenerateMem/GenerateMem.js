@@ -163,13 +163,13 @@ const GenerateMem = ({ texts }) => {
   };
 
   return (
-    <div className="flex h-[83vh] flex-col items-center justify-center pt-4">
+    <div className="flex h-[91vh] flex-col items-center justify-center pt-4 md:h-[83vh]">
       <label htmlFor="file-upload" className="mb-2 cursor-pointer rounded-lg bg-gray-900  p-2 text-lg text-white">
         <FontAwesomeIcon className="mr-4 text-orange-600" size="lg" icon={faCloudUploadAlt} />
         {texts.upload} Meme
       </label>
       <input className="hidden" id="file-upload" type="file" onChange={handleImageChange} />
-      <canvas className="h-full max-h-[50vh] w-full max-w-[50vw] rounded-lg " ref={canvasRef} />
+      <canvas className="w-full rounded-lg object-contain md:max-h-[40vh] md:max-w-[50vw] " ref={canvasRef} />
       <img src={imageUrl} alt="Selected Meme" className="hidden" />
       {error && <p className="text-red-400">{error}</p>}
       <div className="mt-4 rounded-lg bg-gray-900  p-2">

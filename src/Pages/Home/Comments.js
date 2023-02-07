@@ -47,7 +47,7 @@ const Comments = ({ texts }) => {
           {comments.length} {texts.comments}
         </p>
       )}
-      <ul className="mt-4 mb-6 max-h-[20vh] overflow-y-scroll scrollbar-thin overflow-x-hidden scrollbar-track-gray-400 scrollbar-thumb-orange-700">
+      <ul className="mt-4 mb-6 max-h-[20vh] overflow-y-scroll scrollbar-thin overflow-x-hidden scrollbar-track-gray-400 scrollbar-thumb-orange-600">
         {comments.map((comment, index) => (
           <div key={index} className="my-2 mx-2 flex w-[90%] border-t-2 border-gray-700 pt-2 md:mx-8">
             <FcReddit size={32} className=" rounded-full" />
