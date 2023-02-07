@@ -15,7 +15,7 @@ const ROLES = {
 };
 function atLayout(Component) {
   return (
-    <div className="h-screen w-screen bg-gray-600">
+    <div className="max-h-full min-h-screen w-screen bg-gray-600">
       <MainLayout>
         <Component />
       </MainLayout>
