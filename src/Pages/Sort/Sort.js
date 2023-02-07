@@ -93,7 +93,7 @@ function Sort({ texts }) {
 
   return (
     <main>
-      <div className="flex h-[92vh] flex-col items-center justify-center border border-gray-700 bg-gray-700 pt-2 shadow-md md:h-[83vh] md:flex-row md:pt-20">
+      <div className="flex flex-col items-center justify-center border border-gray-700 bg-gray-700 pt-2 shadow-md md:h-[83vh] md:flex-row md:pt-20">
         {isLoading ? <PacmanLoader color="orange" /> : <RandomMeme texts={texts} randomMeme={meme} />}
         <ToastContainer position="bottom-left" autoClose={2000} hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
         {isError || (

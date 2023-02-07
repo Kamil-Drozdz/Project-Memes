@@ -80,7 +80,7 @@ function BrowsingMemes({ texts }) {
       <InfiniteScroll dataLength={limit} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg scrollbar-none ">
         {data?.map((meme) => (
           <div className="w-full bg-black px-4 md:w-[40vw]" key={meme.id}>
-            <div className="m-2 flex w-full items-center justify-center rounded-lg shadow-lg ">{meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="mb-12 max-h-[70vh] w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme video" controls></video> : <img loading="lazy" className="mr-3  max-h-[70vh] w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme" />}</div>
+            <div className="m-2 flex w-full items-center justify-center rounded-lg shadow-lg ">{meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="mb-12 w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme video" controls></video> : <img loading="lazy" className="mr-3 w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme" />}</div>
             <div className="mx-2 mb-8 flex">
               <button onClick={() => handleVoice(meme.id, true)} className="rounded border-b-4 border-green-800 bg-green-700 px-2 font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400">
                 +
@@ -105,7 +105,7 @@ function BrowsingMemes({ texts }) {
             </button>
           </div>
         )}
-        {!!data.length || <p className="mb-4 text-white">żeby dane załadowały się musisz się zalogować(endpoint niedopracowany)</p>}
+        {!!data.length || <p className=" mb-4 text-white">żeby dane załadowały się musisz się zalogować(endpoint niedopracowany)</p>}
         {isLoading && <FadeLoader className="mb-4 text-red-600" color="orange" />}
         <ToastContainer position="bottom-left" hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
       </InfiniteScroll>

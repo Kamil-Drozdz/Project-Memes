@@ -8,11 +8,8 @@ module.exports = {
   },
   plugins: [require('tailwind-scrollbar')({ nocompatible: true })],
   theme: {
-    minWidth: {
-      400: '400px'
-    },
     screens: {
-      sm: '640px',
+      sm: '390px',
       // => @media (min-width: 640px) { ... }
 
       md: '1024px',

@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { Category } from './Category';
 import { Type } from './Type';
 import { BooleanChooseField } from './BooleanChooseField';
@@ -8,7 +7,7 @@ export function Form({ props }) {
   const hasEmptyFields = Object.values(formErrors).some((error) => error);
 
   return (
-    <form className=" ml-4 pt-4 md:ml-24 md:pt-12" onSubmit={handleSubmit}>
+    <form className=" ml-4 pt-4 md:mx-16 md:pt-12" onSubmit={handleSubmit}>
       <Category texts={texts} handleChange={handleChange} reference={categorySelectRef} />
       <Type texts={texts} handleChange={handleChange} reference={typeSelectRef} />
       <BooleanChooseField
