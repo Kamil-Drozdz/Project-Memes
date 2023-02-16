@@ -60,7 +60,7 @@ function Header({ texts }) {
             {texts.hi}, {auth.userNick}
           </p>
         )}
-        {subscription ||  <Checkout />}
+        {subscription || <Checkout />}
         <button className="z-20 mt-2 mr-6 flex flex-col text-orange-500" onClick={() => setLanguage(language === 'en' ? 'pl' : 'en')}>
           {<FontAwesomeIcon size="lg" icon={faGlobe} />}
           {language.toUpperCase()}
