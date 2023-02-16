@@ -95,7 +95,7 @@ function Sort({ texts }) {
   return (
     <main>
       <div className="flex flex-col items-center justify-center border border-gray-700 bg-gray-700 pt-2 shadow-md md:h-[83vh] md:flex-row md:pt-20">
-        <div className="pr-36">
+        <div className="flex w-full justify-center md:block md:w-auto md:pr-36 ">
           <Ads />
         </div>
         {isLoading ? <PacmanLoader color="orange" /> : <RandomMeme texts={texts} randomMeme={meme} />}
@@ -115,7 +115,7 @@ function Sort({ texts }) {
             }}
           />
         )}
-        <div className="pl-16">
+        <div className="flex w-full justify-center md:block md:w-auto md:pl-16 ">
           <Ads />
         </div>
       </div>

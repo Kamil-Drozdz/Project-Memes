@@ -41,10 +41,10 @@ const Checkout = ({ texts }) => {
             label="Subskrybuj"
             token={onToken} // Dodane wywołanie funkcji onToken po poprawnej płatności.
           >
-            <span className="mx-2 cursor-pointer rounded border-b-4 border-orange-700 bg-orange-500 p-2 font-bold text-black">PREMIUM</span>
+            <span className="mx-2 cursor-pointer rounded border-b-4 border-red-700 bg-red-600 p-2 font-bold text-black hover:bg-red-500">PREMIUM</span>
           </StripeCheckout>
         ) : (
-          <button onClick={handlePayment} className="mx-2 cursor-pointer rounded border-b-4 border-orange-700 bg-orange-500 p-2 font-bold text-black">
+          <button onClick={handlePayment} className="mx-2 cursor-pointer rounded border-b-4 border-red-700 bg-red-600 p-2 font-bold text-black hover:bg-red-500">
             PREMIUM
           </button>
         )}
