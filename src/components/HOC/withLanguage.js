@@ -29,6 +29,7 @@ export const withLanguage = (WrappedComponent) => {
         register: 'Register',
         back: 'Back to login form',
         logIn: 'Log in',
+        logInPremium: 'Log in to buy a subscription',
         remindPassword: 'Remind password',
         sendPassword: 'Send password reset link',
         forgetPassword: 'Forget password?',
@@ -65,7 +66,8 @@ export const withLanguage = (WrappedComponent) => {
           HOC: `The application implements Higher-Order Components (HOC) and context to manage the state of the application.`,
           Styling: `The styling of the application was done using Tailwind CSS.,`,
           backendDevelopment: `The backend of the application was developed by using PHP and the PostgreSQL database. The developer thoroughly tested the entire development process and merged the code into the develop branch.`,
-          revenueModel: `This project is planned to be a future product that will generate revenue from advertisements and paid subscriptions.`,
+          revenueModel: `We decided to use Stripe for payment processing in the project. We believe that when it comes to payment processing, it's best to use the best and most tested solutions available on the market. Stripe is a reliable and popular service that offers many payment-related features, including integration with various payment methods and tools for managing subscriptions.
+          Using Stripe allowed us to provide a secure and convenient payment process for users of the application. As a result, users can easily make payments for subscriptions and access premium features on our platform in a quick and seamless manner.`,
           info: 'The memes displayed from the database are not intended to offend anyone and are solely for humorous purposes, as well as to showcase certain programming techniques in the portfolio'
         }
       },
@@ -92,6 +94,7 @@ export const withLanguage = (WrappedComponent) => {
         register: 'Zajerestruj',
         back: 'Cofnij do logowania',
         logIn: 'Zaloguj',
+        logInPremium: 'Zaloguj, żeby wykupić subskrypcję',
         remindPassword: 'Przypomnij hasło',
         sendPassword: 'Wyślij link do resetowania hasła',
         forgetPassword: 'Zapomniałeś hasła?',
@@ -128,7 +131,8 @@ export const withLanguage = (WrappedComponent) => {
           HOC: ` Aplikacja implementuje Higher-Order Components (HOC) i kontekst do zarządzania stanem aplikacji.`,
           Styling: ` Stylowanie aplikacji zostało wykonane za pomocą Tailwind CSS.`,
           backendDevelopment: ` Backend aplikacji został opracowany za pomocą PHP i bazy danych PostgreSQL. Programista dokładnie przetestował cały proces tworzenia i połączył kod z gałęzią develop.`,
-          revenueModel: `Ten projekt jest planowany jako przyszły produkt, który będzie generować przychody z reklam i płatnych subskrypcji.`,
+          revenueModel: `W projekcie zdecydowaliśmy się skorzystać z rozwiązania Stripe do obsługi płatności. Jesteśmy zdania, że jeśli chodzi o przetwarzanie płatności, warto skorzystać z najlepszych i przetestowanych rozwiązań dostępnych na rynku. Stripe to solidny i popularny serwis, który oferuje wiele funkcji związanych z płatnościami, w tym integrację z różnymi metodami płatności oraz narzędzia do obsługi abonamentów.
+          Korzystanie z Stripe umożliwi nam zapewnienie bezpiecznego i wygodnego procesu płatności dla użytkowników aplikacji. Dzięki temu użytkownicy mogą dokonywać płatności za subskrypcje i otrzymywać dostęp do funkcji premium na naszej platformie w sposób szybki i łatwy.`,
           info: 'Memy wyświetlane z bazy danych nie mają na celu obrażania nikogo i służą wyłącznie do celów humorystycznych, a także do pokazania określonych technik programistycznych w portfolio'
         }
       }

@@ -9,15 +9,18 @@ import { QRCodeGenerator } from './QRCodeGenerator';
 import { BiQr } from 'react-icons/bi';
 import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
+import Checkout from '../payments/Checkout';
+import { SubscriptionContext } from '../context/SubscriptionProvider';
 
 function Header({ texts }) {
   const [isOpen, setOpen] = useState(false);
   const { language, setLanguage } = useContext(LanguageContext);
+  const { subscription } = useContext(SubscriptionContext);
   const [showQRCode, setShowQRCode] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { auth } = useAuth();
-
+  console.log(subscription);
   useEffect(() => {
     if (!auth.email) {
       setShowLogin(true);
@@ -57,6 +60,7 @@ function Header({ texts }) {
             {texts.hi}, {auth.userNick}
           </p>
         )}
+        {subscription ||  <Checkout />}
         <button className="z-20 mt-2 mr-6 flex flex-col text-orange-500" onClick={() => setLanguage(language === 'en' ? 'pl' : 'en')}>
           {<FontAwesomeIcon size="lg" icon={faGlobe} />}
           {language.toUpperCase()}
