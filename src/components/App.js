@@ -27,12 +27,13 @@ export function App() {
   return (
     <Routes>
       {/* Without roles */}
-      <Route path="login" element={atLayout(LoginForm)} />
+      <Route path="/" element={atLayout(LoginForm)} />
       <Route path="unauthorized" element={atLayout(Unauthorized)} />
       <Route path="*" element={atLayout(Missing)} />
-      <Route path="/" element={atLayout(BrowsingMemes)} />
+
       {/*Role user*/}
       <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>
+        <Route path="/homepage" element={atLayout(BrowsingMemes)} />
         <Route path="sort" element={atLayout(Sort)} />
         <Route path="generatemem" element={atLayout(GenerateMem)} />
       </Route>

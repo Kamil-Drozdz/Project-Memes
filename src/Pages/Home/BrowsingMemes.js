@@ -115,10 +115,7 @@ function BrowsingMemes({ texts }) {
           </div>
         )}
         {!!data.length && <Ads />}
-        <div className="flex flex-col items-center">
-          {!!data.length || <p className=" mb-4 text-white">żeby dane załadowały się musisz się zalogować(endpoint niedopracowany)</p>}
-          {isLoading && <FadeLoader className="mb-4 text-red-600" color="orange" />}
-        </div>
+
         <ToastContainer position="bottom-left" hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
       </InfiniteScroll>
     </>

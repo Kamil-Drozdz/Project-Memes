@@ -50,11 +50,11 @@ function Header({ texts }) {
             {showQRCode && <QRCodeGenerator />}
           </button>
         </div>
-        <NavItem to="/" text={texts.browse} icon={faRandom} />
+        <NavItem to="/homepage" text={texts.browse} icon={faRandom} />
         <NavItem to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
         <NavItem to="/generatemem" text={texts.generateMeme} icon={faPlusSquare} />
         {showLogin ? (
-          <NavItem to="/login" text={texts.logIn} icon={faUser} />
+          <NavItem to="/" text={texts.logIn} icon={faUser} />
         ) : (
           <p className=" absolute left-[25%] text-white">
             {texts.hi}, {auth.userNick}
@@ -73,7 +73,7 @@ function Header({ texts }) {
             <header className="flex max-h-full flex-nowrap items-center justify-end rounded-lg bg-gray-800 md:block ">
               <div className="flex flex-col">
                 <NavItem to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
-                <NavItem to="/" text={texts.browse} icon={faRandom} />
+                <NavItem to="/homepage" text={texts.browse} icon={faRandom} />
                 <NavItem to="/generatemem" text={texts.generateMeme} icon={faPlusSquare} />
               </div>
             </header>
@@ -84,7 +84,7 @@ function Header({ texts }) {
               <FontAwesomeIcon size="lg" icon={faFileLines} />
             </button>
             {showLogin && (
-              <Link to="/login" className="absolute left-32 top-3 ml-2 text-orange-500" icon={faUser}>
+              <Link to="/" className="absolute left-32 top-3 ml-2 text-orange-500" icon={faUser}>
                 <FontAwesomeIcon size="lg" icon={faUser} />
               </Link>
             )}
@@ -116,7 +116,7 @@ function Header({ texts }) {
                   setShowInfoModal(false);
                 }}
               >
-                Close
+                {texts.close}
               </button>
             </div>
           </div>

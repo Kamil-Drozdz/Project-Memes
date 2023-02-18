@@ -32,19 +32,18 @@ const Checkout = ({ texts }) => {
             cancelable={true}
             stripeKey="pk_test_51MQlOHCzzlMcK3e31WfjSrnP3jzjxEDc1AgyaJCIWycBQ2ivfAhpgrc82aqjaPBcE0q2xyuMGPIvjwStW1TFkAH800v3jwAKnI"
             amount={1999}
-            name="Subkrypcja premium"
-            description="Subskrypcja"
+            name={`PREMIUM ${texts.subscribe}`}
+            description={texts.subscribeDescription}
             image="https://i.imgur.com/EHyR2nP.png"
-            panelLabel="Subskrybuj"
+            panelLabel={texts.subscribe}
             currency="PLN"
             locale="pl"
-            label="Subskrybuj"
             token={onToken} // Dodane wywołanie funkcji onToken po poprawnej płatności.
           >
-            <span className="mr-3 -ml-2 cursor-pointer rounded border-b-4 border-red-700 bg-red-600 p-2 font-bold text-black hover:bg-red-500">PREMIUM</span>
+            <span className="mr-3 -ml-2 cursor-pointer rounded border-b-4 border-red-700 bg-red-600 px-2 pb-2 pt-[10px] font-bold text-black hover:bg-red-500">PREMIUM</span>
           </StripeCheckout>
         ) : (
-          <button onClick={handlePayment} className="mr-3 -ml-2 cursor-pointer rounded border-b-4 border-red-700 bg-red-600 p-2 font-bold text-black hover:bg-red-500">
+          <button onClick={handlePayment} className="mr-3 -ml-2 cursor-pointer rounded border-b-4 border-red-700 bg-red-600 px-2 pb-2 pt-[10px] font-bold text-black hover:bg-red-500">
             PREMIUM
           </button>
         )}

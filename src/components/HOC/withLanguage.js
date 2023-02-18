@@ -8,6 +8,9 @@ export const withLanguage = (WrappedComponent) => {
     const texts = {
       en: {
         hi: 'Hi',
+        close: 'close',
+        subscribe: 'Subscribe',
+        subscribeDescription: 'removes ads, gives premium access',
         sortMemes: 'Sort memes',
         browse: 'Browsing memes',
         generateMeme: 'Generate meme',
@@ -73,6 +76,9 @@ export const withLanguage = (WrappedComponent) => {
       },
       pl: {
         hi: 'Cześć',
+        close: 'zamknij',
+        subscribe: 'Subskrybuj',
+        subscribeDescription: 'usuwa reklamy, daje dostęp premium',
         sortMemes: 'Sortuj memy',
         browse: 'Przeglądaj memy',
         generateMeme: 'Generuj mema',
