@@ -9,7 +9,7 @@ function Missing({ texts }) {
       <h2 className="text:sm flex flex-col items-center justify-center md:flex-row md:text-2xl">
         {texts.missing}
         <br />
-        <Link className=" flex  flex-col md:block md:flex-row" to="/">
+        <Link className=" flex  flex-col md:block md:flex-row" to="homepage">
           <button className="mx-2 rounded-lg bg-orange-600 p-2"> {texts.mainPage}</button>
           {texts.or}
         </Link>

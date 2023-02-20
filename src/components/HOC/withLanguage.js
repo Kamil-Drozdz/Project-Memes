@@ -70,7 +70,8 @@ export const withLanguage = (WrappedComponent) => {
           Styling: `The styling of the application was done using Tailwind CSS.,`,
           backendDevelopment: `The backend of the application was developed by using PHP and the PostgreSQL database. The developer thoroughly tested the entire development process and merged the code into the develop branch.`,
           revenueModel: `We decided to use Stripe for payment processing in the project. We believe that when it comes to payment processing, it's best to use the best and most tested solutions available on the market. Stripe is a reliable and popular service that offers many payment-related features, including integration with various payment methods and tools for managing subscriptions.
-          Using Stripe allowed us to provide a secure and convenient payment process for users of the application. As a result, users can easily make payments for subscriptions and access premium features on our platform in a quick and seamless manner.`,
+          Using Stripe allowed us to provide a secure and convenient payment process for users of the application. As a result, users can easily make payments for subscriptions and access premium features on our platform in a quick and seamless manner.
+          To test the payment use the card number: 4242 4242 4242 4242 4242 and a random CVC number as well as a future date`,
           info: 'The memes displayed from the database are not intended to offend anyone and are solely for humorous purposes, as well as to showcase certain programming techniques in the portfolio'
         }
       },
@@ -138,7 +139,8 @@ export const withLanguage = (WrappedComponent) => {
           Styling: ` Stylowanie aplikacji zostało wykonane za pomocą Tailwind CSS.`,
           backendDevelopment: ` Backend aplikacji został opracowany za pomocą PHP i bazy danych PostgreSQL. Programista dokładnie przetestował cały proces tworzenia i połączył kod z gałęzią develop.`,
           revenueModel: `W projekcie zdecydowaliśmy się skorzystać z rozwiązania Stripe do obsługi płatności. Jesteśmy zdania, że jeśli chodzi o przetwarzanie płatności, warto skorzystać z najlepszych i przetestowanych rozwiązań dostępnych na rynku. Stripe to solidny i popularny serwis, który oferuje wiele funkcji związanych z płatnościami, w tym integrację z różnymi metodami płatności oraz narzędzia do obsługi abonamentów.
-          Korzystanie z Stripe umożliwi nam zapewnienie bezpiecznego i wygodnego procesu płatności dla użytkowników aplikacji. Dzięki temu użytkownicy mogą dokonywać płatności za subskrypcje i otrzymywać dostęp do funkcji premium na naszej platformie w sposób szybki i łatwy.`,
+          Korzystanie z Stripe umożliwi nam zapewnienie bezpiecznego i wygodnego procesu płatności dla użytkowników aplikacji. Dzięki temu użytkownicy mogą dokonywać płatności za subskrypcje i otrzymywać dostęp do funkcji premium na naszej platformie w sposób szybki i łatwy.
+          Żeby przetestować płatność użyj nr karty: 4242 4242 4242 4242 4242 i  losowy numer CVC jak i przyszłą datę `,
           info: 'Memy wyświetlane z bazy danych nie mają na celu obrażania nikogo i służą wyłącznie do celów humorystycznych, a także do pokazania określonych technik programistycznych w portfolio'
         }
       }
