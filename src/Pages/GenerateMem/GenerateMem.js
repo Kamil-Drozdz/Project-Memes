@@ -163,8 +163,8 @@ const GenerateMem = ({ texts }) => {
   };
 
   return (
-    <div className="flex h-[91vh] flex-col items-center justify-center pt-4 md:h-[83vh]">
-      <label htmlFor="file-upload" className="mb-2 cursor-pointer rounded-lg bg-gray-900  p-2 text-lg text-white">
+    <div className="flex h-[91vh] flex-col items-center justify-center pt-4 md:h-[86vh]">
+      <label htmlFor="file-upload" className="mb-2 cursor-pointer rounded-lg bg-gray-900 p-2 text-lg text-white hover:bg-black">
         <FontAwesomeIcon className="mr-4 text-orange-600" size="lg" icon={faCloudUploadAlt} />
         {texts.upload} Meme
       </label>

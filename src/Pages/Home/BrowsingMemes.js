@@ -42,9 +42,13 @@ function BrowsingMemes({ texts }) {
       toast.error(`${texts.logIn}`, { autoClose: 2000 });
       return;
     }
+    if ((ratings[memeId] === 1 && isLike) || (ratings[memeId] === -1 && !isLike)) {
+      toast.error(`${texts.notificationToastErrorAlreadyRated}`, { autoClose: 2000 });
+      return;
+    }
     setRatings((prevRatings) => ({
       ...prevRatings,
-      [memeId]: isLike ? (prevRatings[memeId] || 0) + 1 : (prevRatings[memeId] || 0) - 1
+      [memeId]: isLike ? 1 : -1
     }));
     toast.success(isLike ? `${texts.notificationToastSuccesLike}` : `${texts.notificationToastSuccesDisLike}`, { autoClose: 1000 });
     //TODO tu request do API

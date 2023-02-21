@@ -131,7 +131,7 @@ function NavItem({ to, text, icon }) {
   const active = location.pathname === to;
 
   return (
-    <Link to={to} className={`rounded-lg p-2 text-white md:mr-5 ${active ? 'rounded border-b-4 border-orange-700 bg-orange-500 text-black' : ''}`}>
+    <Link to={to} className={`p-2 text-white hover:rounded hover:border-b-4  hover:border-orange-700 hover:bg-orange-500 hover:text-black md:mr-5 ${active ? 'rounded border-b-4 border-orange-700 bg-orange-500 text-black' : ''}`}>
       <FontAwesomeIcon className="mr-5" icon={icon} />
       {text}
     </Link>
