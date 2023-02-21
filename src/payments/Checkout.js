@@ -43,7 +43,7 @@ const Checkout = ({ texts }) => {
             <span className="mr-3 -ml-2 cursor-pointer rounded border-b-4 border-red-700 bg-red-600 px-2 pb-2 pt-[10px] font-bold text-black hover:bg-red-500">PREMIUM</span>
           </StripeCheckout>
         ) : (
-          <button onClick={handlePayment} className="mr-3 -ml-2 cursor-pointer rounded border-b-4 border-red-700 bg-red-600 px-2 pb-2 pt-[10px] font-bold text-black hover:bg-red-500">
+          <button onClick={handlePayment} className="mr-3 cursor-pointer rounded border-b-4 border-red-700 bg-red-600 px-2 pb-2 pt-[10px] font-bold text-black hover:bg-red-500">
             PREMIUM
           </button>
         )}
