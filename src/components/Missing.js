@@ -4,7 +4,7 @@ import { withLanguage } from './HOC/withLanguage';
 
 function Missing({ texts }) {
   return (
-    <div className=" h-[92vh] md:h-[83vh]">
+    <div className=" h-[92vh] md:h-[86vh]">
       <img className="mx-auto my-auto h-[50%] object-contain" src={caveman} alt="a caveman lost, chewing a cable"></img>
       <h2 className="text:sm flex flex-col items-center justify-center md:flex-row md:text-2xl">
         {texts.missing}
