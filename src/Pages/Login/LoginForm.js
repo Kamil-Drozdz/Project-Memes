@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import RegistrationForm from './RegistrationForm';
 import PasswordResetForm from './PasswordResetForm';
 import { withLanguage } from '../../components/HOC/withLanguage';
+import { PulseLoader } from 'react-spinners';
 import { useAuth } from '../../hooks/useAuth';
 
 const LoginForm = ({ texts }) => {
@@ -11,12 +12,14 @@ const LoginForm = ({ texts }) => {
   const [showRegistration, setShowRegistration] = useState(false);
   const [email, setEmail] = useState('username@example.com');
   const [password, setPassword] = useState('passwd');
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { setAuth } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}security/token`, {
         method: 'POST',
@@ -35,11 +38,13 @@ const LoginForm = ({ texts }) => {
       navigate('/homepage');
     } catch (error) {
       setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex h-[92vh] items-center justify-center md:h-[83vh]">
+    <div className="flex h-[92vh] items-center justify-center md:h-[86vh]">
       {showPasswordReset ? (
         <PasswordResetForm setShowPasswordReset={setShowPasswordReset} />
       ) : showRegistration ? (
@@ -59,8 +64,8 @@ const LoginForm = ({ texts }) => {
               {texts.password}
             </label>
           </div>
-          <button className="my-2 w-full max-w-[60vw] rounded-lg bg-red-700 p-2 px-2 text-white disabled:opacity-60" type="submit" disabled={!email || !password}>
-            {texts.logIn}
+          <button className="my-2 w-full rounded-lg bg-red-700 p-2  text-white disabled:opacity-60" type="submit" disabled={!email || !password}>
+            {isLoading ? <PulseLoader color="#fbffff" /> : `${texts.logIn}`}
           </button>
           <div className="flex w-full flex-col  justify-between sm:flex-row">
             <div className="mr-8 cursor-pointer text-gray-400" onClick={() => setShowPasswordReset(true)}>
