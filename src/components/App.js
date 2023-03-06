@@ -8,11 +8,14 @@ import Missing from './Missing';
 import BrowsingMemes from '../Pages/Home/BrowsingMemes';
 import { MainLayout } from '../Layouts//MainLayout';
 import GenerateMem from '../Pages/GenerateMem/GenerateMem';
+import { useAuth } from '../hooks/useAuth';
+import { FadeLoader } from 'react-spinners';
 
 const ROLES = {
   User: 'ROLE_USER',
   Admin: 'ROLE_SUPER_USER'
 };
+
 function atLayout(Component) {
   return (
     <div className="max-h-full min-h-screen w-screen bg-gray-600">
@@ -24,19 +27,30 @@ function atLayout(Component) {
 }
 
 export function App() {
-  return (
-    <Routes>
-      {/* Without roles */}
-      <Route path="/" element={atLayout(LoginForm)} />
-      <Route path="unauthorized" element={atLayout(Unauthorized)} />
-      <Route path="*" element={atLayout(Missing)} />
+  const { isLoading } = useAuth();
 
-      {/*Role user*/}
-      <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>
-        <Route path="/homepage" element={atLayout(BrowsingMemes)} />
-        <Route path="sort" element={atLayout(Sort)} />
-        <Route path="generatemem" element={atLayout(GenerateMem)} />
-      </Route>
-    </Routes>
+  return (
+    <div>
+      {isLoading ? (
+        <div className=" flex max-h-full min-h-screen w-screen flex-col  items-center justify-center bg-gray-600">
+          <FadeLoader color="#f97316" />
+          <p>Checking...</p>
+        </div>
+      ) : (
+        <Routes>
+          {/* Without roles */}
+          <Route path="/" element={atLayout(LoginForm)} />
+          <Route path="unauthorized" element={atLayout(Unauthorized)} />
+          <Route path="*" element={atLayout(Missing)} />
+
+          {/*Role user*/}
+          <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>
+            <Route path="/homepage" element={atLayout(BrowsingMemes)} />
+            <Route path="sort" element={atLayout(Sort)} />
+            <Route path="generatemem" element={atLayout(GenerateMem)} />
+          </Route>
+        </Routes>
+      )}
+    </div>
   );
 }

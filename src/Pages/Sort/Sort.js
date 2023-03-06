@@ -3,7 +3,7 @@ import { Form } from './Form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { RandomMeme } from './RandomMeme';
-import { PacmanLoader } from 'react-spinners';
+import { FadeLoader } from 'react-spinners';
 import useFetch from '../../hooks/useFetch';
 import { withLanguage } from '../../components/HOC/withLanguage';
 import { useAuth } from '../../hooks/useAuth';
@@ -93,33 +93,41 @@ function Sort({ texts }) {
   }
 
   return (
-    <main>
-      <div className="flex flex-col items-center justify-center border border-gray-700 bg-gray-700 pt-2 shadow-md md:h-[86vh] md:flex-row md:pt-20">
-        <div className="flex w-full justify-center md:block md:w-auto md:pr-36 ">
-          <Ads />
+    <>
+      {isLoading ? (
+        <div className="flex flex-col items-center justify-center border border-gray-700 bg-gray-700 pt-2 shadow-md md:h-[86vh] md:flex-row md:pt-20">
+          <FadeLoader color="orange" />
         </div>
-        {isLoading ? <PacmanLoader color="orange" /> : <RandomMeme texts={texts} randomMeme={meme} />}
-        <ToastContainer position="bottom-left" autoClose={2000} hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
-        {isError || (
-          <Form
-            props={{
-              texts,
-              form,
-              formErrors,
-              categorySelectRef,
-              typeSelectRef,
-              setForm,
-              setFormErrors,
-              handleSubmit,
-              handleChange
-            }}
-          />
-        )}
-        <div className="flex w-full justify-center md:block md:w-auto md:pl-16 ">
-          <Ads />
-        </div>
-      </div>
-    </main>
+      ) : (
+        <main>
+          <div className="flex flex-col items-center justify-center border border-gray-700 bg-gray-700 pt-2 shadow-md md:h-[86vh] md:flex-row md:pt-20">
+            <div className="flex w-full justify-center md:block md:w-auto md:pr-36 ">
+              <Ads />
+            </div>
+            <RandomMeme texts={texts} randomMeme={meme} />
+            <ToastContainer position="bottom-left" autoClose={2000} hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
+            {isError || (
+              <Form
+                props={{
+                  texts,
+                  form,
+                  formErrors,
+                  categorySelectRef,
+                  typeSelectRef,
+                  setForm,
+                  setFormErrors,
+                  handleSubmit,
+                  handleChange
+                }}
+              />
+            )}
+            <div className="flex w-full justify-center md:block md:w-auto md:pl-16 ">
+              <Ads />
+            </div>
+          </div>
+        </main>
+      )}
+    </>
   );
 }
 

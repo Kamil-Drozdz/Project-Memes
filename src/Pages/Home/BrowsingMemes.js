@@ -7,6 +7,7 @@ import { FadeLoader } from 'react-spinners';
 import { TfiArrowUp } from 'react-icons/tfi';
 import { BiCommentAdd } from 'react-icons/bi';
 import { withLanguage } from '../../components/HOC/withLanguage';
+import SkeletonLoader from '../../components/SkeletonLoader';
 import Comments from './Comments';
 import { useAuth } from '../../hooks/useAuth';
 import Ads from '../../payments/Ads';
@@ -19,6 +20,7 @@ function BrowsingMemes({ texts }) {
   const [showComments, setShowComments] = useState(false);
   const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=1&limit=${limit}`);
   const memeColections = memeFetching?._embedded?.items;
+
   const { auth } = useAuth();
 
   const loadMoreMemes = () => {
@@ -82,7 +84,8 @@ function BrowsingMemes({ texts }) {
 
   return (
     <>
-      <InfiniteScroll dataLength={limit} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg scrollbar-none ">
+      <InfiniteScroll dataLength={data} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
+      <SkeletonLoader />
         {!!data.length && (
           <div className="top-96 flex w-full items-center justify-center px-36 md:fixed md:justify-between ">
             <Ads />
@@ -118,9 +121,8 @@ function BrowsingMemes({ texts }) {
             </button>
           </div>
         )}
-        {!!data.length && <Ads />}
-
         <ToastContainer position="bottom-left" hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
+        {!!data.length && <Ads />}
       </InfiniteScroll>
     </>
   );

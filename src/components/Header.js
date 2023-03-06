@@ -20,7 +20,7 @@ function Header({ texts }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { auth } = useAuth();
-  console.log(subscription);
+
   useEffect(() => {
     if (!auth.email) {
       setShowLogin(true);
