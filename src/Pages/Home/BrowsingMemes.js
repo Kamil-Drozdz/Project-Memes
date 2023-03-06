@@ -7,7 +7,6 @@ import { FadeLoader } from 'react-spinners';
 import { TfiArrowUp } from 'react-icons/tfi';
 import { BiCommentAdd } from 'react-icons/bi';
 import { withLanguage } from '../../components/HOC/withLanguage';
-import SkeletonLoader from '../../components/SkeletonLoader';
 import Comments from './Comments';
 import { useAuth } from '../../hooks/useAuth';
 import Ads from '../../payments/Ads';
@@ -85,7 +84,6 @@ function BrowsingMemes({ texts }) {
   return (
     <>
       <InfiniteScroll dataLength={data} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
-      <SkeletonLoader />
         {!!data.length && (
           <div className="top-96 flex w-full items-center justify-center px-36 md:fixed md:justify-between ">
             <Ads />
