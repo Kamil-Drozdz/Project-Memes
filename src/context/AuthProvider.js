@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }) => {
             throw new Error('User not found');
           }
           const data = await response.json();
-          console.log(data);
           const email = data.email;
           const userNick = data.displayName;
           const roles = data.roles;

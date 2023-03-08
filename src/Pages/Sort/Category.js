@@ -4,7 +4,6 @@ import useFetch from '../../hooks/useFetch';
 export const Category = ({ handleChange, reference, texts }) => {
   const { data } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/meme-categories`);
   const filteredCategories = data?._embedded?.items.filter((_, index) => index !== 3);
-  console.log(filteredCategories, data);
   const categories = useMemo(() => filteredCategories, [filteredCategories]);
 
   return (
