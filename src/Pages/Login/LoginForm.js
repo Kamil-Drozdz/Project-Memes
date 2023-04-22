@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import RegistrationForm from './RegistrationForm';
@@ -10,8 +10,8 @@ import { useAuth } from '../../hooks/useAuth';
 const LoginForm = ({ texts }) => {
   const [showPasswordReset, setShowPasswordReset] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
-  const [email, setEmail] = useState('username@example.com');
-  const [password, setPassword] = useState('passwd');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const LoginForm = ({ texts }) => {
       ) : showRegistration ? (
         <RegistrationForm setShowRegistration={setShowRegistration} />
       ) : (
-        <form className="w-[70vw] rounded-lg bg-gray-800 p-4 md:absolute md:w-[20vw]" onSubmit={handleSubmit}>
+        <form className="relative w-[70vw] rounded-lg bg-gray-800 p-4 md:absolute md:w-[20vw]" onSubmit={handleSubmit}>
           {error && <p className="text-red-500">{error}</p>}
           <div className=" relative z-0 mb-6 mt-4 w-full">
             <input name="floating_email" id="floating_email" className="peer block w-full appearance-none border-0 border-b-2 border-gray-100 bg-transparent py-2.5 px-0 text-sm text-gray-200 focus:border-orange-600 focus:outline-none focus:ring-0" placeholder=" " autoComplete="username" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
@@ -66,6 +66,15 @@ const LoginForm = ({ texts }) => {
           </div>
           <button className="my-2 w-full rounded-lg bg-red-700 p-2  text-white disabled:opacity-60" type="submit" disabled={!email || !password}>
             {isLoading ? <PulseLoader color="#fbffff" /> : `${texts.logIn}`}
+          </button>
+          <button
+            className="absolute -right-14 mt-2 rounded-lg bg-orange-500 p-2 font-bold"
+            onClick={() => {
+              setEmail('username@example.com');
+              setPassword('passwd');
+            }}
+          >
+            TEST
           </button>
           <div className="flex w-full flex-col  justify-between sm:flex-row">
             <div className="mr-8 cursor-pointer text-gray-400" onClick={() => setShowPasswordReset(true)}>
