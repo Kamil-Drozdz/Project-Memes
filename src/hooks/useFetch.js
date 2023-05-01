@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { useQuery } from 'react-query';
 import Cookies from 'js-cookie';
 

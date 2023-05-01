@@ -12,30 +12,31 @@ import { useAuth } from '../../hooks/useAuth';
 import Ads from '../../payments/Ads';
 import SkeletonLoader from '../../components/SkeletonLoader';
 
-function BrowsingMemes({ texts }) {
+const BrowsingMemes = ({ texts }) => {
   const [data, setData] = useState([]);
   const [limit, setLimit] = useState(10);
   const [ratings, setRatings] = useState({});
   const [isLoaded, setIsLoaded] = useState([]);
   const [showArrow, setShowArrow] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=20&limit=${limit}`);
+  const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=1&limit=${limit}`);
   const memeColections = memeFetching?._embedded?.items;
-
   const { auth } = useAuth();
 
   const loadMoreMemes = () => {
-    setLimit(limit + 5);
+    if (limit <= data.length) {
+      setLimit(limit + 5);
+    }
   };
-
-  function handleImageLoaded(index) {
+  const handleImageLoaded = (index) => {
     setIsLoaded((prevState) => {
       const updatedState = [...prevState];
       updatedState[index] = true;
 
       return updatedState;
     });
-  }
+  };
   //sets the state of the data to static, because when fetching with useFetch sometimes there is undefined data which will move to the top of the page, using state to store api data statically fixes the problem
   useEffect(() => {
     if (memeColections) {
@@ -48,7 +49,18 @@ function BrowsingMemes({ texts }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [showArrow]);
 
-  function handleVoice(memeId, isLike) {
+  useEffect(() => {
+    if (!data.length) {
+      const timer = setTimeout(() => {
+        toast.warn(`${texts.notificationToastWarn}`, { autoClose: 5000 });
+        setShowError(true);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [data]);
+
+  const handleVoice = async (memeId, isLike) => {
     if (!auth.email) {
       toast.error(`${texts.logIn}`, { autoClose: 2000 });
       return;
@@ -62,8 +74,19 @@ function BrowsingMemes({ texts }) {
       [memeId]: isLike ? 1 : -1
     }));
     toast.success(isLike ? `${texts.notificationToastSuccesLike}` : `${texts.notificationToastSuccesDisLike}`, { autoClose: 1000 });
-    //TODO tu request do API
-  }
+    const reaction = isLike ? 'like' : 'dislike';
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes/${memeId}/reaction/${reaction}`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${auth.token}` }
+      });
+      if (!response.ok) {
+        throw new Error(`Błąd API: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Wystąpił błąd podczas aktualizacji polubień:', error);
+    }
+  };
   const handleComments = (memeId) => {
     setShowComments(memeId);
   };
@@ -80,18 +103,12 @@ function BrowsingMemes({ texts }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (!data) {
-    toast.warn(`${texts.notificationToastWarn}`, { autoClose: 5000 });
-
-    return (
-      <div className="flex items-center justify-center border border-gray-700 bg-gray-700 pt-20 shadow-md">
-        <img className="m-8 max-h-full min-h-0 max-w-full rounded-t-lg border-4 md:rounded" src={photoError} alt="error" />
-        <ToastContainer position="bottom-left" hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
-      </div>
-    );
-  }
-
-  return (
+  return showError ? (
+    <div className="flex items-center justify-center border border-gray-700 bg-gray-700 pt-20 shadow-md">
+      <img className="m-8 max-h-full min-h-0 max-w-full rounded-t-lg border-4 md:rounded" src={photoError} alt="error" />
+      <ToastContainer position="bottom-left" hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
+    </div>
+  ) : (
     <>
       <InfiniteScroll dataLength={data} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
         {!!data.length && (
@@ -114,7 +131,7 @@ function BrowsingMemes({ texts }) {
                 <button onClick={() => handleVoice(meme.id, false)} className="mx-1 rounded border-b-4 border-red-800 bg-red-700 px-[10px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400">
                   -
                 </button>
-                <p className="rounded bg-gray-700 px-[10px] font-bold text-white"> {ratings[meme.id] || 0}</p>
+                <p className="rounded bg-gray-700 px-[10px] font-bold text-white"> {(meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
                 <div className=" ml-1 rounded border-b-4 border-orange-800 bg-orange-700 px-2 font-bold text-black shadow-lg">
                   <button onClick={() => handleComments(meme.id)}>
                     <BiCommentAdd className="mt-1" />
@@ -137,6 +154,6 @@ function BrowsingMemes({ texts }) {
       </InfiniteScroll>
     </>
   );
-}
+};
 
 export default withLanguage(BrowsingMemes);

@@ -2,9 +2,8 @@ import { useMemo } from 'react';
 import useFetch from '../../hooks/useFetch';
 
 export const Category = ({ handleChange, reference, texts }) => {
-  const { data } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/meme-categories`);
-  const filteredCategories = data?._embedded?.items.filter((_, index) => index !== 3);
-  const categories = useMemo(() => filteredCategories, [filteredCategories]);
+  const categories = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/meme-categories`).data?._embedded?.items;
+  const memoizedCategories = useMemo(() => categories, [categories]);
 
   return (
     <div className="mb-4">
@@ -12,9 +11,9 @@ export const Category = ({ handleChange, reference, texts }) => {
         <option value="Category" disabled>
           {texts.category}
         </option>
-        {categories?.map((category, i) => (
+        {memoizedCategories?.map((category, i) => (
           <option key={i} value={category.id}>
-            {category.id}
+            {category.id.charAt(0).toUpperCase() + category.id.slice(1)}
           </option>
         ))}
       </select>

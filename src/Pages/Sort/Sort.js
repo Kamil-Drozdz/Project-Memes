@@ -62,8 +62,7 @@ function Sort({ texts }) {
       headers: {
         Authorization: `Bearer ${auth.token}`,
         Accept: 'application/json',
-        'Content-Type': 'application/json',
-        method: 'PATCH'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(form)
     }).then((response) => {
