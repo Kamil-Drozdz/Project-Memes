@@ -19,7 +19,7 @@ function BrowsingMemes({ texts }) {
   const [isLoaded, setIsLoaded] = useState([]);
   const [showArrow, setShowArrow] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=1&limit=${limit}`);
+  const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=20&limit=${limit}`);
   const memeColections = memeFetching?._embedded?.items;
 
   const { auth } = useAuth();

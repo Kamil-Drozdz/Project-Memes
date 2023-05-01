@@ -68,13 +68,13 @@ const LoginForm = ({ texts }) => {
             {isLoading ? <PulseLoader color="#fbffff" /> : `${texts.logIn}`}
           </button>
           <button
-            className="absolute -right-14 mt-2 rounded-lg bg-orange-500 p-2 font-bold"
+            className="-right-14 my-2 w-full rounded-lg bg-orange-500 p-2 font-bold"
             onClick={() => {
               setEmail('username@example.com');
               setPassword('passwd');
             }}
           >
-            TEST
+            {texts.logInTest}
           </button>
           <div className="flex w-full flex-col  justify-between sm:flex-row">
             <div className="mr-8 cursor-pointer text-gray-400" onClick={() => setShowPasswordReset(true)}>

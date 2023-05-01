@@ -10,11 +10,11 @@ function Missing({ texts }) {
         {texts.missing}
         <br />
         <Link className=" flex  flex-col md:block md:flex-row" to="homepage">
-          <button className="mx-2 rounded-lg bg-orange-600 p-2"> {texts.mainPage}</button>
+          <button className="mx-2 rounded-lg bg-orange-600 p-2 font-semibold"> {texts.mainPage}</button>
           {texts.or}
         </Link>
         <Link to="sort">
-          <button className="mx-2 rounded-lg bg-orange-600 p-2"> {texts.browse}</button>
+          <button className="mx-2 rounded-lg bg-orange-600 p-2 font-semibold"> {texts.browse}</button>
         </Link>
       </h2>
     </div>
