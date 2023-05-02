@@ -15,10 +15,10 @@ import SkeletonLoader from '../../components/SkeletonLoader';
 const BrowsingMemes = ({ texts }) => {
   const [data, setData] = useState([]);
   const [limit, setLimit] = useState(10);
-  const [ratings, setRatings] = useState({});
   const [isLoaded, setIsLoaded] = useState([]);
   const [showArrow, setShowArrow] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [lastUpdatedMeme, setLastUpdatedMeme] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=1&limit=${limit}`);
   const memeColections = memeFetching?._embedded?.items;
@@ -65,15 +65,6 @@ const BrowsingMemes = ({ texts }) => {
       toast.error(`${texts.logIn}`, { autoClose: 2000 });
       return;
     }
-    if ((ratings[memeId] === 1 && isLike) || (ratings[memeId] === -1 && !isLike)) {
-      toast.error(`${texts.notificationToastErrorAlreadyRated}`, { autoClose: 2000 });
-      return;
-    }
-    setRatings((prevRatings) => ({
-      ...prevRatings,
-      [memeId]: isLike ? 1 : -1
-    }));
-    toast.success(isLike ? `${texts.notificationToastSuccesLike}` : `${texts.notificationToastSuccesDisLike}`, { autoClose: 1000 });
     const reaction = isLike ? 'like' : 'dislike';
     try {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes/${memeId}/reaction/${reaction}`, {
@@ -82,11 +73,17 @@ const BrowsingMemes = ({ texts }) => {
       });
       if (!response.ok) {
         throw new Error(`Błąd API: ${response.status}`);
+      } else {
+        const updatedMeme = await response.json();
+        setLastUpdatedMeme(updatedMeme);
+        toast.success(isLike ? `${texts.notificationToastSuccesLike}` : `${texts.notificationToastSuccesDisLike}`, { autoClose: 1000 });
       }
     } catch (error) {
       console.error('Wystąpił błąd podczas aktualizacji polubień:', error);
+      toast.error(`${texts.notificationToastErrorAlreadyRated}`, { autoClose: 2000 });
     }
   };
+
   const handleComments = (memeId) => {
     setShowComments(memeId);
   };
@@ -110,7 +107,7 @@ const BrowsingMemes = ({ texts }) => {
     </div>
   ) : (
     <>
-      <InfiniteScroll dataLength={data} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
+      <InfiniteScroll dataLength={data} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.9} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
         {!!data.length && (
           <div className="top-96 flex w-full items-center justify-center px-36 md:fixed md:justify-between ">
             <Ads />
@@ -131,7 +128,7 @@ const BrowsingMemes = ({ texts }) => {
                 <button onClick={() => handleVoice(meme.id, false)} className="mx-1 rounded border-b-4 border-red-800 bg-red-700 px-[10px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400">
                   -
                 </button>
-                <p className="rounded bg-gray-700 px-[10px] font-bold text-white"> {(meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
+                <p className="rounded bg-gray-700 px-[10px] font-bold text-white">{lastUpdatedMeme && lastUpdatedMeme.id === meme.id ? lastUpdatedMeme.likeCount - lastUpdatedMeme.dislikeCount : (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
                 <div className=" ml-1 rounded border-b-4 border-orange-800 bg-orange-700 px-2 font-bold text-black shadow-lg">
                   <button onClick={() => handleComments(meme.id)}>
                     <BiCommentAdd className="mt-1" />
