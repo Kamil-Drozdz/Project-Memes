@@ -29,6 +29,7 @@ const BrowsingMemes = ({ texts }) => {
       setLimit(limit + 5);
     }
   };
+
   const handleImageLoaded = (index) => {
     setIsLoaded((prevState) => {
       const updatedState = [...prevState];
@@ -65,23 +66,32 @@ const BrowsingMemes = ({ texts }) => {
       toast.error(`${texts.logIn}`, { autoClose: 2000 });
       return;
     }
+
     const reaction = isLike ? 'like' : 'dislike';
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes/${memeId}/reaction/${reaction}`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${auth.token}` }
-      });
-      if (!response.ok) {
-        throw new Error(`Błąd API: ${response.status}`);
-      } else {
+    const apiUrl = `${process.env.REACT_APP_API_BASE_URL}memes/memes/${memeId}/reaction`;
+
+    const updateReaction = async (url, method = 'POST') => {
+      try {
+        const response = await fetch(url, {
+          method,
+          headers: { Authorization: `Bearer ${auth.token}` }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Błąd API: ${response.status}`);
+        }
+
         const updatedMeme = await response.json();
         setLastUpdatedMeme(updatedMeme);
-        toast.success(isLike ? `${texts.notificationToastSuccesLike}` : `${texts.notificationToastSuccesDisLike}`, { autoClose: 1000 });
+        setData((prevData) => prevData.map((meme) => (meme.id === memeId ? updatedMeme : meme)));
+
+        toast.success(isLike ? `${texts.notificationToastSuccesLike}` : `${texts.notificationToastSuccesDisLike}`, { autoClose: 500 });
+      } catch (error) {
+        toast.warn(`${texts.notificationToastReset}`, { autoClose: 500 });
+        await updateReaction(`${apiUrl}/reset`, 'POST');
       }
-    } catch (error) {
-      console.error('Wystąpił błąd podczas aktualizacji polubień:', error);
-      toast.error(`${texts.notificationToastErrorAlreadyRated}`, { autoClose: 2000 });
-    }
+    };
+    await updateReaction(`${apiUrl}/${reaction}`, 'POST');
   };
 
   const handleComments = (memeId) => {
@@ -107,7 +117,7 @@ const BrowsingMemes = ({ texts }) => {
     </div>
   ) : (
     <>
-      <InfiniteScroll dataLength={data} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.9} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
+      <InfiniteScroll dataLength={data} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.95} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
         {!!data.length && (
           <div className="top-96 flex w-full items-center justify-center px-36 md:fixed md:justify-between ">
             <Ads />
@@ -123,10 +133,10 @@ const BrowsingMemes = ({ texts }) => {
               <div className="m-2 flex w-full items-center justify-center rounded-lg shadow-lg">{meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="mb-12 w-full rounded-lg border-4 object-contain md:rounded" onLoad={() => handleImageLoaded(index)} src={meme.url} alt="random meme video" controls /> : <img onLoad={() => handleImageLoaded(index)} className="mr-3 w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme" />}</div>
               <div className="mx-2 mb-8 flex">
                 <button onClick={() => handleVoice(meme.id, true)} className="rounded border-b-4 border-green-800 bg-green-700 px-2 font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400">
-                  +
+                  {meme?.userReaction?.id === 'like' ? '👍' : '+'}
                 </button>
-                <button onClick={() => handleVoice(meme.id, false)} className="mx-1 rounded border-b-4 border-red-800 bg-red-700 px-[10px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400">
-                  -
+                <button onClick={() => handleVoice(meme.id, false)} className="mx-1 w-fit rounded border-b-4 border-red-800 bg-red-700 px-[10px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400">
+                  {meme?.userReaction?.id === 'dislike' ? '👎' : '-'}
                 </button>
                 <p className="rounded bg-gray-700 px-[10px] font-bold text-white">{lastUpdatedMeme && lastUpdatedMeme.id === meme.id ? lastUpdatedMeme.likeCount - lastUpdatedMeme.dislikeCount : (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
                 <div className=" ml-1 rounded border-b-4 border-orange-800 bg-orange-700 px-2 font-bold text-black shadow-lg">
