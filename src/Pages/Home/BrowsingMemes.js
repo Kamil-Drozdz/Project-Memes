@@ -6,6 +6,7 @@ import photoError from '../../assets/error.png';
 import { FadeLoader } from 'react-spinners';
 import { TfiArrowUp } from 'react-icons/tfi';
 import { BiCommentAdd } from 'react-icons/bi';
+import { AiFillLike, AiOutlineLike, AiFillDislike, AiOutlineDislike } from 'react-icons/ai';
 import { withLanguage } from '../../components/HOC/withLanguage';
 import Comments from './Comments';
 import { useAuth } from '../../hooks/useAuth';
@@ -15,6 +16,7 @@ import SkeletonLoader from '../../components/SkeletonLoader';
 const BrowsingMemes = ({ texts }) => {
   const [data, setData] = useState([]);
   const [limit, setLimit] = useState(10);
+  // filling the table with false values, because sometimes the table when loading additional memes showed values ​​like empty or undefined, in this case false will replace these gaps
   const [isLoaded, setIsLoaded] = useState([]);
   const [showArrow, setShowArrow] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -25,9 +27,7 @@ const BrowsingMemes = ({ texts }) => {
   const { auth } = useAuth();
 
   const loadMoreMemes = () => {
-    if (limit <= data.length) {
-      setLimit(limit + 5);
-    }
+    setLimit(limit + 5);
   };
 
   const handleImageLoaded = (index) => {
@@ -117,7 +117,7 @@ const BrowsingMemes = ({ texts }) => {
     </div>
   ) : (
     <>
-      <InfiniteScroll dataLength={data} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.95} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
+      <InfiniteScroll dataLength={data.length} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.98} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
         {!!data.length && (
           <div className="top-96 flex w-full items-center justify-center px-36 md:fixed md:justify-between ">
             <Ads />
@@ -133,10 +133,10 @@ const BrowsingMemes = ({ texts }) => {
               <div className="m-2 flex w-full items-center justify-center rounded-lg shadow-lg">{meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="mb-12 w-full rounded-lg border-4 object-contain md:rounded" onLoad={() => handleImageLoaded(index)} src={meme.url} alt="random meme video" controls /> : <img onLoad={() => handleImageLoaded(index)} className="mr-3 w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme" />}</div>
               <div className="mx-2 mb-8 flex">
                 <button onClick={() => handleVoice(meme.id, true)} className="rounded border-b-4 border-green-800 bg-green-700 px-2 font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400">
-                  {meme?.userReaction?.id === 'like' ? '👍' : '+'}
+                  {meme?.userReaction?.id === 'like' ? <AiFillLike size={20} /> : <AiOutlineLike size={20} />}
                 </button>
                 <button onClick={() => handleVoice(meme.id, false)} className="mx-1 w-fit rounded border-b-4 border-red-800 bg-red-700 px-[10px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400">
-                  {meme?.userReaction?.id === 'dislike' ? '👎' : '-'}
+                  {meme?.userReaction?.id === 'dislike' ? <AiFillDislike size={20} /> : <AiOutlineDislike size={20} />}
                 </button>
                 <p className="rounded bg-gray-700 px-[10px] font-bold text-white">{lastUpdatedMeme && lastUpdatedMeme.id === meme.id ? lastUpdatedMeme.likeCount - lastUpdatedMeme.dislikeCount : (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
                 <div className=" ml-1 rounded border-b-4 border-orange-800 bg-orange-700 px-2 font-bold text-black shadow-lg">
