@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
           const roles = data.roles;
           const userId = data.id;
           setAuth({ ...auth, roles, userId, userNick, email });
-          navigate('/homepage');
+          navigate('/');
         } catch (error) {
           console.error(error);
         } finally {

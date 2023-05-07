@@ -58,11 +58,11 @@ function Header({ texts }) {
             {showQRCode && <QRCodeGenerator />}
           </button>
         </div>
-        <NavItem to="/homepage" text={texts.browse} icon={faRandom} />
+        <NavItem to="/" text={texts.browse} icon={faRandom} />
         <NavItem to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
         <NavItem to="/generatemem" text={texts.generateMeme} icon={faPlusSquare} />
         {showLogin ? (
-          <NavItem to="/" text={texts.logIn} icon={faUser} />
+          <NavItem to="/login" text={texts.logIn} icon={faUser} />
         ) : (
           <p className=" absolute left-[25%] text-white">
             {texts.hi}, {auth.userNick}
@@ -81,7 +81,7 @@ function Header({ texts }) {
             <header className="flex max-h-full flex-nowrap items-center justify-end rounded-lg bg-gray-800 md:block ">
               <div className="flex flex-col">
                 <NavItem to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
-                <NavItem to="/homepage" text={texts.browse} icon={faRandom} />
+                <NavItem to="/" text={texts.browse} icon={faRandom} />
                 <NavItem to="/generatemem" text={texts.generateMeme} icon={faPlusSquare} />
               </div>
             </header>

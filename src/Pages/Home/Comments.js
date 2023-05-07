@@ -6,19 +6,25 @@ import moment from 'moment';
 import Cookies from 'js-cookie';
 
 const Comments = ({ texts, id }) => {
-  const currentTime = moment(moment.now()).fromNow();
   const { auth } = useAuth();
   const [comments, setComments] = useState([]);
-  const [timestamp, setTimestamp] = useState(currentTime);
   const [comment, setComment] = useState('');
   const [errorMessage, setErrorMessage] = useState(false);
   const [authMessage, setAuthMessage] = useState(false);
   const token = Cookies.get('token');
 
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
   const handleComment = (e) => {
     e.preventDefault();
-    if (comment.length === 0) {
+    if (!comment.length) {
       setErrorMessage(true);
+      return;
+    }
+    if (!auth.userNick) {
+      setAuthMessage(true);
       return;
     }
     fetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes/${id}/comments`, {
@@ -31,16 +37,10 @@ const Comments = ({ texts, id }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        setComments([...comments, res.comment]);
+        //adding the current comment locally to array
+        setComments([...comments, res]);
       });
-    if (!auth.userNick) {
-      setAuthMessage(true);
-      return;
-    }
-
     setErrorMessage(false);
-    setTimestamp(currentTime);
-    setComments([...comments, { comment, timestamp }]);
     setComment('');
   };
 
@@ -54,9 +54,6 @@ const Comments = ({ texts, id }) => {
         console.error('Error fetching comments:', error);
       });
   };
-  useEffect(() => {
-    fetchComments();
-  }, [comments]);
 
   const CommentList = ({ comments }) => (
     <>
@@ -70,8 +67,9 @@ const Comments = ({ texts, id }) => {
           <div key={index} className="my-2 mx-2 flex w-[90%] border-t-2 border-gray-700 pt-2 md:mx-8">
             <FcReddit size={32} className=" rounded-full" />
             <div className="w-full px-1 md:px-4">
-              <div className="flex">
-                <p className="text-xs text-white md:text-base md:font-bold">{auth.userNick}</p> <p className="ml-4 overflow-hidden whitespace-nowrap text-[8px] text-gray-500 md:text-xs">{comment?.timestamp}</p>
+              <div className="flex items-center justify-start">
+                <p className="text-xs text-white md:text-base md:font-bold">{comment?.user?.email}</p>
+                <p className="ml-4 overflow-hidden whitespace-nowrap text-[8px] text-gray-500 md:text-xs">{comment?.createdTimestamp ? moment(comment.createdTimestamp).fromNow() : 'nie określona data dodania'}</p>
               </div>
               <li className=" w-full break-words p-2 text-xs text-white md:text-base">{comment?.text}</li>
             </div>

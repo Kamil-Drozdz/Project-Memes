@@ -39,10 +39,10 @@ export function App() {
       ) : (
         <Routes>
           {/* Without roles */}
-          <Route path="/" element={atLayout(LoginForm)} />
+          <Route path="/login" element={atLayout(LoginForm)} />
           <Route path="unauthorized" element={atLayout(Unauthorized)} />
           <Route path="*" element={atLayout(Missing)} />
-          <Route path="/homepage" element={atLayout(BrowsingMemes)} />
+          <Route path="/" element={atLayout(BrowsingMemes)} />
 
           {/*Role user*/}
           <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>

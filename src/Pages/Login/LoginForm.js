@@ -35,7 +35,7 @@ const LoginForm = ({ texts }) => {
       const userId = user?.id;
       setAuth({ email, password, roles, userId, userNick, token });
       Cookies.set('token', token);
-      navigate('/homepage');
+      navigate('/');
     } catch (error) {
       setError(error.message);
     } finally {

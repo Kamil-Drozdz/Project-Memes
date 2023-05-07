@@ -8,7 +8,7 @@ function Unauthorized({ texts }) {
       <img className="mx-auto my-auto h-[50%] object-contain" src={unauthorizedPhoto} alt="named you shall not pass"></img>
       <h2 className="text:sm flex flex-col items-center justify-center md:text-2xl ">
         {texts.unauthorized}
-        <Link to="/">
+        <Link to="/login">
           <button className="e mx-2 mt-4 rounded-lg bg-orange-600 p-2 font-semibold">{texts.logIn}</button>
         </Link>
       </h2>
