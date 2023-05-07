@@ -15,33 +15,40 @@ import SkeletonLoader from '../../components/SkeletonLoader';
 
 const BrowsingMemes = ({ texts }) => {
   const [data, setData] = useState([]);
-  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
   // filling the table with false values, because sometimes the table when loading additional memes showed values ​​like empty or undefined, in this case false will replace these gaps
   const [isLoaded, setIsLoaded] = useState([]);
   const [showArrow, setShowArrow] = useState(false);
   const [showError, setShowError] = useState(false);
   const [lastUpdatedMeme, setLastUpdatedMeme] = useState(null);
   const [showComments, setShowComments] = useState(false);
-  const { data: memeFetching, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=1&limit=${limit}`);
+  const { data: memeFetching, isLoading, refetch } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes?page=${page}&limit=10`);
   const memeColections = memeFetching?._embedded?.items;
   const { auth } = useAuth();
 
   const loadMoreMemes = () => {
-    setLimit(limit + 5);
+    setPage(page + 1);
   };
 
   const handleImageLoaded = (index) => {
     setIsLoaded((prevState) => {
       const updatedState = [...prevState];
       updatedState[index] = true;
-
       return updatedState;
     });
   };
+
+  //adding a check if the user is up for data refetch in order to update the user's reaction
+  useEffect(() => {
+    if (auth.email) {
+      refetch();
+    }
+  }, [auth.email]);
+
   //sets the state of the data to static, because when fetching with useFetch sometimes there is undefined data which will move to the top of the page, using state to store api data statically fixes the problem
   useEffect(() => {
     if (memeColections) {
-      setData(memeColections);
+      setData((prevData) => [...prevData, ...memeColections]);
     } else return;
   }, [isLoading]);
 
@@ -68,7 +75,7 @@ const BrowsingMemes = ({ texts }) => {
     }
 
     const reaction = isLike ? 'like' : 'dislike';
-    const apiUrl = `${process.env.REACT_APP_API_BASE_URL}memes/memes/${memeId}/reaction`;
+    const apiUrl = `${process.env.REACT_APP_API_BASE_URL}memes/memes/${memeId}/reactions`;
 
     const updateReaction = async (url, method = 'POST') => {
       try {
@@ -127,7 +134,7 @@ const BrowsingMemes = ({ texts }) => {
           </div>
         )}
         {data?.map((meme, index) => (
-          <div className="w-full bg-gray-900 px-4 md:w-[40vw]" key={meme.id}>
+          <div className="w-full bg-gray-900 px-4 md:w-[40vw]" key={index}>
             {!isLoaded[index] && <SkeletonLoader />}
             <div className={`${isLoaded[index] ? 'block' : 'hidden'}`}>
               <div className="m-2 flex w-full items-center justify-center rounded-lg shadow-lg">{meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="mb-12 w-full rounded-lg border-4 object-contain md:rounded" onLoad={() => handleImageLoaded(index)} src={meme.url} alt="random meme video" controls /> : <img onLoad={() => handleImageLoaded(index)} className="mr-3 w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme" />}</div>
@@ -135,6 +142,7 @@ const BrowsingMemes = ({ texts }) => {
                 <button onClick={() => handleVoice(meme.id, true)} className="rounded border-b-4 border-green-800 bg-green-700 px-2 font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400">
                   {meme?.userReaction?.id === 'like' ? <AiFillLike size={20} /> : <AiOutlineLike size={20} />}
                 </button>
+
                 <button onClick={() => handleVoice(meme.id, false)} className="mx-1 w-fit rounded border-b-4 border-red-800 bg-red-700 px-[10px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400">
                   {meme?.userReaction?.id === 'dislike' ? <AiFillDislike size={20} /> : <AiOutlineDislike size={20} />}
                 </button>
