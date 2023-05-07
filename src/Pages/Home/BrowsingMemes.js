@@ -154,7 +154,7 @@ const BrowsingMemes = ({ texts }) => {
                 </div>
               </div>
             </div>
-            {showComments === meme.id && <Comments />}
+            {showComments === meme.id && <Comments id={meme.id} />}
           </div>
         ))}
         {showArrow && (

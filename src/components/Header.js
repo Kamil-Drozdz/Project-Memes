@@ -20,6 +20,7 @@ function Header({ texts }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { auth } = useAuth();
+  const [pingModal, setPingModal] = useState(true);
 
   useEffect(() => {
     if (!auth.email) {
@@ -38,12 +39,19 @@ function Header({ texts }) {
             </p>
           </Link>
           <button
-            className="ml-4 rounded-lg bg-black p-1 text-white"
+            className="relative ml-4 rounded-lg bg-black p-1 text-white "
             onClick={() => {
               setShowInfoModal(true);
+              setPingModal(false);
             }}
           >
             Docs
+            {pingModal && (
+              <>
+                <span class="absolute -top-1 -right-1 inline-flex h-3 w-3 animate-ping rounded-full bg-orange-400 opacity-75"></span>
+                <span class="absolute -top-1 -right-1 inline-flex h-3 w-3  rounded-full bg-orange-500"></span>
+              </>
+            )}
           </button>
           <button className="ml-20 hidden md:flex" onClick={() => setShowQRCode(!showQRCode)}>
             {<BiQr className="text-2xl text-orange-600" />}
@@ -80,8 +88,20 @@ function Header({ texts }) {
             <button className=" absolute top-3 left-14 text-orange-500" onClick={() => setLanguage(language === 'en' ? 'pl' : 'en')}>
               {<FontAwesomeIcon size="lg" icon={faGlobe} />}
             </button>
-            <button onClick={() => setShowInfoModal(true)} className="absolute top-3 left-24  text-orange-500">
+            <button
+              onClick={() => {
+                setShowInfoModal(true);
+                setPingModal(false);
+              }}
+              className="absolute top-3 left-24  text-orange-500"
+            >
               <FontAwesomeIcon size="lg" icon={faFileLines} />
+              {pingModal && (
+                <>
+                  <span class="absolute -top-1 -right-1 inline-flex h-3 w-3 animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                  <span class="absolute -top-1 -right-1 inline-flex h-3 w-3  rounded-full bg-sky-500"></span>
+                </>
+              )}
             </button>
             {showLogin && (
               <Link to="/" className="absolute left-32 top-3 ml-2 text-orange-500" icon={faUser}>
@@ -106,7 +126,7 @@ function Header({ texts }) {
               <p className="mt-4 ">{texts.projectDocs.SortingOptions}</p>
               <p className="mt-4 ">{texts.projectDocs.MemeGeneration}</p>
               <p className="mt-4 ">{texts.projectDocs.HOC}</p>
-              <p className="mt-4 ">{texts.projectDocs.Styling}</p>
+
               <p className="mt-4 ">{texts.projectDocs.backendDevelopment}</p>
               <p className="mt-4 ">{texts.projectDocs.revenueModel}</p>
               <p className="mt-4 ">{texts.projectDocs.info}</p>
