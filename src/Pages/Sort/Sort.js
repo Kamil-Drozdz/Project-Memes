@@ -9,7 +9,7 @@ import { withLanguage } from '../../components/HOC/withLanguage';
 import { useAuth } from '../../hooks/useAuth';
 import Ads from '../../payments/Ads';
 
-function Sort({ texts }) {
+const Sort = ({ texts }) => {
   const categorySelectRef = useRef();
   const typeSelectRef = useRef();
   const [isError, setIsError] = useState(false);
@@ -32,7 +32,7 @@ function Sort({ texts }) {
   // formSubmited here as the second argument and useFetch custom hook gets a signal when the form is submitted fetches the data again
   const { data: meme, refetch, isLoading } = useFetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes/random`);
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const fieldName = event.target.name;
     const fieldValue = event.target.value;
     setForm((prevForm) => {
@@ -52,9 +52,9 @@ function Sort({ texts }) {
       ...formErrors,
       [fieldName]: !fieldValue
     });
-  }
+  };
 
-  function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
     fetch(`${process.env.REACT_APP_API_BASE_URL}memes/memes/${meme.id}`, {
       method: 'PATCH',
@@ -89,7 +89,7 @@ function Sort({ texts }) {
       categorySelectRef.current.value = 'Category';
       typeSelectRef.current.value = 'Type';
     });
-  }
+  };
 
   return (
     <>
@@ -128,6 +128,6 @@ function Sort({ texts }) {
       )}
     </>
   );
-}
+};
 
 export default withLanguage(Sort);

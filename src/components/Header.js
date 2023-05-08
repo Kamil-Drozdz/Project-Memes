@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { Spin as Hamburger } from 'hamburger-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusSquare, faRandom, faSearch, faSortAmountAsc, faGlobe, faUser, faFileLines } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faRandom, faSortAmountAsc, faGlobe, faUser, faFileLines } from '@fortawesome/free-solid-svg-icons';
 import { LanguageContext } from '../context/LanguageProvider';
 import { withLanguage } from '../components/HOC/withLanguage';
 import { QRCodeGenerator } from './QRCodeGenerator';
@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import Checkout from '../payments/Checkout';
 import { SubscriptionContext } from '../context/SubscriptionProvider';
 
-function Header({ texts }) {
+const Header = ({ texts }) => {
   const [isOpen, setOpen] = useState(false);
   const { language, setLanguage } = useContext(LanguageContext);
   const { subscription } = useContext(SubscriptionContext);
@@ -29,13 +29,13 @@ function Header({ texts }) {
   }, [auth]);
 
   return (
-    <div>
+    <>
       <nav className="mx-auto hidden items-center justify-between bg-gray-800 md:flex md:flex-row md:items-center md:justify-start">
         <div className="flex flex-1 items-center">
           <Link to="/">
-            <p className="text-white">
+            <p className="ml-4 text-white">
               <strong className="text-2xl">Memes</strong>
-              <br /> alfa version
+              <br /> alpha version
             </p>
           </Link>
           <button
@@ -80,8 +80,8 @@ function Header({ texts }) {
           <>
             <header className="flex max-h-full flex-nowrap items-center justify-end rounded-lg bg-gray-800 md:block ">
               <div className="flex flex-col">
-                <NavItem to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
                 <NavItem to="/" text={texts.browse} icon={faRandom} />
+                <NavItem to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
                 <NavItem to="/generatemem" text={texts.generateMeme} icon={faPlusSquare} />
               </div>
             </header>
@@ -142,20 +142,20 @@ function Header({ texts }) {
           </div>
         </>
       )}
-    </div>
+    </>
   );
-}
+};
 
-function NavItem({ to, text, icon }) {
+const NavItem = ({ to, text, icon }) => {
   const location = useLocation();
   const active = location.pathname === to;
 
   return (
-    <Link to={to} className={`p-2 text-white hover:rounded hover:border-b-4  hover:border-orange-700 hover:bg-orange-500 hover:text-black md:mr-3 ${active ? 'rounded border-b-4 border-orange-700 bg-orange-500 text-black' : ''}`}>
+    <Link to={to} className={` p-2 text-white hover:rounded hover:border-b-4 hover:border-orange-700 hover:bg-orange-500 hover:text-black md:mr-3 ${active ? 'rounded border-b-4 border-orange-700 bg-orange-500 text-black' : ''}`}>
       <FontAwesomeIcon className="mr-5" icon={icon} />
       {text}
     </Link>
   );
-}
+};
 
 export default withLanguage(Header);

@@ -2,7 +2,7 @@ import caveman from '../assets/caveman-error.gif';
 import { Link } from 'react-router-dom';
 import { withLanguage } from './HOC/withLanguage';
 
-function Missing({ texts }) {
+const Missing = ({ texts }) => {
   return (
     <div className=" h-[92vh] md:h-[86vh]">
       <img className="mx-auto my-auto h-[50%] object-contain" src={caveman} alt="a caveman lost, chewing a cable"></img>
@@ -19,6 +19,6 @@ function Missing({ texts }) {
       </h2>
     </div>
   );
-}
+};
 
 export default withLanguage(Missing);

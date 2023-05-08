@@ -2,7 +2,7 @@ import { Category } from './Category';
 import { Type } from './Type';
 import { BooleanChooseField } from './BooleanChooseField';
 
-export function Form({ props }) {
+export const Form = ({ props }) => {
   const { texts, form, formErrors, handleSubmit, categorySelectRef, typeSelectRef, handleChange } = props;
   const hasEmptyFields = Object.values(formErrors).some((error) => error);
 
@@ -45,4 +45,4 @@ export function Form({ props }) {
       </button>
     </form>
   );
-}
+};

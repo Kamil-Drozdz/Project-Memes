@@ -1,7 +1,7 @@
 import Header from '../components/Header';
 import { Footer } from '../components/Footer';
 
-export function MainLayout({ children }) {
+export const MainLayout = ({ children }) => {
   return (
     <>
       <Header />
@@ -9,4 +9,4 @@ export function MainLayout({ children }) {
       <Footer />
     </>
   );
-}
+};

@@ -124,9 +124,9 @@ const BrowsingMemes = ({ texts }) => {
     </div>
   ) : (
     <>
-      <InfiniteScroll dataLength={data.length} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.98} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
+      <InfiniteScroll dataLength={data.length} loader={<FadeLoader className="my-6 h-full w-full text-red-600" color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
         {!!data.length && (
-          <div className="top-96 flex w-full items-center justify-center px-36 md:fixed md:justify-between ">
+          <div className="top-96 -z-0 flex w-full items-center justify-center px-36 md:fixed md:justify-between">
             <Ads />
             <div className="hidden md:block">
               <Ads />
@@ -139,15 +139,15 @@ const BrowsingMemes = ({ texts }) => {
             <div className={`${isLoaded[index] ? 'block' : 'hidden'}`}>
               <div className="m-2 flex w-full items-center justify-center rounded-lg shadow-lg">{meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="mb-12 w-full rounded-lg border-4 object-contain md:rounded" onLoad={() => handleImageLoaded(index)} src={meme.url} alt="random meme video" controls /> : <img onLoad={() => handleImageLoaded(index)} className="mr-3 w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme" />}</div>
               <div className="mx-2 mb-8 flex">
-                <button onClick={() => handleVoice(meme.id, true)} className="rounded border-b-4 border-green-800 bg-green-700 px-2 font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400">
+                <button onClick={() => handleVoice(meme.id, true)} className="z-10 rounded border-b-4 border-green-800 bg-green-700 px-2 font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400">
                   {meme?.userReaction?.id === 'like' ? <AiFillLike size={20} /> : <AiOutlineLike size={20} />}
                 </button>
 
-                <button onClick={() => handleVoice(meme.id, false)} className="mx-1 w-fit rounded border-b-4 border-red-800 bg-red-700 px-[10px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400">
+                <button onClick={() => handleVoice(meme.id, false)} className="z-10 mx-1 w-fit rounded border-b-4 border-red-800 bg-red-700 px-[10px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400">
                   {meme?.userReaction?.id === 'dislike' ? <AiFillDislike size={20} /> : <AiOutlineDislike size={20} />}
                 </button>
                 <p className="rounded bg-gray-700 px-[10px] font-bold text-white">{lastUpdatedMeme && lastUpdatedMeme.id === meme.id ? lastUpdatedMeme.likeCount - lastUpdatedMeme.dislikeCount : (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
-                <div className=" ml-1 rounded border-b-4 border-orange-800 bg-orange-700 px-2 font-bold text-black shadow-lg">
+                <div className="z-10 ml-1 rounded border-b-4 border-orange-800 bg-orange-700 px-2 font-bold text-black shadow-lg">
                   <button onClick={() => handleComments(meme.id)}>
                     <BiCommentAdd className="mt-1" />
                   </button>

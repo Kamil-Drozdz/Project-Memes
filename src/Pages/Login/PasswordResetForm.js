@@ -1,6 +1,6 @@
 import { withLanguage } from '../../components/HOC/withLanguage';
 
-function PasswordResetForm({ texts, setShowPasswordReset }) {
+const PasswordResetForm = ({ texts, setShowPasswordReset }) => {
   return (
     <form className="flex flex-col items-center justify-center rounded-lg bg-gray-800 p-8">
       <h2 className="mb-4 text-lg font-bold text-white">{texts.remindPassword}</h2>
@@ -18,6 +18,6 @@ function PasswordResetForm({ texts, setShowPasswordReset }) {
       </button>
     </form>
   );
-}
+};
 
 export default withLanguage(PasswordResetForm);

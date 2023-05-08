@@ -16,23 +16,24 @@ const ROLES = {
   Admin: 'ROLE_SUPER_USER'
 };
 
-function atLayout(Component) {
+//fixed max size with infinity scroll div set, which extends the page, temporarily solves the problem with the scroll on x
+const atLayout = (Component, extraStyles = '') => {
   return (
-    <div className="max-h-full min-h-screen w-screen bg-gray-600">
+    <div className={`max-h-full min-h-screen w-screen bg-gray-600 ${extraStyles}`}>
       <MainLayout>
         <Component />
       </MainLayout>
     </div>
   );
-}
+};
 
-export function App() {
+export const App = () => {
   const { isLoading } = useAuth();
 
   return (
     <div>
       {isLoading ? (
-        <div className=" flex max-h-full min-h-screen w-screen flex-col  items-center justify-center bg-gray-600">
+        <div className=" flex max-h-full min-h-screen w-screen flex-col items-center justify-center bg-gray-600">
           <FadeLoader color="#f97316" />
           <p>Checking...</p>
         </div>
@@ -42,7 +43,7 @@ export function App() {
           <Route path="/login" element={atLayout(LoginForm)} />
           <Route path="unauthorized" element={atLayout(Unauthorized)} />
           <Route path="*" element={atLayout(Missing)} />
-          <Route path="/" element={atLayout(BrowsingMemes)} />
+          <Route path="/" element={atLayout(BrowsingMemes, 'max-w-[99.1vw]')} />
 
           {/*Role user*/}
           <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>
@@ -53,4 +54,4 @@ export function App() {
       )}
     </div>
   );
-}
+};
