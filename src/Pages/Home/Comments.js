@@ -68,7 +68,7 @@ const Comments = ({ texts, id }) => {
             <FcReddit size={32} className=" rounded-full" />
             <div className="w-full px-1 md:px-4">
               <div className="flex items-center justify-start">
-                <p className="text-xs text-white md:text-base md:font-bold">{comment?.user?.email}</p>
+                <p className="text-xs text-white md:text-base md:font-bold">{comment?.user?.displayName}</p>
                 <p className="ml-4 overflow-hidden whitespace-nowrap text-[8px] text-gray-500 md:text-xs">{comment?.createdTimestamp ? moment(comment.createdTimestamp).fromNow() : 'nie określona data dodania'}</p>
               </div>
               <li className=" w-full break-words p-2 text-xs text-white md:text-base">{comment?.text}</li>

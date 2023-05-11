@@ -43,7 +43,7 @@ export const App = () => {
           <Route path="/login" element={atLayout(LoginForm)} />
           <Route path="unauthorized" element={atLayout(Unauthorized)} />
           <Route path="*" element={atLayout(Missing)} />
-          <Route path="/" element={atLayout(BrowsingMemes, 'max-w-[99.1vw]')} />
+          <Route path="/" element={atLayout(BrowsingMemes, 'md:max-w-[99.1vw]')} />
 
           {/*Role user*/}
           <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>

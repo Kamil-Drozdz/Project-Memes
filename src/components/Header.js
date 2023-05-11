@@ -48,8 +48,8 @@ const Header = ({ texts }) => {
             Docs
             {pingModal && (
               <>
-                <span class="absolute -top-1 -right-1 inline-flex h-3 w-3 animate-ping rounded-full bg-orange-400 opacity-75"></span>
-                <span class="absolute -top-1 -right-1 inline-flex h-3 w-3  rounded-full bg-orange-500"></span>
+                <span className="absolute -top-1 -right-1 inline-flex h-3 w-3 animate-ping rounded-full bg-orange-400 opacity-75"></span>
+                <span className="absolute -top-1 -right-1 inline-flex h-3 w-3  rounded-full bg-orange-500"></span>
               </>
             )}
           </button>
@@ -98,8 +98,8 @@ const Header = ({ texts }) => {
               <FontAwesomeIcon size="lg" icon={faFileLines} />
               {pingModal && (
                 <>
-                  <span class="absolute -top-1 -right-1 inline-flex h-3 w-3 animate-ping rounded-full bg-sky-400 opacity-75"></span>
-                  <span class="absolute -top-1 -right-1 inline-flex h-3 w-3  rounded-full bg-sky-500"></span>
+                  <span className="absolute -top-1 -right-1 inline-flex h-3 w-3 animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="absolute -top-1 -right-1 inline-flex h-3 w-3  rounded-full bg-sky-500"></span>
                 </>
               )}
             </button>
