@@ -16,7 +16,6 @@ import SkeletonLoader from '../../components/SkeletonLoader';
 const BrowsingMemes = ({ texts }) => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  // filling the table with false values, because sometimes the table when loading additional memes showed values ​​like empty or undefined, in this case false will replace these gaps
   const [isLoaded, setIsLoaded] = useState([]);
   const [showArrow, setShowArrow] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -73,36 +72,38 @@ const BrowsingMemes = ({ texts }) => {
       toast.error(`${texts.logIn}`, { autoClose: 2000 });
       return;
     }
-
     const reaction = isLike ? 'like' : 'dislike';
     const apiUrl = `${process.env.REACT_APP_API_BASE_URL}memes/memes/${memeId}/reactions`;
 
     const updateReaction = async (url, method = 'POST') => {
-      try {
-        const response = await fetch(url, {
-          method,
-          headers: { Authorization: `Bearer ${auth.token}` }
-        });
+      const response = await fetch(url, {
+        method,
+        headers: { Authorization: `Bearer ${auth.token}` }
+      });
 
-        if (!response.ok) {
-          throw new Error(`Błąd API: ${response.status}`);
-        }
-
-        const updatedMeme = await response.json();
-        setLastUpdatedMeme(updatedMeme);
-        setData((prevData) => prevData.map((meme) => (meme.id === memeId ? updatedMeme : meme)));
-
-        toast.success(isLike ? `${texts.notificationToastSuccesLike}` : `${texts.notificationToastSuccesDisLike}`, { autoClose: 500 });
-      } catch (error) {
-        toast.warn(`${texts.notificationToastReset}`, { autoClose: 500 });
-        await updateReaction(`${apiUrl}/reset`, 'POST');
+      if (!response.ok) {
+        throw new Error(`Błąd API: ${response.status}`);
       }
+
+      const updatedMeme = await response.json();
+      setLastUpdatedMeme(updatedMeme);
+      setData((prevData) => prevData.map((meme) => (meme.id === memeId ? updatedMeme : meme)));
     };
-    await updateReaction(`${apiUrl}/${reaction}`, 'POST');
+    try {
+      await updateReaction(`${apiUrl}/${reaction}`);
+      toast.success(isLike ? `${texts.notificationToastSuccesLike}` : `${texts.notificationToastSuccesDisLike}`, { autoClose: 500 });
+    } catch (error) {
+      await updateReaction(`${apiUrl}/reset`);
+      toast.warn(`${texts.notificationToastReset}`, { autoClose: 500 });
+    }
   };
 
   const handleComments = (memeId) => {
-    setShowComments(memeId);
+    if (showComments === memeId) {
+      setShowComments(null);
+    } else {
+      setShowComments(memeId);
+    }
   };
 
   const handleScroll = () => {
