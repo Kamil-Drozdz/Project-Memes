@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { App } from './components/App';
@@ -9,20 +8,21 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { SubscriptionProvider } from './context/SubscriptionProvider';
 
 const queryClient = new QueryClient();
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const rootElement = document.getElementById('root') as HTMLElement;
+const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <BrowserRouter>
-    <LanguageProvider>
-      <AuthProvider>
-        <SubscriptionProvider>
-          <QueryClientProvider client={queryClient}>
-            <Routes>
-              <Route path="/*" element={<App />} />
-            </Routes>
-          </QueryClientProvider>
-        </SubscriptionProvider>
-      </AuthProvider>
-    </LanguageProvider>
-  </BrowserRouter>
+	<BrowserRouter>
+		<LanguageProvider>
+			<AuthProvider>
+				<SubscriptionProvider>
+					<QueryClientProvider client={queryClient}>
+						<Routes>
+							<Route path='/*' element={<App />} />
+						</Routes>
+					</QueryClientProvider>
+				</SubscriptionProvider>
+			</AuthProvider>
+		</LanguageProvider>
+	</BrowserRouter>
 );

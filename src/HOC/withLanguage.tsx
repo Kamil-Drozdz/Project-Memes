@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { LanguageContext } from '../../context/LanguageProvider';
-import { texts } from '../../translations/translations';
+import { LanguageContext } from '../context/LanguageProvider';
+import { texts } from '../translations/translations';
 
 export const withLanguage = (WrappedComponent) => {
   return (props) => {

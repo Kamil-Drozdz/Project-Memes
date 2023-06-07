@@ -1,4 +1,4 @@
-import { withLanguage } from '../../components/HOC/withLanguage';
+import { withLanguage } from '../../HOC/withLanguage';
 
 const PasswordResetForm = ({ texts, setShowPasswordReset }) => {
   return (

@@ -4,7 +4,7 @@ import watermark from '../../assets/watermark.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../hooks/useAuth';
-import { withLanguage } from '../../components/HOC/withLanguage';
+import { withLanguage } from '../../HOC/withLanguage';
 
 const GenerateMem = ({ texts }) => {
   const [image, setImage] = useState(null);

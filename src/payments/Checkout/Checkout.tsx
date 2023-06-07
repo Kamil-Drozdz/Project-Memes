@@ -1,27 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
-import { SubscriptionContext } from '../context/SubscriptionProvider';
-import { useAuth } from '../hooks/useAuth';
-import { toast, ToastContainer } from 'react-toastify';
-import { withLanguage } from '../components/HOC/withLanguage';
+import { ToastContainer } from 'react-toastify';
+import { CheckoutProps } from './CheckoutContainer';
 
-const Checkout = ({ texts }) => {
-  const { setSubscription } = useContext(SubscriptionContext);
-  const { auth } = useAuth();
-  const [showPayment, setShowPayment] = useState(false);
-
-  const handlePayment = () => {
-    if (!auth.email) {
-      toast.error(`${texts.logInPremium}`, { autoClose: 2000 });
-    } else {
-      setShowPayment(true);
-    }
-  };
-
-  const onToken = (token) => {
-    setSubscription(true);
-  };
-
+const Checkout: React.FC<CheckoutProps> = ({ showPayment, handlePayment, onToken, texts }) => {
   return (
     <>
       <div>
@@ -40,4 +22,4 @@ const Checkout = ({ texts }) => {
   );
 };
 
-export default withLanguage(Checkout);
+export default Checkout;
