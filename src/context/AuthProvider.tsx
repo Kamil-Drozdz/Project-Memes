@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export interface AuthContextType {

@@ -1,12 +1,12 @@
 import Header from '../components/Header';
-import { Footer } from '../components/Footer';
+import { FooterContainer } from '../components/Footer/FooterContainer';
 
-export const MainLayout = ({ children }) => {
+export const MainLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <>
       <Header />
       {children}
-      <Footer />
+      <FooterContainer />
     </>
   );
 };

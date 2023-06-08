@@ -1,14 +1,13 @@
 import { useQuery } from 'react-query';
 import Cookies from 'js-cookie';
 
-const useFetch = (url) => {
+const useFetch = (url: string) => {
   const token = Cookies.get('token');
   const { data, refetch, isLoading } = useQuery(
     url,
     async () => {
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const response = await fetch(url, {
-        headers
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
       });
       if (!response.ok) {
         throw new Error(response.statusText);
