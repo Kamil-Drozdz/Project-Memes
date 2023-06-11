@@ -41,7 +41,7 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
   const { data: memeFetching, isLoading, refetch } = useFetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes?page=${page}&limit=10`);
   const memeColections = memeFetching?._embedded?.items;
   const { auth } = useAuth() as { auth: PropsAuth };
-  console.log(data);
+
   const loadMoreMemes = () => {
     setPage(page + 1);
   };

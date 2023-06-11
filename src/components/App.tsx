@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Sort from '../Pages/Sort/Sort';
 import LoginForm from '../Pages/Login/LoginForm';
 import { PrivateRoute } from '../Pages/Login/PrivateRoute';
 import Unauthorized from './Unauthorized';
 import Missing from './Missing';
 import { MainLayout } from '../Layouts/MainLayout';
-import GenerateMem from '../Pages/GenerateMem/GenerateMem';
+import GenerateMem from '../Pages/GenerateMeme/GenerateMem';
 import { useAuth } from '../hooks/useAuth';
 import { FadeLoader } from 'react-spinners';
 import MemeLoaderContainer from '../Pages/Home/BrowsingMemes/MemeLoaderContainer';
+import SortContainer from '../Pages/Sort/SortContainer';
 
 const ROLES = {
   User: 'ROLE_USER',
@@ -47,7 +47,7 @@ export const App = () => {
 
           {/*Role user*/}
           <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>
-            <Route path="sort" element={atLayout(Sort)} />
+            <Route path="sort" element={atLayout(SortContainer)} />
             <Route path="generatemem" element={atLayout(GenerateMem)} />
           </Route>
         </Routes>
