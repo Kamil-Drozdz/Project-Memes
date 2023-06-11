@@ -6,7 +6,7 @@ import { BiCommentAdd } from 'react-icons/bi';
 import { ToastContainer } from 'react-toastify';
 import SkeletonLoader from '../../../components/SkeletonLoader';
 import photoError from '/@/assets/error.png';
-import Comments from '../Comments';
+import Comments from '../Comments/Comments';
 import { TfiArrowUp } from 'react-icons/tfi';
 import { Meme } from './MemeLoaderContainer';
 

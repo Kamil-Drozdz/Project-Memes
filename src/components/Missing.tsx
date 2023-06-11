@@ -2,7 +2,15 @@ import caveman from '../assets/caveman-error.gif';
 import { Link } from 'react-router-dom';
 import { withLanguage } from '../HOC/withLanguage';
 
-const Missing = ({ texts }) => {
+interface MissingProps {
+  texts: {
+    missing: string;
+    mainPage: string;
+    or: string;
+    sortMemes: string;
+  };
+}
+const Missing = ({ texts }: MissingProps) => {
   return (
     <div className=" h-[92vh] md:h-[86vh]">
       <img className="mx-auto my-auto h-[50%] object-contain" src={caveman} alt="a caveman lost, chewing a cable"></img>

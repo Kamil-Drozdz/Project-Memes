@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import LoginForm from '../Pages/Login/LoginForm';
 import { PrivateRoute } from '../Pages/Login/PrivateRoute';
 import Unauthorized from './Unauthorized';
 import Missing from './Missing';
@@ -10,6 +9,7 @@ import { useAuth } from '../hooks/useAuth';
 import { FadeLoader } from 'react-spinners';
 import MemeLoaderContainer from '../Pages/Home/BrowsingMemes/MemeLoaderContainer';
 import SortContainer from '../Pages/Sort/SortContainer';
+import LoginFormContainer from '../Pages/Login/LoginFormContainer';
 
 const ROLES = {
   User: 'ROLE_USER',
@@ -40,7 +40,7 @@ export const App = () => {
       ) : (
         <Routes>
           {/* Without roles */}
-          <Route path="/login" element={atLayout(LoginForm)} />
+          <Route path="/login" element={atLayout(LoginFormContainer)} />
           <Route path="unauthorized" element={atLayout(Unauthorized)} />
           <Route path="*" element={atLayout(Missing)} />
           <Route path="/" element={atLayout(MemeLoaderContainer, 'max-w-full xl:max-w-[99.1vw] 2xl:max-w-full ')} />

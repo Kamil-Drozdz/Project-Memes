@@ -1,6 +1,15 @@
 import { withLanguage } from '../../HOC/withLanguage';
 
-const PasswordResetForm = ({ texts, setShowPasswordReset }) => {
+interface PasswordResetProps {
+  texts: {
+    remindPassword: string;
+    email: string;
+    sendPassword: string;
+    back: string;
+  };
+  setShowPasswordReset: (value: boolean) => void;
+}
+const PasswordResetForm: React.FC<PasswordResetProps> = ({ texts, setShowPasswordReset }) => {
   return (
     <form className="flex flex-col items-center justify-center rounded-lg bg-gray-800 p-8">
       <h2 className="mb-4 text-lg font-bold text-white">{texts.remindPassword}</h2>

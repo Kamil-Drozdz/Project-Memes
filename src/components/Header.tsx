@@ -5,12 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare, faRandom, faSortAmountAsc, faGlobe, faUser, faFileLines } from '@fortawesome/free-solid-svg-icons';
 import { LanguageContext } from '../context/LanguageProvider';
 import { withLanguage } from '../HOC/withLanguage';
-import { QRCodeGenerator } from './QRCodeGenerator';
 import { BiQr } from 'react-icons/bi';
 import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
 import Checkout from '../payments/Checkout/CheckoutContainer';
 import { SubscriptionContext } from '../context/SubscriptionProvider';
+import QRCodeContainer from './QRCode/QRCodeContainer';
 
 const Header = ({ texts }) => {
   const [isOpen, setOpen] = useState(false);
@@ -55,7 +55,7 @@ const Header = ({ texts }) => {
           </button>
           <button className="ml-20 hidden md:flex" onClick={() => setShowQRCode(!showQRCode)}>
             {<BiQr className="text-2xl text-orange-600" />}
-            {showQRCode && <QRCodeGenerator />}
+            {showQRCode && <QRCodeContainer />}
           </button>
         </div>
         <NavItem to="/" text={texts.browse} icon={faRandom} />

@@ -2,7 +2,13 @@ import unauthorizedPhoto from '../assets/unauthorized-error.png';
 import { Link } from 'react-router-dom';
 import { withLanguage } from '../HOC/withLanguage';
 
-const Unauthorized = ({ texts }) => {
+interface UnauthorizedProps {
+  texts: {
+    unauthorized: string;
+    logIn: string;
+  };
+}
+const Unauthorized = ({ texts }: UnauthorizedProps) => {
   return (
     <div className=" h-[92vh] md:h-[86vh]">
       <img className="mx-auto my-auto h-[50%] object-contain" src={unauthorizedPhoto} alt="named you shall not pass"></img>
