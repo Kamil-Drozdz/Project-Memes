@@ -6,9 +6,9 @@ import { BiCommentAdd } from 'react-icons/bi';
 import { ToastContainer } from 'react-toastify';
 import SkeletonLoader from '../../../components/SkeletonLoader';
 import photoError from '/@/assets/error.png';
-import Comments from '../Comments/Comments';
 import { TfiArrowUp } from 'react-icons/tfi';
 import { Meme } from './MemeLoaderContainer';
+import CommentsContainer from '../Comments/CommentsContainer';
 
 interface InfiniteScrollProps {
   data: Meme[];
@@ -52,7 +52,7 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoade
                     handleVoice(meme.id, true);
                   }
                 }}
-                className="z-[2] rounded border-b-4 border-green-800 bg-green-700 px-[6px] font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400"
+                className="z-[2] rounded border-b-4 border-green-800 bg-green-700 px-[8px] py-[6px] font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400"
               >
                 {meme?.userReaction?.id === 'like' ? <AiFillLike size={20} /> : <AiOutlineLike size={20} />}
               </button>
@@ -62,24 +62,24 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoade
                     handleVoice(meme.id, false);
                   }
                 }}
-                className="z-[2] mx-1 w-fit rounded border-b-4 border-red-800 bg-red-700 px-[6px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400"
+                className="z-[2] mx-1 w-fit rounded border-b-4 border-red-800 bg-red-700  px-[8px] py-[6px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400"
               >
                 {meme?.userReaction?.id === 'dislike' ? <AiFillDislike size={20} /> : <AiOutlineDislike size={20} />}
               </button>
-              <p className="rounded bg-gray-700 px-[10px] font-bold text-white">{lastUpdatedMeme && lastUpdatedMeme.id === meme.id ? lastUpdatedMeme.likeCount - lastUpdatedMeme.dislikeCount : (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
+              <p className="rounded bg-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{lastUpdatedMeme && lastUpdatedMeme.id === meme.id ? lastUpdatedMeme.likeCount - lastUpdatedMeme.dislikeCount : (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
               <button
-                className="z-[2] ml-1 rounded border-b-4 border-orange-800 bg-orange-700 px-2 font-bold text-black shadow-lg"
+                className="z-[2] ml-1 rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400 px-[10px] font-bold text-black shadow-lg"
                 onClick={() => {
                   if (meme.id !== undefined) {
                     handleComments(meme.id);
                   }
                 }}
               >
-                <BiCommentAdd className="my-1" />
+                <BiCommentAdd size={20} />
               </button>
             </div>
           </div>
-          {showComments === meme.id && <Comments id={meme.id} />}
+          {showComments === meme.id && <CommentsContainer id={meme.id} />}
         </div>
       ))}
       {showArrow && (

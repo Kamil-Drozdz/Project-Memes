@@ -2,6 +2,7 @@ import { Category } from './Category';
 import { Type } from './Type';
 import { BooleanChooseField } from './BooleanChooseField';
 import { SortProps } from './SortContainer';
+import TypeContainer from './TypeContainer';
 
 export const Form = ({ texts, form, formErrors, handleSubmit, categorySelectRef, typeSelectRef, handleChange }: SortProps) => {
   const hasEmptyFields = formErrors && Object.values(formErrors).some((error) => error);
@@ -9,7 +10,7 @@ export const Form = ({ texts, form, formErrors, handleSubmit, categorySelectRef,
   return (
     <form className=" ml-4 pt-4 md:mx-16 md:pt-12" onSubmit={handleSubmit}>
       <Category texts={texts} handleChange={handleChange} categorySelectRef={categorySelectRef} />
-      <Type texts={texts} handleChange={handleChange} typeSelectRef={typeSelectRef} />
+      <TypeContainer texts={texts} handleChange={handleChange} typeSelectRef={typeSelectRef} />
       {form && (
         <>
           <BooleanChooseField
