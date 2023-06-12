@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { SubscriptionContext } from '../../context/SubscriptionProvider';
 import { useAuth } from '../../hooks/useAuth';
-import { AuthContextType } from '../../context/AuthProvider';
+
 import { withLanguage } from '../../HOC/withLanguage';
 import Checkout from './Checkout';
 
@@ -16,7 +16,7 @@ export type CheckoutProps = {
 };
 
 const CheckoutContainer: React.FC<CheckoutProps> = ({ texts }) => {
-  const { auth } = useAuth() as AuthContextType;
+  const { auth } = useAuth();
   const [showPayment, setShowPayment] = useState(false);
   const contextValue = useContext(SubscriptionContext);
   if (!contextValue) {
@@ -32,7 +32,7 @@ const CheckoutContainer: React.FC<CheckoutProps> = ({ texts }) => {
     }
   };
 
-  const onToken = (token: any) => {
+  const onToken = () => {
     setSubscription(true);
   };
 

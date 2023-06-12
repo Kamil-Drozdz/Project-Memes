@@ -47,13 +47,13 @@ const LoginFormContainer: React.FC<LoginFormContainerProps> = ({ texts }) => {
       Cookies.set('token', token);
       navigate('/');
     } catch (error) {
-      setError(error.message);
+      setError(error as string);
     } finally {
       setIsLoading(false);
     }
   };
 
-  return <LoginForm texts={texts} showPasswordReset={showPasswordReset} setShowPasswordReset={setShowPasswordReset} showRegistration={showRegistration} setShowRegistration={setShowRegistration} handleSubmit={handleSubmit} error={error} isLoading={isLoading} email={email} setEmail={setEmail} password={password} setPassword={setPassword} />;
+  return <LoginForm {...{ texts, showPasswordReset, setShowPasswordReset, showRegistration, setShowRegistration, handleSubmit, error, isLoading, email, setEmail, password, setPassword }} />;
 };
 
 export default withLanguage(LoginFormContainer);

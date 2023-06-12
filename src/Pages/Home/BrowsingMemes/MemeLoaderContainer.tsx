@@ -22,14 +22,6 @@ export interface Meme {
   userReaction: UserReaction;
 }
 
-interface PropsAuth {
-  email?: string | null;
-  password?: string | null;
-  userId: string | null;
-  userNick?: string | null;
-  token: string | null;
-}
-
 const MemeLoaderContainer: React.FC = ({ texts }: any) => {
   const [data, setData] = useState<Meme[]>([]);
   const [page, setPage] = useState(1);
@@ -40,7 +32,7 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
   const [showComments, setShowComments] = useState<number | null>(null);
   const { data: memeFetching, isLoading, refetch } = useFetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes?page=${page}&limit=10`);
   const memeColections = memeFetching?._embedded?.items;
-  const { auth } = useAuth() as { auth: PropsAuth };
+  const { auth } = useAuth();
 
   const loadMoreMemes = () => {
     setPage(page + 1);
@@ -132,7 +124,7 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  return <InfiniteScrollComponent data={data} showArrow={showArrow} loadMoreMemes={loadMoreMemes} isLoaded={isLoaded} showError={showError} handleImageLoaded={handleImageLoaded} lastUpdatedMeme={lastUpdatedMeme} showComments={showComments} handleClick={handleClick} handleVoice={handleVoice} handleComments={handleComments} />;
+  return <InfiniteScrollComponent {...{ data, loadMoreMemes, lastUpdatedMeme, isLoaded, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }} />;
 };
 
 export default withLanguage(MemeLoaderContainer);

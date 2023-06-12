@@ -5,7 +5,7 @@ import { Form } from './Form';
 import { ToastContainer } from 'react-toastify';
 import { SortProps } from './SortContainer';
 
-const Sort = ({ texts, isLoading, meme, form, formErrors, categorySelectRef, typeSelectRef, setForm, setFormErrors, handleSubmit, handleChange }: SortProps) => {
+const Sort = ({ texts, isLoading, meme, form, formErrors, categorySelectRef, typeSelectRef, handleSubmit, handleChange }: SortProps) => {
   return (
     <>
       {isLoading ? (
@@ -21,7 +21,7 @@ const Sort = ({ texts, isLoading, meme, form, formErrors, categorySelectRef, typ
             <RandomMeme texts={texts} randomMeme={meme} />
             <ToastContainer position="bottom-left" autoClose={2000} hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
 
-            <Form texts={texts} form={form} formErrors={formErrors} categorySelectRef={categorySelectRef} typeSelectRef={typeSelectRef} setForm={setForm} setFormErrors={setFormErrors} handleSubmit={handleSubmit} handleChange={handleChange} />
+            <Form {...{ texts, form, formErrors, handleSubmit, categorySelectRef, typeSelectRef, handleChange }} />
 
             <div className="flex w-full justify-center md:block md:w-auto md:pl-16 ">
               <Ads />

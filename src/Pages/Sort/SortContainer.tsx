@@ -23,12 +23,6 @@ interface FormValues {
   [key: string]: string | { id: string };
 }
 
-interface AuthProps {
-  auth: {
-    token: string;
-  };
-}
-
 export interface TextsProps {
   texts: {
     notificationToastSuccesSortMeme?: string;
@@ -64,7 +58,7 @@ const SortContainer = ({ texts }: SortProps) => {
   const categorySelectRef = useRef<HTMLSelectElement>(null);
   const typeSelectRef = useRef<HTMLSelectElement>(null);
 
-  const { auth } = useAuth() as AuthProps;
+  const { auth } = useAuth();
   const [formErrors, setFormErrors] = useState({
     category: true,
     type: true,
@@ -146,6 +140,6 @@ const SortContainer = ({ texts }: SortProps) => {
     });
   };
 
-  return <Sort texts={texts} handleSubmit={handleSubmit} handleChange={handleChange} meme={meme} isLoading={isLoading} form={form} formErrors={formErrors} categorySelectRef={categorySelectRef} typeSelectRef={typeSelectRef} setForm={setForm} setFormErrors={setFormErrors} />;
+  return <Sort {...{ texts, isLoading, meme, form, formErrors, categorySelectRef, typeSelectRef, handleSubmit, handleChange }} />;
 };
 export default withLanguage(SortContainer);

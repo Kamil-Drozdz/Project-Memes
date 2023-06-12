@@ -15,14 +15,8 @@ export interface CommentType {
   text: string;
 }
 
-interface AuthProps {
-  auth: {
-    userNick: string;
-  };
-}
-
 const CommentsContainer: React.FC<CommentsProps> = ({ texts, id }) => {
-  const { auth } = useAuth() as AuthProps;
+  const { auth } = useAuth();
   const [comments, setComments] = useState<CommentType[]>([]);
   const [comment, setComment] = useState('');
   const [errorMessage, setErrorMessage] = useState(false);
@@ -70,7 +64,7 @@ const CommentsContainer: React.FC<CommentsProps> = ({ texts, id }) => {
         console.error('Error fetching comments:', error);
       });
   };
-  return <Comments texts={texts} handleComment={handleComment} errorMessage={errorMessage} authMessage={authMessage} comments={comments} comment={comment} setComment={setComment} />;
+  return <Comments {...{ texts, handleComment, errorMessage, authMessage, comments, comment, setComment }} />;
 };
 
 export default withLanguage(CommentsContainer);

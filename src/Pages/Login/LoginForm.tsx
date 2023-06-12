@@ -1,7 +1,7 @@
-import RegistrationForm from './RegistrationForm';
 import PasswordResetForm from './PasswordResetForm';
 import { PulseLoader } from 'react-spinners';
 import { FormEvent } from 'react';
+import RegistrationFormContainer from './RegistrationFormContainer';
 
 interface LoginFormProps {
   texts: {
@@ -30,7 +30,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ texts, showPasswordReset, setShow
       {showPasswordReset ? (
         <PasswordResetForm setShowPasswordReset={setShowPasswordReset} />
       ) : showRegistration ? (
-        <RegistrationForm setShowRegistration={setShowRegistration} />
+        <RegistrationFormContainer setShowRegistration={setShowRegistration} />
       ) : (
         <form className="relative w-[70vw] rounded-lg bg-gray-800 p-4 md:absolute md:w-[20vw]" onSubmit={handleSubmit}>
           {error && <p className="text-red-500">{error}</p>}

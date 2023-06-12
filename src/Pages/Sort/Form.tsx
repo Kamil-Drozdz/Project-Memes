@@ -1,5 +1,4 @@
 import { Category } from './Category';
-import { Type } from './Type';
 import { BooleanChooseField } from './BooleanChooseField';
 import { SortProps } from './SortContainer';
 import TypeContainer from './TypeContainer';

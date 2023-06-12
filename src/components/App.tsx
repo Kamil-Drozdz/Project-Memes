@@ -28,7 +28,7 @@ const atLayout = (Component: React.ComponentType<any>, extraStyles = '') => {
 };
 
 export const App = () => {
-  const { isLoading } = useAuth() ?? {};
+  const { isLoading } = useAuth();
 
   return (
     <div>

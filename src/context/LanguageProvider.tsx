@@ -1,6 +1,12 @@
 import { ReactNode, createContext, useState } from 'react';
 
-export const LanguageContext = createContext({});
+export interface LanguageContextType {
+  language: string;
+  setLanguage: (lang: string) => void;
+}
+
+export const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
 const SUPPORTED_LANGS = ['en', 'pl'];
 const BROWSER_LANG = navigator.language.slice(0, 2);
 
