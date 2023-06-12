@@ -1,15 +1,10 @@
-import { ChangeEvent, RefObject, useMemo } from 'react';
+import { useMemo } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { Type, TypeItem } from './Type';
+import { SortProps } from './SortContainer';
 
-interface TypeProps {
-  handleChange?: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => void;
-
-  typeSelectRef: RefObject<HTMLSelectElement>;
-  texts: {
-    type: string;
-  };
-  memoizedTypes: TypeItem[];
+export interface TypeProps extends SortProps {
+  memoizedTypes?: TypeItem[];
 }
 
 const TypeContainer: React.FC<TypeProps> = ({ texts, handleChange, typeSelectRef }) => {

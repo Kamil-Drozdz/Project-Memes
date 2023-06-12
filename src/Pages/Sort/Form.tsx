@@ -1,5 +1,5 @@
-import { Category } from './Category';
 import { BooleanChooseField } from './BooleanChooseField';
+import CategoryContainer from './CategoryContainer';
 import { SortProps } from './SortContainer';
 import TypeContainer from './TypeContainer';
 
@@ -8,7 +8,7 @@ export const Form = ({ texts, form, formErrors, handleSubmit, categorySelectRef,
 
   return (
     <form className=" ml-4 pt-4 md:mx-16 md:pt-12" onSubmit={handleSubmit}>
-      <Category texts={texts} handleChange={handleChange} categorySelectRef={categorySelectRef} />
+      <CategoryContainer texts={texts} handleChange={handleChange} categorySelectRef={categorySelectRef} />
       <TypeContainer texts={texts} handleChange={handleChange} typeSelectRef={typeSelectRef} />
       {form && (
         <>

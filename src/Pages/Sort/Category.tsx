@@ -1,14 +1,9 @@
-import { useMemo } from 'react';
-import useFetch from '../../hooks/useFetch';
-import { SortProps } from './SortContainer';
+import { CategoryProps } from './CategoryContainer';
 
-interface CategoryItem {
+export interface CategoryItem {
   id: string;
 }
-export const Category = ({ handleChange, categorySelectRef, texts }: SortProps) => {
-  const categories = useFetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/meme-categories`).data?._embedded?.items;
-  const memoizedCategories = useMemo(() => categories, [categories]);
-
+export const Category = ({ categorySelectRef, texts, memoizedCategories, handleChange }: CategoryProps) => {
   return (
     <div className="mb-4">
       <select name="category" ref={categorySelectRef} className="mt-3 flex rounded-full bg-gray-300 py-2 px-4 font-bold text-gray-800 hover:bg-gray-400" onChange={handleChange} defaultValue="Category">
