@@ -12,7 +12,7 @@ const UserPanelContainer = () => {
   moment.locale(`${language}`);
   const lastLogin = moment(auth.lastLogin).fromNow();
   const [userData, setUserData] = useState({
-    nickname: auth.userNick,
+    userNick: auth.userNick,
     email: auth.email,
     currentPassword: '',
     password: '',
@@ -32,10 +32,10 @@ const UserPanelContainer = () => {
     let filteredData = {};
     if (activePanel === 'information') {
       filteredData = {
-        nickname: userData.nickname,
+        userNick: userData.userNick,
         email: userData.email
       };
-    } else if (activePanel === 'passwordPanel') {
+    } else if (activePanel === 'password') {
       filteredData = {
         currentPassword: userData.currentPassword,
         password: userData.password,
@@ -47,17 +47,17 @@ const UserPanelContainer = () => {
       const response = await fetch(`${import.meta.env.VITE_APP_API_BASE_URL}users/users/${auth.userId}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          Authorization: `Bearer ${auth.token}`
         },
         body: JSON.stringify(filteredData)
       });
-      console.log(filteredData);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
 
-  return <UserPanel {...{ auth, lastLogin, userData, handleUserDataChange, handleSubmit, activePanel, setActivePanel }} />;
+  return <UserPanel  {...{ auth, lastLogin, userData, handleUserDataChange, handleSubmit, activePanel, setActivePanel }} />;
 };
 
 export default UserPanelContainer;

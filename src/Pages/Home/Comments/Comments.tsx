@@ -14,6 +14,7 @@ interface CommentsProps {
     errorMessageComment: string;
     userMessageComment: string;
     comments: string;
+    undefinedDateText: string;
   };
 }
 const Comments: React.FC<CommentsProps> = ({ texts, handleComment, errorMessage, authMessage, comments, comment, setComment }) => {

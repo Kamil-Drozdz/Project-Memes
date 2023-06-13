@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { useAuth } from '../../hooks/useAuth';
 import { withLanguage } from '../../HOC/withLanguage';
 import LoginForm from './LoginForm';
-import { AuthContextType } from '../../context/AuthProvider';
+
 
 interface LoginFormContainerProps {
   texts: {
@@ -25,7 +25,7 @@ const LoginFormContainer: React.FC<LoginFormContainerProps> = ({ texts }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setAuth } = useAuth() as AuthContextType;
+  const { setAuth } = useAuth();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -43,7 +43,8 @@ const LoginFormContainer: React.FC<LoginFormContainerProps> = ({ texts }) => {
       const userNick = user.displayName;
       const roles = user?.roles;
       const userId = user?.id;
-      setAuth({ email, password, roles, userId, userNick, token });
+      const lastLogin = user?.lastLogin;
+      setAuth({ email, password, roles, userId, lastLogin, userNick, token });
       Cookies.set('token', token);
       navigate('/');
     } catch (error) {

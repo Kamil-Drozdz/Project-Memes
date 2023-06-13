@@ -1,11 +1,12 @@
-import moment from 'moment';
 import { FcReddit } from 'react-icons/fc';
 import { CommentType } from './CommentsContainer';
+import moment from 'moment';
 
 interface CommentListProps {
   comments: CommentType[];
   texts: {
     comments: string;
+    undefinedDateText: string;
   };
 }
 
@@ -23,7 +24,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, texts }) => (
           <div className="w-full px-1 md:px-4">
             <div className="flex items-center justify-start">
               <p className="text-xs text-white md:text-base md:font-bold">{comment?.user?.displayName}</p>
-              <p className="ml-4 overflow-hidden whitespace-nowrap text-[8px] text-gray-500 md:text-xs">{comment?.createdTimestamp ? moment(comment.createdTimestamp).fromNow() : 'nie określona data dodania'}</p>
+              <p className="ml-4 overflow-hidden whitespace-nowrap text-[8px] text-gray-500 md:text-xs">{comment?.createdTimestamp ? moment(comment?.createdTimestamp).fromNow() : texts.undefinedDateText}</p>
             </div>
             <li className=" w-full break-words p-2 text-xs text-white md:text-base">{comment?.text}</li>
           </div>

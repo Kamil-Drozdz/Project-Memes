@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { withLanguage } from '../../HOC/withLanguage';
 import RegistrationForm from './RegistrationForm';
+import { useAuth } from '../../hooks/useAuth';
 
 export interface RegistrationFormProps {
   setShowRegistration: (value: boolean) => void;
@@ -11,6 +12,8 @@ export interface RegistrationFormProps {
   isLoading: boolean;
   email: string;
   setEmail: (value: string) => void;
+  user: string;
+  setUser: (value: string) => void;
   password: string;
   setPassword: (value: string) => void;
   confirmPassword: string;
@@ -21,11 +24,13 @@ export interface RegistrationFormProps {
     confirmPassword: string;
     back: string;
     register: string;
+    userNick: string;
   };
 }
 
 const RegistrationFormContainer: React.FC<RegistrationFormProps> = ({ setShowRegistration, texts }) => {
   const [user, setUser] = useState('');
+  const { auth } = useAuth();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState('');
@@ -62,7 +67,7 @@ const RegistrationFormContainer: React.FC<RegistrationFormProps> = ({ setShowReg
       setIsLoading(false);
     }
   };
-  return <RegistrationForm {...{ texts, handleSubmit, error, isLoading, setShowRegistration, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword }} />;
+  return <RegistrationForm {...{ texts, handleSubmit, error, isLoading, setShowRegistration, email, setEmail, user, setUser, password, setPassword, confirmPassword, setConfirmPassword }} />;
 };
 
 export default withLanguage(RegistrationFormContainer);

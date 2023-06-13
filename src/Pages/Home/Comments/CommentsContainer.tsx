@@ -3,9 +3,12 @@ import Cookies from 'js-cookie';
 import { useState, useEffect, FormEvent } from 'react';
 import { withLanguage } from '../../../HOC/withLanguage';
 import Comments from './Comments';
+import 'moment/dist/locale/pl';
+import { useLanguage } from '../../../hooks/useLanguage';
+import moment from 'moment';
 
 interface CommentsProps {
-  texts: { comments: string; addComment: string; errorMessageComment: string; userMessageComment: string };
+  texts: { comments: string; addComment: string; errorMessageComment: string; userMessageComment: string; undefinedDateText: string };
   id: number;
 }
 
@@ -17,11 +20,13 @@ export interface CommentType {
 
 const CommentsContainer: React.FC<CommentsProps> = ({ texts, id }) => {
   const { auth } = useAuth();
+  const { language } = useLanguage();
   const [comments, setComments] = useState<CommentType[]>([]);
   const [comment, setComment] = useState('');
   const [errorMessage, setErrorMessage] = useState(false);
   const [authMessage, setAuthMessage] = useState(false);
   const token = Cookies.get('token');
+  moment.locale(`${language}`);
 
   useEffect(() => {
     fetchComments();
