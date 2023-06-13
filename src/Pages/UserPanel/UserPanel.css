@@ -1,0 +1,7 @@
+.target {
+  transform: translateX(0rem);
+}
+.target:hover .icon {
+  transform: translateX(0.5rem);
+  transition: transform 0.3s ease;
+}

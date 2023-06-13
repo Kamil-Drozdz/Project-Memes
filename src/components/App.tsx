@@ -10,6 +10,7 @@ import { FadeLoader } from 'react-spinners';
 import MemeLoaderContainer from '../Pages/Home/BrowsingMemes/MemeLoaderContainer';
 import SortContainer from '../Pages/Sort/SortContainer';
 import LoginFormContainer from '../Pages/Login/LoginFormContainer';
+import UserPanelContainer from '../Pages/UserPanel/UserPanelContainer';
 
 const ROLES = {
   User: 'ROLE_USER',
@@ -49,6 +50,7 @@ export const App = () => {
           <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>
             <Route path="sort" element={atLayout(SortContainer)} />
             <Route path="generatemem" element={atLayout(GenerateMem)} />
+            <Route path="userpanel" element={atLayout(UserPanelContainer)} />
           </Route>
         </Routes>
       )}

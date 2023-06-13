@@ -9,6 +9,7 @@ export interface AuthContextType {
     password: string | null;
     roles: string | null;
     userId: string | null;
+    lastLogin: string | null;
     userNick: string | null;
     token: string | null;
   };
@@ -18,6 +19,7 @@ export interface AuthContextType {
       password: string | null;
       roles: string | null;
       userId: string | null;
+      lastLogin: string | null;
       userNick: string | null;
       token: string | null;
     }>
@@ -37,6 +39,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     password: null,
     roles: null,
     userId: null,
+    lastLogin: null,
     userNick: null,
     token: Cookies.get('token') || null
   });
@@ -56,10 +59,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           }
           const data = await response.json();
           const email = data.email;
+          const lastLogin = data.lastLogin;
           const userNick = data.displayName;
           const roles = data.roles;
           const userId = data.id;
-          setAuth({ ...auth, roles, userId, userNick, email });
+
+          setAuth({ ...auth, roles, userId, userNick, email, lastLogin });
           navigate('/');
         } catch (error) {
           console.error(error);

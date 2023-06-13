@@ -1,12 +1,12 @@
 import { useAuth } from '../../hooks/useAuth';
 import { Dispatch, useEffect, SetStateAction } from 'react';
-import { LanguageContext, LanguageContextType } from '../../context/LanguageProvider';
 import { useState, useContext } from 'react';
 import { SubscriptionContext, SubscriptionContextType } from '../../context/SubscriptionProvider';
 import { withLanguage } from '../../HOC/withLanguage';
 import Header from './Header';
+import { useLanguage } from '../../hooks/useLanguage';
 
-export interface HeaderContainerProps{
+export interface HeaderContainerProps {
   isOpen: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   language: string;
@@ -35,7 +35,7 @@ export interface HeaderContainerProps{
 
 const HeaderContainer: React.FC<HeaderContainerProps> = ({ texts }) => {
   const [isOpen, setOpen] = useState(false);
-  const { language, setLanguage } = useContext(LanguageContext) as LanguageContextType;
+  const { language, setLanguage } = useLanguage();
   const { subscription } = useContext(SubscriptionContext) as SubscriptionContextType;
   const [showQRCode, setShowQRCode] = useState(false);
   const [showLogin, setShowLogin] = useState(false);

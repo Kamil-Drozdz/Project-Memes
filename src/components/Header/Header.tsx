@@ -46,8 +46,10 @@ const Header: React.FC<HeaderContainerProps> = ({ texts, isOpen, setOpen, langua
         {showLogin ? (
           <NavItemContainer to="/login" text={texts.logIn} icon={faUser} />
         ) : (
-          <p className=" absolute left-[25%] text-white">
-            {texts.hi}, {auth?.userNick}
+          <p title="kliknij by przenieść się do panelu użytkownika" className=" absolute left-[25%] text-white">
+            <Link to="/userpanel">
+              {texts.hi}, {auth?.userNick}
+            </Link>
           </p>
         )}
         {subscription || <Checkout />}
