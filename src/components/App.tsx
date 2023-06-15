@@ -50,7 +50,7 @@ export const App = () => {
           <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>
             <Route path="sort" element={atLayout(SortContainer)} />
             <Route path="generatemem" element={atLayout(GenerateMem)} />
-            <Route path="userpanel" element={atLayout(UserPanelContainer)} />
+            <Route path="profile" element={atLayout(UserPanelContainer)} />
           </Route>
         </Routes>
       )}

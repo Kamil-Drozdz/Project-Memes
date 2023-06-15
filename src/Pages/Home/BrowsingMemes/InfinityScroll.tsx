@@ -33,9 +33,9 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoade
   ) : (
     <InfiniteScroll dataLength={data?.length} loader={<FadeLoader className="my-6 h-full w-full text-red-600 " color="orange" />} hasMore={true} next={loadMoreMemes} scrollThreshold={0.8} className="flex min-h-[83vh] flex-col items-center justify-center bg-gray-700 shadow-lg ">
       {!!data.length && (
-        <div className="top-96 -z-0 flex w-full items-center justify-center px-36 md:fixed md:justify-between">
+        <div className="md:top-[10%] mt-12 mb-4  relative -z-0 md:flex w-full items-center justify-center px-0  xs:px-10 xl:px-20  2xl:px-36 md:fixed md:justify-between ">
           <Ads />
-          <div className="hidden md:block">
+          <div className="hidden md:block my-8 ">
             <Ads />
           </div>
         </div>
@@ -90,7 +90,11 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoade
         </div>
       )}
       <ToastContainer position="bottom-left" hideProgressBar={false} limit={1} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
-      {!!data.length && <Ads />}
+      {!!data.length && (
+        <div className="my-4 w-full md:w-auto md:h-auto h-full">
+          <Ads />
+        </div>
+      )}
     </InfiniteScroll>
   );
 };
