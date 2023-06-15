@@ -66,7 +66,7 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoade
               >
                 {meme?.userReaction?.id === 'dislike' ? <AiFillDislike size={20} /> : <AiOutlineDislike size={20} />}
               </button>
-              <p className="rounded bg-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{lastUpdatedMeme && lastUpdatedMeme.id === meme.id ? lastUpdatedMeme.likeCount - lastUpdatedMeme.dislikeCount : (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
+              <p className="rounded bg-gray-600 border-b-4 border-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{lastUpdatedMeme && lastUpdatedMeme.id === meme.id ? lastUpdatedMeme.likeCount - lastUpdatedMeme.dislikeCount : (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
               <button
                 className="z-[2] ml-1 rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400 px-[10px] font-bold text-black shadow-lg"
                 onClick={() => {

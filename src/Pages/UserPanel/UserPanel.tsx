@@ -1,6 +1,6 @@
 import { FcReddit } from 'react-icons/fc';
 import { HiDownload } from 'react-icons/hi';
-import { RiUserSettingsLine } from 'react-icons/Ri';
+import { RiUserSettingsLine } from 'react-icons/ri';
 import { BiLock, BiUserCircle } from 'react-icons/bi';
 import './UserPanel.css';
 import { ListItem } from './ListItem';

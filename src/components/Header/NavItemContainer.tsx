@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { NavItem } from './NavItem';
+import NavItem from './NavItem';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 export interface NavItemContainerProps {
