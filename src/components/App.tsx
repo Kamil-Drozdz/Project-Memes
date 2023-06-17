@@ -19,9 +19,9 @@ const ROLES = {
 };
 
 //fixed max size with infinity scroll div set, which extends the page, temporarily solves the problem with the scroll on x
-const atLayout = (Component: React.ComponentType<any>, extraStyles = '') => {
+const atLayout = (Component: React.ComponentType<any>) => {
   return (
-    <div className={` max-h-full min-h-screen w-screen bg-gray-600  ${extraStyles}`}>
+    <div className={` max-h-full min-h-screen max-w-screen bg-gray-600  `}>
       <MainLayout>
         <Component />
       </MainLayout>
@@ -52,7 +52,7 @@ export const App = () => {
           <Route path="/meme/:id" element={atLayout(MemeInteraction)} />
           <Route path="unauthorized" element={atLayout(Unauthorized)} />
           <Route path="*" element={atLayout(Missing)} />
-          <Route path="/" element={atLayout(MemeLoaderContainer, 'max-w-full xl:max-w-[99.1vw] 2xl:max-w-full ')} />
+          <Route path="/" element={atLayout(MemeLoaderContainer)} />
         </Routes>
       )}
     </div>

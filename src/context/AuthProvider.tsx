@@ -65,7 +65,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           const userId = data.id;
 
           setAuth({ ...auth, roles, userId, userNick, email, lastLogin });
-          navigate('/');
         } catch (error) {
           console.error(error);
         } finally {

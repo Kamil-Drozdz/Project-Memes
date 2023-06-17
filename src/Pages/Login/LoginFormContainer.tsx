@@ -1,10 +1,9 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useAuth } from '../../hooks/useAuth';
 import { withLanguage } from '../../HOC/withLanguage';
 import LoginForm from './LoginForm';
-
 
 interface LoginFormContainerProps {
   texts: {
@@ -25,7 +24,13 @@ const LoginFormContainer: React.FC<LoginFormContainerProps> = ({ texts }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { setAuth, auth } = useAuth();
+
+  useEffect(() => {
+    if (auth.token) {
+      navigate('/');
+    }
+  }, [auth.token, navigate]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

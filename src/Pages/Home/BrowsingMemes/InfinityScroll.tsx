@@ -13,7 +13,6 @@ import CommentsContainer from '../Comments/CommentsContainer';
 interface InfiniteScrollProps {
   data: Meme[];
   loadMoreMemes: () => void;
-  lastUpdatedMeme: Meme | null;
   isLoaded: boolean[];
   showError: boolean;
   handleImageLoaded: (index: number) => void;
@@ -25,7 +24,7 @@ interface InfiniteScrollProps {
   handleMemeClick: (Id: number) => void;
 }
 
-const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoaded, handleMemeClick, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }: InfiniteScrollProps): React.ReactElement => {
+const InfiniteScrollComponent = ({ data, loadMoreMemes,  isLoaded, handleMemeClick, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }: InfiniteScrollProps): React.ReactElement => {
   return showError ? (
     <div className="flex items-center justify-center border border-gray-700 bg-gray-700 pt-20 shadow-md">
       <img className="m-8 max-h-full min-h-0 max-w-full rounded-t-lg border-4 md:rounded" src={photoError} alt="error" />
@@ -69,7 +68,7 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoade
               >
                 {meme?.userReaction?.id === 'dislike' ? <AiFillDislike size={20} /> : <AiOutlineDislike size={20} />}
               </button>
-              <p className="rounded bg-gray-600 border-b-4 border-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{lastUpdatedMeme && lastUpdatedMeme.id === meme.id ? lastUpdatedMeme.likeCount - lastUpdatedMeme.dislikeCount : (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
+              <p className="rounded bg-gray-600 border-b-4 border-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{ (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
               <button
                 className="ml-1 rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400 px-[10px] font-bold text-black shadow-lg"
                 onClick={() => {

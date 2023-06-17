@@ -5,6 +5,7 @@ import { useAuth } from '../../../hooks/useAuth';
 import InfiniteScrollComponent from './InfinityScroll';
 import { withLanguage } from '../../../HOC/withLanguage';
 import { useNavigate } from 'react-router-dom';
+import { useMemeVote } from '../../../hooks/useMemeVote';
 
 export interface UserReaction {
   id: string;
@@ -25,17 +26,20 @@ export interface Meme {
 
 const MemeLoaderContainer: React.FC = ({ texts }: any) => {
   let navigate = useNavigate();
+
   const [data, setData] = useState<Meme[]>([]);
   const [page, setPage] = useState(1);
   const [isLoaded, setIsLoaded] = useState<boolean[]>([]);
   const [showArrow, setShowArrow] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [lastUpdatedMeme, setLastUpdatedMeme] = useState(null);
+
   const [showComments, setShowComments] = useState<number | null>(null);
   const { data: memeFetching, isLoading, refetch } = useFetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes?page=${page}&limit=10`);
   const memeColections = memeFetching?._embedded?.items;
   const { auth } = useAuth();
-
+  const handleVoice = useMemeVote(texts, (updatedMeme: Meme) => {
+    setData((prevData) => prevData.map((meme) => (meme.id === updatedMeme.id ? updatedMeme : meme)));
+  });
   const loadMoreMemes = () => {
     setPage(page + 1);
   };
@@ -75,37 +79,6 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
     }
   }, [data]);
 
-  const handleVoice = async (memeId: number, isLike: boolean) => {
-    if (!auth.email) {
-      toast.error(`${texts.logIn}`, { autoClose: 2000 });
-      return;
-    }
-    const reaction = isLike ? 'like' : 'dislike';
-    const apiUrl = `${import.meta.env.VITE_APP_API_BASE_URL}memes/memes/${memeId}/reactions`;
-
-    const updateReaction = async (url: string, method = 'POST') => {
-      const response = await fetch(url, {
-        method,
-        headers: { Authorization: `Bearer ${auth.token}` }
-      });
-
-      if (!response.ok) {
-        throw new Error(`Błąd API: ${response.status}`);
-      }
-
-      const updatedMeme = await response.json();
-      setLastUpdatedMeme(updatedMeme);
-      setData((prevData) => prevData.map((meme) => (meme.id === memeId ? updatedMeme : meme)));
-    };
-    try {
-      await updateReaction(`${apiUrl}/${reaction}`);
-      toast.success(isLike ? `${texts.notificationToastSuccesLike}` : `${texts.notificationToastSuccesDisLike}`, { autoClose: 500 });
-    } catch (error) {
-      await updateReaction(`${apiUrl}/reset`);
-      toast.warn(`${texts.notificationToastReset}`, { autoClose: 500 });
-    }
-  };
-
   const handleComments = (memeId: number) => {
     if (showComments === memeId) {
       setShowComments(null);
@@ -130,7 +103,7 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
     navigate(`/meme/${id}`);
   };
 
-  return <InfiniteScrollComponent {...{ data, loadMoreMemes, handleMemeClick, lastUpdatedMeme, isLoaded, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }} />;
+  return <InfiniteScrollComponent {...{ data, loadMoreMemes, handleMemeClick, isLoaded, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }} />;
 };
 
 export default withLanguage(MemeLoaderContainer);
