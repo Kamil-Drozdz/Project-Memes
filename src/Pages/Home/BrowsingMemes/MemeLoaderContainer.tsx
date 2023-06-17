@@ -4,6 +4,7 @@ import useFetch from '../../../hooks/useFetch';
 import { useAuth } from '../../../hooks/useAuth';
 import InfiniteScrollComponent from './InfinityScroll';
 import { withLanguage } from '../../../HOC/withLanguage';
+import { useNavigate } from 'react-router-dom';
 
 export interface UserReaction {
   id: string;
@@ -23,6 +24,7 @@ export interface Meme {
 }
 
 const MemeLoaderContainer: React.FC = ({ texts }: any) => {
+  let navigate = useNavigate();
   const [data, setData] = useState<Meme[]>([]);
   const [page, setPage] = useState(1);
   const [isLoaded, setIsLoaded] = useState<boolean[]>([]);
@@ -124,7 +126,11 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  return <InfiniteScrollComponent {...{ data, loadMoreMemes, lastUpdatedMeme, isLoaded, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }} />;
+  const handleMemeClick = (id: number) => {
+    navigate(`/meme/${id}`);
+  };
+
+  return <InfiniteScrollComponent {...{ data, loadMoreMemes, handleMemeClick, lastUpdatedMeme, isLoaded, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }} />;
 };
 
 export default withLanguage(MemeLoaderContainer);

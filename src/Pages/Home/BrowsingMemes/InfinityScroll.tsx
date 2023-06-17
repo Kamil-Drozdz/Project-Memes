@@ -22,9 +22,10 @@ interface InfiniteScrollProps {
   handleClick: () => void;
   handleVoice: (memeId: number, isLike: boolean) => void;
   handleComments: (memeId: number) => void;
+  handleMemeClick: (Id: number) => void;
 }
 
-const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoaded, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }: InfiniteScrollProps): React.ReactElement => {
+const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoaded, handleMemeClick, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }: InfiniteScrollProps): React.ReactElement => {
   return showError ? (
     <div className="flex items-center justify-center border border-gray-700 bg-gray-700 pt-20 shadow-md">
       <img className="m-8 max-h-full min-h-0 max-w-full rounded-t-lg border-4 md:rounded" src={photoError} alt="error" />
@@ -41,10 +42,12 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoade
         </div>
       )}
       {data?.map((meme, index: number) => (
-        <div className="w-full bg-gray-900 px-4 md:w-[40vw]" key={index}>
+        <div className="w-full bg-gray-900 px-4 md:w-[40vw] z-[3]" key={index}>
           {!isLoaded[index] && <SkeletonLoader />}
           <div className={`${isLoaded[index] ? 'block' : 'hidden'}`}>
-            <div className="m-2 flex w-full items-center justify-center rounded-lg shadow-lg">{meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="mb-12 w-full rounded-lg border-4 object-contain md:rounded" onLoad={() => handleImageLoaded(index)} src={meme.url} aria-label="random meme video" controls /> : <img onLoad={() => handleImageLoaded(index)} className="mr-3 w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme" />}</div>
+            <div onClick={() => meme.id && handleMemeClick(meme.id)} className="m-2 flex cursor-pointer z-[5] w-full items-center justify-center rounded-lg shadow-lg">
+              {meme.url.endsWith('.mp4') || meme.url.endsWith('.avi') ? <video className="mb-12 w-full rounded-lg border-4 object-contain md:rounded" onLoad={() => handleImageLoaded(index)} src={meme.url} aria-label="random meme video" controls /> : <img onLoad={() => handleImageLoaded(index)} className="mr-3 w-full rounded-lg border-4 object-contain md:rounded" src={meme.url} alt="random meme" />}
+            </div>
             <div className="mx-2 mb-8 flex">
               <button
                 onClick={() => {
@@ -52,7 +55,7 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoade
                     handleVoice(meme.id, true);
                   }
                 }}
-                className="z-[2] rounded border-b-4 border-green-800 bg-green-700 px-[8px] py-[6px] font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400"
+                className=" rounded border-b-4 border-green-800 bg-green-700 px-[8px] py-[6px] font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400"
               >
                 {meme?.userReaction?.id === 'like' ? <AiFillLike size={20} /> : <AiOutlineLike size={20} />}
               </button>
@@ -62,13 +65,13 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, lastUpdatedMeme, isLoade
                     handleVoice(meme.id, false);
                   }
                 }}
-                className="z-[2] mx-1 w-fit rounded border-b-4 border-red-800 bg-red-700  px-[8px] py-[6px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400"
+                className=" mx-1 w-fit rounded border-b-4 border-red-800 bg-red-700  px-[8px] py-[6px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400"
               >
                 {meme?.userReaction?.id === 'dislike' ? <AiFillDislike size={20} /> : <AiOutlineDislike size={20} />}
               </button>
               <p className="rounded bg-gray-600 border-b-4 border-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{lastUpdatedMeme && lastUpdatedMeme.id === meme.id ? lastUpdatedMeme.likeCount - lastUpdatedMeme.dislikeCount : (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
               <button
-                className="z-[2] ml-1 rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400 px-[10px] font-bold text-black shadow-lg"
+                className="ml-1 rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400 px-[10px] font-bold text-black shadow-lg"
                 onClick={() => {
                   if (meme.id !== undefined) {
                     handleComments(meme.id);

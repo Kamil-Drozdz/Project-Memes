@@ -11,6 +11,7 @@ import MemeLoaderContainer from '../Pages/Home/BrowsingMemes/MemeLoaderContainer
 import SortContainer from '../Pages/Sort/SortContainer';
 import LoginFormContainer from '../Pages/Login/LoginFormContainer';
 import UserPanelContainer from '../Pages/UserPanel/UserPanelContainer';
+import MemeInteraction from '../Pages/MemeInteraction/MemeInteraction';
 
 const ROLES = {
   User: 'ROLE_USER',
@@ -40,18 +41,18 @@ export const App = () => {
         </div>
       ) : (
         <Routes>
-          {/* Without roles */}
-          <Route path="/login" element={atLayout(LoginFormContainer)} />
-          <Route path="unauthorized" element={atLayout(Unauthorized)} />
-          <Route path="*" element={atLayout(Missing)} />
-          <Route path="/" element={atLayout(MemeLoaderContainer, 'max-w-full xl:max-w-[99.1vw] 2xl:max-w-full ')} />
-
           {/*Role user*/}
           <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>
             <Route path="sort" element={atLayout(SortContainer)} />
             <Route path="generatemem" element={atLayout(GenerateMem)} />
             <Route path="profile" element={atLayout(UserPanelContainer)} />
           </Route>
+          {/* Without roles */}
+          <Route path="/login" element={atLayout(LoginFormContainer)} />
+          <Route path="/meme/:id" element={atLayout(MemeInteraction)} />
+          <Route path="unauthorized" element={atLayout(Unauthorized)} />
+          <Route path="*" element={atLayout(Missing)} />
+          <Route path="/" element={atLayout(MemeLoaderContainer, 'max-w-full xl:max-w-[99.1vw] 2xl:max-w-full ')} />
         </Routes>
       )}
     </div>
