@@ -9,6 +9,7 @@ import photoError from '/@/assets/error.png';
 import { TfiArrowUp } from 'react-icons/tfi';
 import { Meme } from './MemeLoaderContainer';
 import CommentsContainer from '../Comments/CommentsContainer';
+import { TbCheck, TbShare3 } from 'react-icons/tb';
 
 interface InfiniteScrollProps {
   data: Meme[];
@@ -19,12 +20,14 @@ interface InfiniteScrollProps {
   showComments: number | null;
   showArrow: boolean;
   handleClick: () => void;
+  handleCopy: (Id: number) => void;
+  copiedMemeId: number | null;
   handleVoice: (memeId: number, isLike: boolean) => void;
   handleComments: (memeId: number) => void;
   handleMemeClick: (Id: number) => void;
 }
 
-const InfiniteScrollComponent = ({ data, loadMoreMemes,  isLoaded, handleMemeClick, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }: InfiniteScrollProps): React.ReactElement => {
+const InfiniteScrollComponent = ({ data, loadMoreMemes, handleCopy, copiedMemeId, isLoaded, handleMemeClick, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }: InfiniteScrollProps): React.ReactElement => {
   return showError ? (
     <div className="flex items-center justify-center border border-gray-700 bg-gray-700 pt-20 shadow-md">
       <img className="m-8 max-h-full min-h-0 max-w-full rounded-t-lg border-4 md:rounded" src={photoError} alt="error" />
@@ -68,16 +71,26 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes,  isLoaded, handleMemeCli
               >
                 {meme?.userReaction?.id === 'dislike' ? <AiFillDislike size={20} /> : <AiOutlineDislike size={20} />}
               </button>
-              <p className="rounded bg-gray-600 border-b-4 border-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{ (meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
+              <p className="rounded bg-gray-600 border-b-4 border-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{(meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
               <button
-                className="ml-1 rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400 px-[10px] font-bold text-black shadow-lg"
+                onClick={() => {
+                  if (meme.id !== undefined) {
+                    handleCopy(meme.id);
+                  }
+                }}
+                className="z-[2] ml-1 rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400 px-[8px] font-bold text-black shadow-lg"
+              >
+                {copiedMemeId === meme.id ? <TbCheck size={20} className="text-white" /> : <TbShare3 size={20} className="text-white" />}
+              </button>
+              <button
+                className="ml-1 rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400 px-[8px] font-bold text-black shadow-lg"
                 onClick={() => {
                   if (meme.id !== undefined) {
                     handleComments(meme.id);
                   }
                 }}
               >
-                <BiCommentAdd size={20} />
+                <BiCommentAdd className="text-white" size={20} />
               </button>
             </div>
           </div>

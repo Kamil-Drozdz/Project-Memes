@@ -88,7 +88,7 @@ const Header: React.FC<HeaderContainerProps> = ({ texts, isOpen, setOpen, langua
               )}
             </button>
             {showLogin && (
-              <Link to="/" className="absolute left-32 top-3 ml-2 text-orange-500">
+              <Link to="/login" className="absolute left-32 top-3 ml-2 text-orange-500">
                 <FontAwesomeIcon size="lg" icon={faUser} />
               </Link>
             )}

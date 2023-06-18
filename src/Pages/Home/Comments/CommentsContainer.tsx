@@ -8,7 +8,7 @@ import { useLanguage } from '../../../hooks/useLanguage';
 import moment from 'moment';
 
 interface CommentsProps {
-  texts: { comments: string; addComment: string; errorMessageComment: string; userMessageComment: string; undefinedDateText: string };
+  texts: { comments: string; addComment: string; loadingComments: string; addFirstComment: string; errorMessageComment: string; userMessageComment: string; undefinedDateText: string };
   id: number;
 }
 
@@ -22,6 +22,7 @@ const CommentsContainer: React.FC<CommentsProps> = ({ texts, id }) => {
   const { auth } = useAuth();
   const { language } = useLanguage();
   const [comments, setComments] = useState<CommentType[]>([]);
+  const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState('');
   const [errorMessage, setErrorMessage] = useState(false);
   const [authMessage, setAuthMessage] = useState(false);
@@ -29,8 +30,10 @@ const CommentsContainer: React.FC<CommentsProps> = ({ texts, id }) => {
   moment.locale(`${language}`);
 
   useEffect(() => {
-    fetchComments();
-  }, []);
+    if (id) {
+      fetchComments();
+    }
+  }, [id]);
 
   const handleComment = (event: FormEvent) => {
     event.preventDefault();
@@ -59,17 +62,19 @@ const CommentsContainer: React.FC<CommentsProps> = ({ texts, id }) => {
     setComment('');
   };
 
-  const fetchComments = () => {
-    fetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes/${id}/comments?page=1&limit=10`)
-      .then((response) => response.json())
-      .then((data) => {
-        setComments(data._embedded.items);
-      })
-      .catch((error) => {
-        console.error('Error fetching comments:', error);
-      });
+  const fetchComments = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes/${id}/comments?page=1&limit=10`);
+      const data = await response.json();
+      setComments(data._embedded?.items);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    } finally {
+      setLoading(false);
+    }
   };
-  return <Comments {...{ texts, handleComment, errorMessage, authMessage, comments, comment, setComment }} />;
+  return <Comments {...{ texts, handleComment, loading, errorMessage, authMessage, comments, comment, setComment }} />;
 };
 
 export default withLanguage(CommentsContainer);

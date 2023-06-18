@@ -1,6 +1,7 @@
 import { Dispatch, FormEvent, SetStateAction } from 'react';
 import CommentList from './CommentsLists';
 import { CommentType } from './CommentsContainer';
+import { BeatLoader } from 'react-spinners';
 
 interface CommentsProps {
   handleComment: (event: FormEvent<Element>) => void;
@@ -8,16 +9,19 @@ interface CommentsProps {
   authMessage: boolean;
   comments: CommentType[];
   comment: string;
+  loading: boolean;
   setComment: Dispatch<SetStateAction<string>>;
   texts: {
     addComment: string;
     errorMessageComment: string;
     userMessageComment: string;
     comments: string;
+    loadingComments: string;
     undefinedDateText: string;
+    addFirstComment: string;
   };
 }
-const Comments: React.FC<CommentsProps> = ({ texts, handleComment, errorMessage, authMessage, comments, comment, setComment }) => {
+const Comments: React.FC<CommentsProps> = ({ texts, loading, handleComment, errorMessage, authMessage, comments, comment, setComment }) => {
   return (
     <div className="flex flex-col">
       <form onSubmit={handleComment}>
@@ -28,7 +32,14 @@ const Comments: React.FC<CommentsProps> = ({ texts, handleComment, errorMessage,
       </form>
       {errorMessage && !authMessage && <p className="text-red-500">{texts.errorMessageComment}</p>}
       {authMessage && <p className="text-red-500">{texts.userMessageComment}</p>}
-      <CommentList comments={comments} texts={texts} />
+      {loading ? (
+        <div className="flex flex-col w-full h-full justify-center items-center">
+          <BeatLoader color="#f97316" />
+          <p className="text-white">{texts.loadingComments}</p>
+        </div>
+      ) : (
+        <CommentList comments={comments} texts={texts} />
+      )}
     </div>
   );
 };

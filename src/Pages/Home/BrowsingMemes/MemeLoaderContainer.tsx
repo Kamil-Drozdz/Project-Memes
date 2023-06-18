@@ -32,10 +32,10 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
   const [isLoaded, setIsLoaded] = useState<boolean[]>([]);
   const [showArrow, setShowArrow] = useState(false);
   const [showError, setShowError] = useState(false);
-
+  const [copiedMemeId, setCopiedMemeId] = useState<number | null>(null);
   const [showComments, setShowComments] = useState<number | null>(null);
   const { data: memeFetching, isLoading, refetch } = useFetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes?page=${page}&limit=10`);
-  const memeColections = memeFetching?._embedded?.items;
+  const memeCollections = memeFetching?._embedded?.items;
   const { auth } = useAuth();
   const handleVoice = useMemeVote(texts, (updatedMeme: Meme) => {
     setData((prevData) => prevData.map((meme) => (meme.id === updatedMeme.id ? updatedMeme : meme)));
@@ -58,8 +58,8 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
   }, [auth.email]);
 
   useEffect(() => {
-    if (memeColections) {
-      setData((prevData) => [...prevData, ...memeColections]);
+    if (memeCollections) {
+      setData((prevData) => [...prevData, ...memeCollections]);
     } else return;
   }, [isLoading]);
 
@@ -99,11 +99,25 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleCopy = (id: number) => {
+    navigator.clipboard
+      .writeText(`${window.location.href}meme/${id}`)
+      .then(() => {
+        toast.success(`${texts.linkCopied}`, { autoClose: 1000 });
+        setCopiedMemeId(id);
+        setTimeout(() => {
+          setCopiedMemeId(null);
+        }, 5000);
+      })
+      .catch(() => {
+        toast.success(`${texts.linkCopiedError}`, { autoClose: 1000 });
+      });
+  };
   const handleMemeClick = (id: number) => {
     navigate(`/meme/${id}`);
   };
 
-  return <InfiniteScrollComponent {...{ data, loadMoreMemes, handleMemeClick, isLoaded, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }} />;
+  return <InfiniteScrollComponent {...{ data, loadMoreMemes, handleCopy, copiedMemeId, handleMemeClick, isLoaded, showError, handleImageLoaded, showComments, showArrow, handleClick, handleVoice, handleComments }} />;
 };
 
 export default withLanguage(MemeLoaderContainer);

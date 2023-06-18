@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AiFillLike, AiFillDislike, AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
-import { TbShare3 } from 'react-icons/tb';
+import { TbCheck, TbShare3 } from 'react-icons/tb';
 import CommentsContainer from '../Home/Comments/CommentsContainer';
 import useFetch from '../../hooks/useFetch';
 import errorPhoto from '../../assets/error.png';
@@ -13,11 +13,27 @@ import { withLanguage } from '../../HOC/withLanguage';
 const MemeInteraction = ({ texts }) => {
   let { id } = useParams();
   const [meme, setMeme] = useState([]);
+  const [isCopy, SetIsCopy] = useState(false);
   const { data: fetchedMeme, isLoading } = useFetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes/${id}`);
 
   const handleVoice = useMemeVote(texts, (updatedMeme) => {
     setMeme(updatedMeme);
   });
+
+  const handleCopy = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        toast.success(`${texts.linkCopied}`, { autoClose: 1000 });
+        SetIsCopy(true);
+        setTimeout(() => {
+          SetIsCopy(false);
+        }, 5000);
+      })
+      .catch(() => {
+        toast.success(`${texts.linkCopiedError}`, { autoClose: 1000 });
+      });
+  };
 
   useEffect(() => {
     if (fetchedMeme) {
@@ -56,12 +72,12 @@ const MemeInteraction = ({ texts }) => {
           <button onClick={() => handleVoice(meme?.id, true)} className="z-[2] mr-1 rounded border-b-4 border-green-800 bg-green-700 px-[8px] py-[6px] font-bold text-white shadow-lg hover:border-green-500 hover:bg-green-400">
             {meme?.userReaction?.id === 'like' ? <AiFillLike size={20} /> : <AiOutlineLike size={20} />}
           </button>
-          <button onClick={() => handleVoice(meme?.id, false)} className="z-[2] mx-1 w-fit rounded border-b-4 border-red-800 bg-red-700  px-[8px] py-[6px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400">
+          <button onClick={() => handleVoice(meme?.id, false)} className="z-[2] mx-[1px] w-fit rounded border-b-4 border-red-800 bg-red-700  px-[8px] py-[6px] font-bold text-white shadow-lg hover:border-red-500 hover:bg-red-400">
             {meme?.userReaction?.id === 'dislike' ? <AiFillDislike size={20} /> : <AiOutlineDislike size={20} />}
           </button>
           <p className="rounded bg-gray-600 border-b-4 mx-1 border-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{(meme?.likeCount || 0) - (meme?.dislikeCount || 0)}</p>
-          <button className="z-[2] ml-1 rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400 px-[10px] font-bold text-black shadow-lg">
-            <TbShare3 size={20} className="text-white" />
+          <button onClick={handleCopy} className="z-[2] ml-[1px] rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400  px-[8px] font-bold text-black shadow-lg">
+            {isCopy ? <TbCheck size={20} className="text-white" /> : <TbShare3 size={20} className="text-white" />}
           </button>
         </div>
         <CommentsContainer id={meme?.id} />
