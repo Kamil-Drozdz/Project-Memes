@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Spin as Hamburger } from 'hamburger-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusSquare, faRandom, faSortAmountAsc, faGlobe, faUser, faFileLines } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faRandom, faSortAmountAsc, faGlobe, faUser, faFileLines, faUserPen } from '@fortawesome/free-solid-svg-icons';
 import { BiQr } from 'react-icons/bi';
 import Checkout from '../../payments/Checkout/CheckoutContainer';
 import QRCodeContainer from '../QRCode/QRCodeContainer';
@@ -65,6 +65,7 @@ const Header: React.FC<HeaderContainerProps> = ({ texts, isOpen, setOpen, langua
             <header className="flex max-h-full flex-nowrap items-center justify-end rounded-lg bg-gray-800 md:block ">
               <div className="flex flex-col">
                 <NavItemContainer to="/" text={texts.browse} icon={faRandom} />
+                <NavItemContainer to="/profile" text={texts.myProfil} icon={faUserPen} />
                 <NavItemContainer to="/sort" text={texts.sortMemes} icon={faSortAmountAsc} />
                 <NavItemContainer to="/generatemem" text={texts.generateMeme} icon={faPlusSquare} />
               </div>
@@ -87,10 +88,16 @@ const Header: React.FC<HeaderContainerProps> = ({ texts, isOpen, setOpen, langua
                 </>
               )}
             </button>
-            {showLogin && (
+            {showLogin ? (
               <Link to="/login" className="absolute left-32 top-3 ml-2 text-orange-500">
                 <FontAwesomeIcon size="lg" icon={faUser} />
               </Link>
+            ) : subscription ? (
+              subscription
+            ) : (
+              <div className="absolute left-32 top-3 ml-2 text-orange-500">
+                <Checkout />
+              </div>
             )}
           </>
         )}

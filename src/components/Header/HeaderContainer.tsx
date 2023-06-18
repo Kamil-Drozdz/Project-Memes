@@ -21,6 +21,7 @@ export interface HeaderContainerProps {
   setPingModal: (value: boolean) => void;
   auth?: { userNick: string | null };
   texts: {
+    myProfil: string;
     hi: string;
     browse: string;
     sortMemes: string;
