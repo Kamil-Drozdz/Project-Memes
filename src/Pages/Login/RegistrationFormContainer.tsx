@@ -50,7 +50,7 @@ const RegistrationFormContainer: React.FC<RegistrationFormProps> = ({ setShowReg
     }
     setIsLoading(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_BASE_URL}users/users`, {
+      const response = await fetch(`${process.env.VITE_APP_API_BASE_URL}users/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user, email, password })

@@ -44,7 +44,7 @@ const UserPanelContainer = () => {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_BASE_URL}users/users/${auth.userId}`, {
+      const response = await fetch(`${process.env.VITE_APP_API_BASE_URL}users/users/${auth.userId}`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${auth.token}`
@@ -57,7 +57,7 @@ const UserPanelContainer = () => {
     }
   };
 
-  return <UserPanel  {...{ auth, lastLogin, userData, handleUserDataChange, handleSubmit, activePanel, setActivePanel }} />;
+  return <UserPanel {...{ auth, lastLogin, userData, handleUserDataChange, handleSubmit, activePanel, setActivePanel }} />;
 };
 
 export default UserPanelContainer;

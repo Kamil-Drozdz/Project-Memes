@@ -11,7 +11,7 @@ import MemeLoaderContainer from '../Pages/Home/BrowsingMemes/MemeLoaderContainer
 import SortContainer from '../Pages/Sort/SortContainer';
 import LoginFormContainer from '../Pages/Login/LoginFormContainer';
 import UserPanelContainer from '../Pages/UserPanel/UserPanelContainer';
-import MemeInteraction from '../Pages/MemeInteraction/MemeInteraction';
+import MemeInteractionContainer from '../Pages/MemeInteraction/MemeInteractionContainer';
 
 const ROLES = {
   User: 'ROLE_USER',
@@ -49,7 +49,7 @@ export const App = () => {
           </Route>
           {/* Without roles */}
           <Route path="/login" element={atLayout(LoginFormContainer)} />
-          <Route path="/meme/:id" element={atLayout(MemeInteraction)} />
+          <Route path="/meme/:id" element={atLayout(MemeInteractionContainer)} />
           <Route path="unauthorized" element={atLayout(Unauthorized)} />
           <Route path="*" element={atLayout(Missing)} />
           <Route path="/" element={atLayout(MemeLoaderContainer)} />

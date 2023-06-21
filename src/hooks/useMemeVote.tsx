@@ -1,7 +1,20 @@
+import { Meme } from '../Pages/Home/BrowsingMemes/MemeLoaderContainer';
 import { useAuth } from './useAuth';
 import { toast } from 'react-toastify';
 
-export const useMemeVote = (texts, updateMeme) => {
+interface TextsProps {
+  logIn: string;
+  notificationToastSuccesLike: string;
+  notificationToastSuccesDisLike: string;
+  notificationToastReset: string;
+}
+
+interface MemeVoteProps {
+  texts: TextsProps;
+  updateMeme: (updatedMeme: Meme) => void;
+}
+
+export const useMemeVote = ({ texts, updateMeme }: MemeVoteProps) => {
   const { auth } = useAuth();
 
   const handleVoice = async (memeId: number, isLike: boolean) => {
@@ -10,7 +23,7 @@ export const useMemeVote = (texts, updateMeme) => {
       return;
     }
     const reaction = isLike ? 'like' : 'dislike';
-    const apiUrl = `${import.meta.env.VITE_APP_API_BASE_URL}memes/memes/${memeId}/reactions`;
+    const apiUrl = `${process.env.VITE_APP_API_BASE_URL}memes/memes/${memeId}/reactions`;
 
     const updateReaction = async (url: string, method = 'POST') => {
       const response = await fetch(url, {

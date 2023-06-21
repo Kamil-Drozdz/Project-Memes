@@ -45,7 +45,7 @@ const CommentsContainer: React.FC<CommentsProps> = ({ texts, id }) => {
       setAuthMessage(true);
       return;
     }
-    fetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes/${id}/comments`, {
+    fetch(`${process.env.VITE_APP_API_BASE_URL}memes/memes/${id}/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const CommentsContainer: React.FC<CommentsProps> = ({ texts, id }) => {
   const fetchComments = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes/${id}/comments?page=1&limit=10`);
+      const response = await fetch(`${process.env.VITE_APP_API_BASE_URL}memes/memes/${id}/comments?page=1&limit=10`);
       const data = await response.json();
       setComments(data._embedded?.items);
     } catch (error) {

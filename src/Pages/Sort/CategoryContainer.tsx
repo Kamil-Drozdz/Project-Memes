@@ -8,7 +8,7 @@ export interface CategoryProps extends SortProps {
 }
 
 export const CategoryContainer = ({ handleChange, categorySelectRef, texts }: CategoryProps) => {
-  const categories = useFetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/meme-categories`).data?._embedded?.items;
+  const categories = useFetch(`${process.env.VITE_APP_API_BASE_URL}memes/meme-categories`).data?._embedded?.items;
   const memoizedCategories = useMemo(() => categories, [categories]);
 
   return <Category {...{ categorySelectRef, texts, memoizedCategories, handleChange }} />;

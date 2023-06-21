@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie';
 import { createContext, useState, useEffect, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 export interface AuthContextType {
   isLoading: boolean;
@@ -33,7 +32,6 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
   const [auth, setAuth] = useState<AuthContextType['auth']>({
     email: null,
     password: null,
@@ -49,7 +47,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const getUser = async () => {
         try {
           setIsLoading(true);
-          const response = await fetch(`${import.meta.env.VITE_APP_API_BASE_URL}users/users/1`, {
+          const response = await fetch(`${process.env.VITE_APP_API_BASE_URL}users/users/1`, {
             headers: {
               Authorization: `Bearer ${auth.token}`
             }

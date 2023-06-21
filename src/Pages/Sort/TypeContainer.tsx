@@ -8,7 +8,7 @@ export interface TypeProps extends SortProps {
 }
 
 const TypeContainer: React.FC<TypeProps> = ({ texts, handleChange, typeSelectRef }) => {
-  const types = useFetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/meme-types`).data?._embedded?.items;
+  const types = useFetch(`${process.env.VITE_APP_API_BASE_URL}memes/meme-types`).data?._embedded?.items;
   const memoizedTypes = useMemo(() => types, [types]);
 
   return <Type memoizedTypes={memoizedTypes} texts={texts} handleChange={handleChange} typeSelectRef={typeSelectRef} />;

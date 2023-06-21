@@ -36,7 +36,7 @@ const LoginFormContainer: React.FC<LoginFormContainerProps> = ({ texts }) => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_BASE_URL}security/token`, {
+      const response = await fetch(`${process.env.VITE_APP_API_BASE_URL}security/token`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

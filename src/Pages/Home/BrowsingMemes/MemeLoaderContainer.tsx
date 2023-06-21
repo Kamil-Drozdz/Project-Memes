@@ -34,15 +34,21 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
   const [showError, setShowError] = useState(false);
   const [copiedMemeId, setCopiedMemeId] = useState<number | null>(null);
   const [showComments, setShowComments] = useState<number | null>(null);
-  const { data: memeFetching, isLoading, refetch } = useFetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes?page=${page}&limit=10`);
+  const { data: memeFetching, isLoading, refetch } = useFetch(`${process.env.VITE_APP_API_BASE_URL}memes/memes?page=${page}&limit=10`);
   const memeCollections = memeFetching?._embedded?.items;
   const { auth } = useAuth();
-  const handleVoice = useMemeVote(texts, (updatedMeme: Meme) => {
-    setData((prevData) => prevData.map((meme) => (meme.id === updatedMeme.id ? updatedMeme : meme)));
+
+  const handleVoice = useMemeVote({
+    texts,
+    updateMeme: (updatedMeme: Meme) => {
+      setData((prevData) => prevData.map((meme) => (meme.id === updatedMeme.id ? updatedMeme : meme)));
+    }
   });
+
   const loadMoreMemes = () => {
     setPage(page + 1);
   };
+
   const handleImageLoaded = (index: number) => {
     setIsLoaded((prevState) => {
       const updatedState = [...prevState];

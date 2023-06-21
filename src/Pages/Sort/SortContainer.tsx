@@ -75,7 +75,7 @@ const SortContainer = ({ texts }: SortProps) => {
   });
 
   // formSubmited here as the second argument and useFetch custom hook gets a signal when the form is submitted fetches the data again
-  const { data: meme, refetch, isLoading } = useFetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes/random`);
+  const { data: meme, refetch, isLoading } = useFetch(`${process.env.VITE_APP_API_BASE_URL}memes/memes/random`);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const fieldName = event.target.name;
@@ -101,7 +101,7 @@ const SortContainer = ({ texts }: SortProps) => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    fetch(`${import.meta.env.VITE_APP_API_BASE_URL}memes/memes/${meme.id}`, {
+    fetch(`${process.env.VITE_APP_API_BASE_URL}memes/memes/${meme.id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${auth.token}`,
