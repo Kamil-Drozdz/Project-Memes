@@ -42,7 +42,7 @@ export const App = () => {
       ) : (
         <Routes>
           {/*Role user*/}
-          <Route element={<PrivateRoute allowedRoles={ROLES.User} />}>
+          <Route element={<PrivateRoute allowedRoles={[ROLES.User]} />}>
             <Route path="sort" element={atLayout(SortContainer)} />
             <Route path="generatemem" element={atLayout(GenerateMem)} />
             <Route path="profile" element={atLayout(UserPanelContainer)} />

@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     userNick: null,
     token: Cookies.get('token') || null
   });
-
+  console.log(isLoading);
   useEffect(() => {
     if (auth.token) {
       const getUser = async () => {
