@@ -10,6 +10,8 @@ export type CheckoutProps = {
   onToken: (token: any) => void;
   texts: {
     logInPremium: string;
+    subscribeDescription: string;
+    subscribe: string;
   };
   auth: {
     email: string | null;

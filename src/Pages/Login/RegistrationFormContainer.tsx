@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { withLanguage } from '../../HOC/withLanguage';
 import RegistrationForm from './RegistrationForm';
-import { useAuth } from '../../hooks/useAuth';
 
 export interface RegistrationFormProps {
   setShowRegistration: (value: boolean) => void;
@@ -30,7 +29,6 @@ export interface RegistrationFormProps {
 
 const RegistrationFormContainer: React.FC<RegistrationFormProps> = ({ setShowRegistration, texts }) => {
   const [user, setUser] = useState('');
-  const { auth } = useAuth();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState('');

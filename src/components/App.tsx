@@ -19,7 +19,7 @@ const ROLES = {
 };
 
 //fixed max size with infinity scroll div set, which extends the page, temporarily solves the problem with the scroll on x
-const atLayout = (Component: React.ComponentType<any>) => {
+export const atLayout = (Component: React.ComponentType<any>) => {
   return (
     <div className={` max-h-full min-h-screen max-w-screen bg-gray-600  `}>
       <MainLayout>

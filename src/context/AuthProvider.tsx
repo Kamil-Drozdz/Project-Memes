@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import { createContext, useState, useEffect, ReactNode } from 'react';
 
 export interface AuthContextType {
+  roles?: string[];
   isLoading: boolean;
   auth: {
     email: string | null;

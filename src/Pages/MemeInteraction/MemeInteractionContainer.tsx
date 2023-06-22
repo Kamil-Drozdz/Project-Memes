@@ -19,7 +19,7 @@ interface TextsProps {
 }
 
 function MemeInteractionContainer({ texts }: { texts: TextsProps }) {
-  let { id } = useParams();
+  let { id } = useParams<{ id?: string }>() ?? {};
   const [meme, setMeme] = useState<Meme>();
   const [isCopy, SetIsCopy] = useState(false);
   const { data: fetchedMeme, isLoading } = useFetch(`${process.env.VITE_APP_API_BASE_URL}memes/memes/${id}`);

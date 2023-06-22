@@ -63,7 +63,7 @@ const MemeInteraction = ({ texts, meme, handleVoice, isCopy, handleCopy, isLoadi
                 {meme?.userReaction?.id === 'dislike' ? <AiFillDislike size={20} /> : <AiOutlineDislike size={20} />}
               </button>
               <p className="rounded bg-gray-600 border-b-4 mx-1 border-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{(meme?.likeCount || 0) - (meme?.dislikeCount || 0)}</p>
-              <button onClick={handleCopy} className="z-[2] ml-[1px] rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400  px-[8px] font-bold text-black shadow-lg">
+              <button onClick={handleCopy} data-testid="copy-button" className="z-[2] ml-[1px] rounded border-b-4 border-orange-800 bg-orange-700 hover:border-orange-500 hover:bg-orange-400  px-[8px] font-bold text-black shadow-lg">
                 {isCopy ? <TbCheck size={20} className="text-white" /> : <TbShare3 size={20} className="text-white" />}
               </button>
             </div>

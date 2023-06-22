@@ -73,6 +73,7 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, handleCopy, copiedMemeId
               </button>
               <p className="rounded bg-gray-600 border-b-4 border-gray-700 min-w-[36px] text-center py-1 font-bold text-white">{(meme.likeCount || 0) - (meme.dislikeCount || 0)}</p>
               <button
+                data-testid="copy-button"
                 onClick={() => {
                   if (meme.id !== undefined) {
                     handleCopy(meme.id);
