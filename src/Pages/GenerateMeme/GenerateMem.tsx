@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router';
 import watermark from '../../assets/watermark.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
-import { useAuth } from '../../hooks/useAuth';
+import { useSelector } from 'react-redux';
 import { withLanguage } from '../../HOC/withLanguage';
+import { RootState } from '../../store/authSlice';
 
 const GenerateMem = ({ texts }) => {
   const [image, setImage] = useState(null);
@@ -14,7 +15,7 @@ const GenerateMem = ({ texts }) => {
   const [colorStyle, setColorStyle] = useState(true);
   const [memeTextBottom, setMemeTextBottom] = useState('');
   const [error, setError] = useState('');
-  const { auth } = useAuth();
+  const { token } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const canvasRef = useRef();
 
@@ -134,7 +135,7 @@ const GenerateMem = ({ texts }) => {
         method: 'PATCH',
         crossDomain: true,
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
           Accept: 'application/json',
           'Content-Type': 'application/json',
           method: 'PATCH'

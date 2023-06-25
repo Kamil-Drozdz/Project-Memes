@@ -1,25 +1,20 @@
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import { App } from "./components/App";
-import { LanguageProvider } from "./context/LanguageProvider";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./context/AuthProvider";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { SubscriptionProvider } from "./context/SubscriptionProvider";
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import { App } from './components/App';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Provider } from 'react-redux';
+import store from './store/store.ts';
 
 const queryClient = new QueryClient();
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter>
-    <LanguageProvider>
-      <AuthProvider>
-        <SubscriptionProvider>
-          <QueryClientProvider client={queryClient}>
-            <Routes>
-              <Route path="/*" element={<App />} />
-            </Routes>
-          </QueryClientProvider>
-        </SubscriptionProvider>
-      </AuthProvider>
-    </LanguageProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </QueryClientProvider>
+    </Provider>
   </BrowserRouter>
 );

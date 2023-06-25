@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import useFetch from '../../../hooks/useFetch';
-import { useAuth } from '../../../hooks/useAuth';
+import { useSelector } from 'react-redux';
 import InfiniteScrollComponent from './InfinityScroll';
 import { withLanguage } from '../../../HOC/withLanguage';
 import { useNavigate } from 'react-router-dom';
 import { useMemeVote } from '../../../hooks/useMemeVote';
+import { RootState } from '../../../store/authSlice';
 
 export interface UserReaction {
   id: string;
@@ -26,7 +27,6 @@ export interface Meme {
 
 const MemeLoaderContainer: React.FC = ({ texts }: any) => {
   let navigate = useNavigate();
-
   const [data, setData] = useState<Meme[]>([]);
   const [page, setPage] = useState(1);
   const [isLoaded, setIsLoaded] = useState<boolean[]>([]);
@@ -36,7 +36,7 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
   const [showComments, setShowComments] = useState<number | null>(null);
   const { data: memeFetching, isLoading, refetch } = useFetch(`${process.env.VITE_APP_API_BASE_URL}memes/memes?page=${page}&limit=10`);
   const memeCollections = memeFetching?._embedded?.items;
-  const { auth } = useAuth();
+  const { email } = useSelector((state: RootState) => state.auth);
 
   const handleVoice = useMemeVote({
     texts,
@@ -58,10 +58,10 @@ const MemeLoaderContainer: React.FC = ({ texts }: any) => {
   };
 
   useEffect(() => {
-    if (auth.email) {
+    if (email) {
       refetch();
     }
-  }, [auth.email]);
+  }, [email]);
 
   useEffect(() => {
     if (memeCollections) {

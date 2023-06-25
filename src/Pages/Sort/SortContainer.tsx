@@ -2,9 +2,11 @@ import { useState, useRef, ChangeEvent, FormEvent, RefObject } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetch from '../../hooks/useFetch';
 import { withLanguage } from '../../HOC/withLanguage';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../hooks/useAuth';
+
 import Sort from './Sort';
+import { RootState } from '../../store/authSlice';
 
 interface FormErrors {
   category: boolean;
@@ -58,7 +60,7 @@ const SortContainer = ({ texts }: SortProps) => {
   const categorySelectRef = useRef<HTMLSelectElement>(null);
   const typeSelectRef = useRef<HTMLSelectElement>(null);
 
-  const { auth } = useAuth();
+  const { token } = useSelector((state: RootState) => state.auth);
   const [formErrors, setFormErrors] = useState({
     category: true,
     type: true,
@@ -104,7 +106,7 @@ const SortContainer = ({ texts }: SortProps) => {
     fetch(`${process.env.VITE_APP_API_BASE_URL}memes/memes/${meme.id}`, {
       method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },

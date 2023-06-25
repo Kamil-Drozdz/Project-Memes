@@ -8,11 +8,9 @@ import InformationPanel from './InformationPanel';
 import PasswordPanel from './PasswordPanel';
 
 interface UserPanelProps {
-  auth: {
-    userNick: string | null;
-    email: string | null;
-    lastLogin: string | null;
-  };
+  userNick: string | null;
+  email: string | null;
+  lastLoggedIn: string | null;
   userData: {
     userNick: string | null;
     email: string | null;
@@ -23,12 +21,11 @@ interface UserPanelProps {
   activePanel: string;
   panelName?: string;
   setActivePanel: (value: string) => void;
-  lastLogin: string;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleUserDataChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const UserPanel: React.FC<UserPanelProps> = ({ auth, lastLogin, userData, handleSubmit, handleUserDataChange, activePanel, setActivePanel }) => {
+const UserPanel: React.FC<UserPanelProps> = ({ lastLoggedIn, userNick, email, userData, handleSubmit, handleUserDataChange, activePanel, setActivePanel }) => {
   return (
     <div className="md:h-[83vh] w-3/4  h-screen flex flex-col md:flex-row mx-auto justify-evenly  items-center">
       <div>
@@ -37,9 +34,9 @@ const UserPanel: React.FC<UserPanelProps> = ({ auth, lastLogin, userData, handle
             <FcReddit size="144" className=" rounded-full bg-gray-400 outline-4 outline outline-white" />
             <HiDownload size="24" color="white" className="absolute bottom-0 right-5 outline-2 outline outline-white rounded-full bg-black" />
           </div>
-          <p className=" font-bold">{auth.userNick}</p>
-          <p className="text-sm text-gray-900">ostatnie logowanie {lastLogin}</p>
-          <p className="text-sm text-gray-700">{auth.email}</p>
+          <p className=" font-bold">{userNick}</p>
+          <p className="text-sm text-gray-900">ostatnie logowanie {lastLoggedIn}</p>
+          <p className="text-sm text-gray-700">{email}</p>
         </div>
         <ul className="min-w-[20vw] p-4  mt-8 border-black border-[1px]  bg-gray-300  rounded-xl flex flex-col justify-center items-center shadow-md">
           <ListItem

@@ -1,17 +1,18 @@
-import * as React from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from '../Pages/Login/PrivateRoute';
 import Unauthorized from './Unauthorized';
 import Missing from './Missing';
 import { MainLayout } from '../Layouts/MainLayout';
 import GenerateMem from '../Pages/GenerateMeme/GenerateMem';
-import { useAuth } from '../hooks/useAuth';
 import { FadeLoader } from 'react-spinners';
 import MemeLoaderContainer from '../Pages/Home/BrowsingMemes/MemeLoaderContainer';
 import SortContainer from '../Pages/Sort/SortContainer';
 import LoginFormContainer from '../Pages/Login/LoginFormContainer';
 import UserPanelContainer from '../Pages/UserPanel/UserPanelContainer';
 import MemeInteractionContainer from '../Pages/MemeInteraction/MemeInteractionContainer';
+import { AppDispatch, RootState, fetchUser } from '../store/authSlice';
 
 const ROLES = {
   User: 'ROLE_USER',
@@ -30,7 +31,14 @@ export const atLayout = (Component: React.ComponentType<any>) => {
 };
 
 export const App = () => {
-  const { isLoading } = useAuth();
+  const dispatch  = useDispatch<AppDispatch>();
+  const { token, isLoading } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUser());
+    }
+  }, [token, dispatch]);
 
   return (
     <div>

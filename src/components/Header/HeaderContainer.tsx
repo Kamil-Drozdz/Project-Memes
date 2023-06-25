@@ -1,10 +1,10 @@
-import { useAuth } from '../../hooks/useAuth';
 import { Dispatch, useEffect, SetStateAction } from 'react';
-import { useState, useContext } from 'react';
-import { SubscriptionContext, SubscriptionContextType } from '../../context/SubscriptionProvider';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLanguage as setLanguageAction } from '../../store/languageSlice';
 import { withLanguage } from '../../HOC/withLanguage';
 import Header from './Header';
-import { useLanguage } from '../../hooks/useLanguage';
+import { RootState } from '../../store/authSlice';
 
 export interface HeaderContainerProps {
   isOpen: boolean;
@@ -19,7 +19,7 @@ export interface HeaderContainerProps {
   setShowInfoModal: (value: boolean) => void;
   pingModal: boolean;
   setPingModal: (value: boolean) => void;
-  auth?: { userNick: string | null };
+  userNick: string | null;
   texts: {
     myProfil: string;
     hi: string;
@@ -36,21 +36,26 @@ export interface HeaderContainerProps {
 
 const HeaderContainer: React.FC<HeaderContainerProps> = ({ texts }) => {
   const [isOpen, setOpen] = useState(false);
-  const { language, setLanguage } = useLanguage();
-  const { subscription } = useContext(SubscriptionContext) as SubscriptionContextType;
   const [showQRCode, setShowQRCode] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const { auth } = useAuth();
+  const { email, userNick } = useSelector((state: RootState) => state.auth);
+  const language = useSelector((state: RootState) => state.language);
+  const subscription = useSelector((state: RootState) => state.subscription);
+  const dispatch = useDispatch();
+  const setLanguage = (lang: string) => {
+    dispatch(setLanguageAction(lang));
+  };
+
   const [pingModal, setPingModal] = useState(true);
 
   useEffect(() => {
-    if (!auth.email) {
+    if (!email) {
       setShowLogin(true);
     } else setShowLogin(false);
-  }, [auth]);
+  }, [email]);
 
-  return <Header {...{ texts, isOpen, setOpen, language, setLanguage, subscription, showQRCode, setShowQRCode, showLogin, showInfoModal, setShowInfoModal, auth, pingModal, setPingModal }} />;
+  return <Header {...{ texts, isOpen, setOpen, language, setLanguage, subscription, showQRCode, setShowQRCode, showLogin, showInfoModal, setShowInfoModal, userNick, pingModal, setPingModal }} />;
 };
 
 export default withLanguage(HeaderContainer);

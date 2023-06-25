@@ -1,6 +1,7 @@
 import { Meme } from '../Pages/Home/BrowsingMemes/MemeLoaderContainer';
-import { useAuth } from './useAuth';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { RootState } from '../store/authSlice';
 
 interface TextsProps {
   logIn: string;
@@ -15,10 +16,10 @@ interface MemeVoteProps {
 }
 
 export const useMemeVote = ({ texts, updateMeme }: MemeVoteProps) => {
-  const { auth } = useAuth();
+  const { email, token } = useSelector((state: RootState) => state.auth);
 
   const handleVoice = async (memeId: number, isLike: boolean) => {
-    if (!auth.email) {
+    if (!email) {
       toast.error(`${texts.logIn}`, { autoClose: 2000 });
       return;
     }
@@ -28,7 +29,7 @@ export const useMemeVote = ({ texts, updateMeme }: MemeVoteProps) => {
     const updateReaction = async (url: string, method = 'POST') => {
       const response = await fetch(url, {
         method,
-        headers: { Authorization: `Bearer ${auth.token}` }
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       if (!response.ok) {

@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
-import { SubscriptionContext } from '../../context/SubscriptionProvider';
-import { useAuth } from '../../hooks/useAuth';
+import { useSelector, useDispatch } from 'react-redux';
 import { withLanguage } from '../../HOC/withLanguage';
 import Checkout from './Checkout';
+import { setSubscription } from '../../store/subscriptionSlice';
+import { RootState } from '../../store/authSlice';
 
 export type CheckoutProps = {
   handlePayment: () => void;
@@ -13,31 +14,24 @@ export type CheckoutProps = {
     subscribeDescription: string;
     subscribe: string;
   };
-  auth: {
     email: string | null;
-  };
 };
 
 const CheckoutContainer: React.FC<CheckoutProps> = ({ texts }) => {
-  const { auth } = useAuth();
-  const contextValue = useContext(SubscriptionContext);
-
-  if (!contextValue) {
-    return null;
-  }
-  const { setSubscription } = contextValue;
+  const { email } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   const handlePayment = () => {
-    if (!auth.email) {
+    if (!email) {
       toast.error(`${texts.logInPremium}`, { autoClose: 2000 });
     }
   };
 
   const onToken = () => {
-    setSubscription(true);
+    dispatch(setSubscription(true));
   };
 
-  return <Checkout auth={auth} handlePayment={handlePayment} onToken={onToken} texts={texts} />;
+  return <Checkout email={email} handlePayment={handlePayment} onToken={onToken} texts={texts} />;
 };
 
 export default withLanguage(CheckoutContainer);

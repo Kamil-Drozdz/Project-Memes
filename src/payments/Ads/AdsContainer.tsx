@@ -1,10 +1,12 @@
-import { useContext, useState, useEffect } from 'react';
-import { SubscriptionContext } from '../../context/SubscriptionProvider';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import AdsMockup from '../../assets/AdsMockup.png';
 import AdsMockupMobile from '../../assets/AdsMockupMobile.png';
+import { RootState } from '../../store/authSlice';
 
 const Ads = () => {
-  const contextValue = useContext(SubscriptionContext);
+  const subscription = useSelector((state: RootState) => state.subscription);
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -14,11 +16,6 @@ const Ads = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (!contextValue) {
-    return null;
-  }
-
-  const { subscription } = contextValue;
   const isMobile = windowWidth <= 768;
 
   return <div className="flex justify-center">{subscription ? '' : <img className=" w-full md:w-1/2 xl:w-3/4 2xl:w-full flex justify-center items-center object-fit" src={isMobile ? AdsMockupMobile : AdsMockup} />}</div>;

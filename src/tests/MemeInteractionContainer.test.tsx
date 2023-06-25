@@ -1,11 +1,13 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { toast } from 'react-toastify';
+import { Provider } from 'react-redux';
 import MemeInteractionContainer from '../Pages/MemeInteraction/MemeInteractionContainer';
-import { LanguageProvider } from '../context/LanguageProvider';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { atLayout } from '../components/App';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { AuthProvider } from '../context/AuthProvider';
+import store from '../store/store';
+import useFetch from '../hooks/useFetch';
+import { useMemeVote } from '../hooks/useMemeVote';
 
 const queryClient = new QueryClient();
 
@@ -33,15 +35,13 @@ describe('MemeInteractionContainer', () => {
 
   it('should render loading state', () => {
     render(
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <LanguageProvider>
-            <MemoryRouter initialEntries={['/memes/5']}>
-              <Route path="/meme/:id" element={atLayout(MemeInteractionContainer)} />
-            </MemoryRouter>
-          </LanguageProvider>
-        </QueryClientProvider>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/memes/5']}>
+            <Route path="/meme/:id" element={atLayout(MemeInteractionContainer)} />
+          </MemoryRouter>
+        </Provider>
+      </QueryClientProvider>
     );
 
     expect(screen.getByText('Loading...')).toBeInTheDocument();
@@ -65,13 +65,11 @@ describe('MemeInteractionContainer', () => {
     }));
 
     render(
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <LanguageProvider>
-            <MemeInteractionContainer texts={{}} />
-          </LanguageProvider>
-        </QueryClientProvider>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <MemeInteractionContainer texts={{}} />
+        </Provider>
+      </QueryClientProvider>
     );
 
     expect(screen.getByAltText('random meme')).toBeInTheDocument();
@@ -87,13 +85,11 @@ describe('MemeInteractionContainer', () => {
     }));
 
     render(
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <LanguageProvider>
-            <MemeInteractionContainer texts={{}} />
-          </LanguageProvider>
-        </QueryClientProvider>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <MemeInteractionContainer texts={{}} />
+        </Provider>
+      </QueryClientProvider>
     );
 
     expect(screen.getByText('Meme not found')).toBeInTheDocument();
@@ -101,13 +97,11 @@ describe('MemeInteractionContainer', () => {
 
   it('should handle copy button click', async () => {
     render(
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <LanguageProvider>
-            <MemeInteractionContainer texts={{ linkCopied: 'Link copied', linkCopiedError: 'Error copying link' }} />
-          </LanguageProvider>
-        </QueryClientProvider>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <MemeInteractionContainer texts={{ linkCopied: 'Link copied', linkCopiedError: 'Error copying link' }} />
+        </Provider>
+      </QueryClientProvider>
     );
 
     const writeTextMock = jest.fn();
@@ -127,13 +121,11 @@ describe('MemeInteractionContainer', () => {
 
   it('should handle error while copying link', async () => {
     render(
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <LanguageProvider>
-            <MemeInteractionContainer texts={{ linkCopied: 'Link copied', linkCopiedError: 'Error copying link' }} />
-          </LanguageProvider>
-        </QueryClientProvider>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <MemeInteractionContainer texts={{ linkCopied: 'Link copied', linkCopiedError: 'Error copying link' }} />
+        </Provider>
+      </QueryClientProvider>
     );
 
     const writeTextMock = jest.fn().mockRejectedValueOnce(new Error('Clipboard writeText error'));
@@ -151,22 +143,26 @@ describe('MemeInteractionContainer', () => {
     expect(toast.error).toHaveBeenCalledWith('Error copying link', { autoClose: 1000 });
   });
 
-  it('should handle failed meme fetch', () => {
-    jest.mock('../hooks/useFetch', () => () => ({
+  it('should show error message when memes failed to load', async () => {
+    (useFetch as jest.Mock).mockImplementation(() => ({
       data: null,
-      isLoading: false
+      isLoading: false,
+      error: 'Error fetching memes',
+      refetch: jest.fn()
     }));
 
-    render(
-      <AuthProvider>
+    await act(async () => {
+      render(
         <QueryClientProvider client={queryClient}>
-          <LanguageProvider>
-            <MemeInteractionContainer texts={{}} />
-          </LanguageProvider>
+          <Provider store={store}>
+            <MemeInteractionContainer texts={{ linkCopied: 'Link copied', linkCopiedError: 'Error copying link' }} />
+          </Provider>
         </QueryClientProvider>
-      </AuthProvider>
-    );
+      );
+    });
 
     expect(toast.error).toHaveBeenCalledWith('Nie można załadować mema', { autoClose: 2000 });
+
+    (useMemeVote as jest.MockedFunction<typeof useMemeVote>).mockImplementation(jest.fn());
   });
 });

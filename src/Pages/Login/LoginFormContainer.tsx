@@ -1,7 +1,8 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { useAuth } from '../../hooks/useAuth';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, setAuth } from '../../store/authSlice';
 import { withLanguage } from '../../HOC/withLanguage';
 import LoginForm from './LoginForm';
 
@@ -24,13 +25,14 @@ const LoginFormContainer: React.FC<LoginFormContainerProps> = ({ texts }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setAuth, auth } = useAuth();
+  const { token } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (auth.token) {
+    if (!token) {
       navigate('/');
     }
-  }, [auth.token, navigate]);
+  }, [token, navigate]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,7 +51,7 @@ const LoginFormContainer: React.FC<LoginFormContainerProps> = ({ texts }) => {
       const roles = user?.roles;
       const userId = user?.id;
       const lastLogin = user?.lastLogin;
-      setAuth({ email, password, roles, userId, lastLogin, userNick, token });
+      dispatch(setAuth({ email, password, roles, userId, lastLogin, userNick, token }));
       Cookies.set('token', token);
       navigate('/');
     } catch (error) {

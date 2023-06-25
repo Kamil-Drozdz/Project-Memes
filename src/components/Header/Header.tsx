@@ -9,7 +9,7 @@ import Modal from './Modal';
 import { NavItemContainer } from './NavItemContainer';
 import { HeaderContainerProps } from './HeaderContainer';
 
-const Header: React.FC<HeaderContainerProps> = ({ texts, isOpen, setOpen, language, setLanguage, subscription, showQRCode, setShowQRCode, showLogin, showInfoModal, setShowInfoModal, auth, pingModal, setPingModal }) => {
+const Header: React.FC<HeaderContainerProps> = ({ texts, isOpen, setOpen, language, setLanguage, subscription, showQRCode, setShowQRCode, showLogin, showInfoModal, setShowInfoModal, userNick, pingModal, setPingModal }) => {
   return (
     <>
       <nav className="mx-auto hidden items-center justify-between bg-gray-800 md:flex md:flex-row md:items-center md:justify-start">
@@ -48,7 +48,7 @@ const Header: React.FC<HeaderContainerProps> = ({ texts, isOpen, setOpen, langua
         ) : (
           <p title="kliknij by przenieść się do panelu użytkownika" className=" absolute left-[25%] text-white">
             <Link to="/profile">
-              {texts.hi}, {auth?.userNick}
+              {texts.hi}, {userNick}
             </Link>
           </p>
         )}

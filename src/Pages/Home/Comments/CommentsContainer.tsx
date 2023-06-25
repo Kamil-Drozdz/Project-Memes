@@ -1,11 +1,11 @@
-import { useAuth } from '../../../hooks/useAuth';
 import Cookies from 'js-cookie';
 import { useState, useEffect, FormEvent } from 'react';
+import { useSelector } from 'react-redux';
 import { withLanguage } from '../../../HOC/withLanguage';
 import Comments from './Comments';
 import 'moment/dist/locale/pl';
-import { useLanguage } from '../../../hooks/useLanguage';
 import moment from 'moment';
+import { RootState } from '../../../store/authSlice';
 
 interface CommentsProps {
   texts: { comments: string; addComment: string; loadingComments: string; addFirstComment: string; errorMessageComment: string; userMessageComment: string; undefinedDateText: string };
@@ -19,8 +19,8 @@ export interface CommentType {
 }
 
 const CommentsContainer: React.FC<CommentsProps> = ({ texts, id }) => {
-  const { auth } = useAuth();
-  const { language } = useLanguage();
+  const { userNick } = useSelector((state: RootState) => state.auth);
+  const language = useSelector((state: RootState) => state.language);
   const [comments, setComments] = useState<CommentType[]>([]);
   const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState('');
@@ -41,7 +41,7 @@ const CommentsContainer: React.FC<CommentsProps> = ({ texts, id }) => {
       setErrorMessage(true);
       return;
     }
-    if (!auth.userNick) {
+    if (!userNick) {
       setAuthMessage(true);
       return;
     }
