@@ -44,7 +44,7 @@ const InfiniteScrollComponent = ({ data, loadMoreMemes, handleCopy, copiedMemeId
         </div>
       )}
       {data?.map((meme, index: number) => (
-        <div className="w-full bg-gray-900 px-4 md:w-[40vw] z-[3]" key={index}>
+        <div className="w-full bg-gray-800 px-4 md:w-[40vw] z-[3]" key={index}>
           {!isLoaded[index] && <SkeletonLoader />}
           <div className={`${isLoaded[index] ? 'block' : 'hidden'}`}>
             <div onClick={() => meme.id && handleMemeClick(meme.id)} className="m-2 flex cursor-pointer z-[5] w-full items-center justify-center rounded-lg shadow-lg">
