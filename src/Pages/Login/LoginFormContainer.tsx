@@ -29,7 +29,7 @@ const LoginFormContainer: React.FC<LoginFormContainerProps> = ({ texts }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!token) {
+    if (token) {
       navigate('/');
     }
   }, [token, navigate]);
